@@ -4,128 +4,153 @@ import { useState } from "react";
 import Link from "next/link";
 
 export default function Agendamento() {
-
   const [form, setForm] = useState({
     igreja: "",
     responsavel: "",
     whatsapp: "",
-    cidade: "",
+    local: "",
     data: "",
-    horario: "",
-    observacoes: ""
+    hora: "",
+    observacoes: "",
   });
 
-  function handleChange(e: any) {
+  function handleChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
     setForm({
       ...form,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   }
 
-  function handleSubmit(e: any) {
-    e.preventDefault();
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  e.preventDefault();
 
-    alert("Solicitação enviada! Em breve entraremos em contato.");
+  try {
+    await fetch(
+      "https://script.google.com/macros/s/AKfycbwVh2XcV89W9QxNPaqWDBKaQAoDR0c6swKxFWImBee2jW_nGFUegIebi94SiB-T7w9x/exec",
+      {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify(form),
+      }
+    );
 
-    console.log(form);
+    alert("Solicitação enviada com sucesso!");
+
+    setForm({
+      igreja: "",
+      responsavel: "",
+      whatsapp: "",
+      local: "",
+      data: "",
+      hora: "",
+      observacoes: "",
+    });
+  } catch (error) {
+    console.error("Erro ao enviar:", error);
+    alert("Erro ao enviar solicitação.");
   }
+}
 
   return (
-    <main className="min-h-screen bg-[#061B5C] text-white flex flex-col items-center px-6 py-20">
-
-      {/* Título */}
-      <h1 className="text-5xl font-bold text-[#F4C021] mb-4">
-        Agendamento
-      </h1>
-
-      <p className="mb-12 text-lg text-center max-w-xl">
-        Preencha as informações abaixo para solicitar a participação do
-        grupo <strong>Lúminuss</strong> em sua igreja ou evento.
-      </p>
-
-      {/* Formulário */}
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white text-black p-8 rounded-2xl shadow-lg w-full max-w-xl flex flex-col gap-4"
-      >
-
-        <input
-          type="text"
-          name="igreja"
-          placeholder="Nome da igreja"
-          onChange={handleChange}
-          className="p-3 rounded border"
-          required
-        />
-
-        <input
-          type="text"
-          name="responsavel"
-          placeholder="Nome do responsável"
-          onChange={handleChange}
-          className="p-3 rounded border"
-          required
-        />
-
-        <input
-          type="text"
-          name="whatsapp"
-          placeholder="WhatsApp para contato"
-          onChange={handleChange}
-          className="p-3 rounded border"
-          required
-        />
-
-        <input
-          type="text"
-          name="cidade"
-          placeholder="Cidade"
-          onChange={handleChange}
-          className="p-3 rounded border"
-          required
-        />
-
-        <input
-          type="date"
-          name="data"
-          onChange={handleChange}
-          className="p-3 rounded border"
-          required
-        />
-
-        <input
-          type="time"
-          name="horario"
-          onChange={handleChange}
-          className="p-3 rounded border"
-          required
-        />
-
-        <textarea
-          name="observacoes"
-          placeholder="Informações adicionais (evento, congresso, culto especial...)"
-          onChange={handleChange}
-          className="p-3 rounded border"
-          rows={4}
-        />
-
-        <button
-          type="submit"
-          className="bg-[#F4C021] text-[#061B5C] font-bold p-3 rounded-lg hover:scale-105 transition"
+    <main className="min-h-screen bg-[#061B5C] px-6 py-24 text-white">
+      <div className="mx-auto max-w-3xl">
+        <Link
+          href="/"
+          className="mb-8 inline-block text-[#F4C021] hover:underline"
         >
-          Enviar solicitação
-        </button>
+          ← Voltar
+        </Link>
 
-      </form>
+        <div className="mb-10 text-center">
+          <h1 className="text-5xl font-bold">Agendamento</h1>
+          <p className="mt-4 text-lg text-white/85">
+            Preencha o formulário abaixo para solicitar um convite do Lúminuss.
+          </p>
+        </div>
 
-      {/* Botão voltar */}
-      <Link
-        href="/"
-        className="mt-10 text-[#F4C021] hover:underline"
-      >
-        ← Voltar para o site
-      </Link>
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-4 rounded-3xl bg-white p-8 text-[#061B5C] shadow-xl"
+        >
+          <input
+            type="text"
+            name="igreja"
+            placeholder="Nome da igreja"
+            value={form.igreja}
+            onChange={handleChange}
+            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none"
+            required
+          />
 
+          <input
+            type="text"
+            name="responsavel"
+            placeholder="Responsável"
+            value={form.responsavel}
+            onChange={handleChange}
+            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none"
+            required
+          />
+
+          <input
+            type="text"
+            name="whatsapp"
+            placeholder="WhatsApp"
+            value={form.whatsapp}
+            onChange={handleChange}
+            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none"
+            required
+          />
+
+          <input
+            type="text"
+            name="local"
+            placeholder="Local do evento"
+            value={form.local}
+            onChange={handleChange}
+            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none"
+            required
+          />
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <input
+              type="date"
+              name="data"
+              value={form.data}
+              onChange={handleChange}
+              className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none"
+              required
+            />
+
+            <input
+              type="time"
+              name="hora"
+              value={form.hora}
+              onChange={handleChange}
+              className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none"
+              required
+            />
+          </div>
+
+          <textarea
+            name="observacoes"
+            placeholder="Observações"
+            value={form.observacoes}
+            onChange={handleChange}
+            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none"
+            rows={5}
+          />
+
+          <button
+            type="submit"
+            className="w-full rounded-xl bg-[#061B5C] px-6 py-3 font-semibold text-white transition hover:opacity-90"
+          >
+            Enviar solicitação
+          </button>
+        </form>
+      </div>
     </main>
   );
 }

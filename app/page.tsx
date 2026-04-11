@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { categorias } from "./dados/integrantes";
 
@@ -36,39 +36,40 @@ export default function Home() {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  e.preventDefault();
 
-    const novoPedido: Pedido = {
-      ...form,
-      status: "Pendente",
-    };
+  try {
+    const resposta = await fetch(
+      "https://script.google.com/macros/s/AKfycbwVh2XcV89W9QxNPaqWDBKaQAoDR0c6swKxFWImBee2jW_nGFUegIebi94SiB-T7w9x/exec",
+      {
+        method: "POST",
+        body: JSON.stringify(form),
+      }
+    );
 
-    setPedidos([...pedidos, novoPedido]);
+    const data = await resposta.json();
 
-    alert("Solicitação enviada com sucesso!");
+    if (data.ok) {
+      alert("Solicitação enviada com sucesso!");
 
-    setForm({
-      igreja: "",
-      responsavel: "",
-      whatsapp: "",
-      local: "",
-      data: "",
-      hora: "",
-      observacoes: "",
-    });
+      setForm({
+        igreja: "",
+        responsavel: "",
+        whatsapp: "",
+        local: "",
+        data: "",
+        hora: "",
+        observacoes: "",
+      });
+    } else {
+      alert("Não foi possível enviar a solicitação.");
+    }
+  } catch (error) {
+    console.error("Erro ao enviar:", error);
+    alert("Erro ao enviar solicitação.");
   }
-
-  function aprovar(index: number) {
-    const lista = [...pedidos];
-    lista[index].status = "Aprovado";
-    setPedidos(lista);
-  }
-
-  function recusar(index: number) {
-    const lista = pedidos.filter((_, i) => i !== index);
-    setPedidos(lista);
-  }
+}
 
   const fotos = [
     "/ftantiga1.jpeg",
@@ -79,8 +80,32 @@ export default function Home() {
     "/foto6.jpeg",
   ];
 
-  const agenda: { data: string; local: string }[] = [];
+  const [agenda, setAgenda] = useState<any[]>([]);
+  useEffect(() => {
+  fetch(
+    "https://opensheet.elk.sh/1tIzkJBwIc0urjHafhqkhzljjWfkUfSeP8HyGAoLdQHQ/Agendamento%20Luminuss%20(respostas)"
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("Dados da planilha:", data);
 
+      if (!Array.isArray(data)) {
+        console.error("A resposta não veio como lista:", data);
+        setAgenda([]);
+        return;
+      }
+
+      const aprovados = data.filter(
+        (item) => item.aprovado && item.aprovado.toLowerCase() === "sim"
+      );
+
+      setAgenda(aprovados);
+    })
+    .catch((err) => {
+      console.error("Erro ao carregar agenda:", err);
+      setAgenda([]);
+    });
+}, []);
   return (
     <main className="bg-white text-[#061B5C]">
       <header className="fixed top-0 left-0 z-50 w-full border-b border-white/10 bg-[#061B5C]/95 backdrop-blur">
@@ -161,7 +186,7 @@ export default function Home() {
         className="absolute inset-0 h-full w-full object-cover"
       />
 
-      <div className="absolute inset-y-0 left-0 w-28 bg-gradient-to-r from-[#061B5C] via-[#3b82f6]/30 to-transparent md:w-56" />
+      <div className="absolute inset-y-0 left-0 w-28 bg-linear-to-r from-[#061B5C] via-[#3b82f6]/30 to-transparent md:w-56" />
     </div>
   </div>
 </section>
@@ -226,11 +251,21 @@ export default function Home() {
     <Link
   key={categoria.slug}
   href={`/integrantes/${categoria.slug}`}
-  className="w-[260px] rounded-3xl bg-white p-8 text-center shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-xl"
+  className="w-65 rounded-3xl bg-white p-8 text-center shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-xl"
 >
-          <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-[#061B5C] text-2xl font-bold text-[#F4C021]">
-            {categoria.nome.charAt(0)}
-          </div>
+          <div className="mx-auto mb-4 h-20 w-20 overflow-hidden rounded-full bg-[#061B5C]">
+  {categoria.foto ? (
+    <img
+      src={categoria.foto}
+      alt={categoria.nome}
+      className="h-full w-full object-cover"
+    />
+  ) : (
+    <div className="flex h-full w-full items-center justify-center text-2xl font-bold text-[#F4C021]">
+      {categoria.nome.charAt(0)}
+    </div>
+  )}
+</div>
 
           <h3 className="text-2xl font-semibold">{categoria.nome}</h3>
         </Link>
@@ -311,7 +346,7 @@ export default function Home() {
         <p className="text-sm text-white/80">© 2026 Lúminuss</p>
 
         <p className="mt-1 text-sm text-white/70">
-          Site feito com{" "}
+          Desenvolvido com{" "}
           <span className="heart-beat text-red-500">❤</span>
           {" "}por Vitória Kelly
         </p>
