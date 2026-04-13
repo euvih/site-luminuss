@@ -38,7 +38,7 @@ export const categorias: Categoria[] = [
         funcao: "Tenor",
         foto: "/Guilherme.jpeg",
         sobre:
-          "Guilherme atua como tenor no grupo, participando das apresentações com entusiasmo e compromisso.",
+          "Filho do diretor Reginaldo, Guilherme participa do grupo desde novo, hoje com 19 anos mostra sua fase mais rebelde, talvez por sempre ter sido uma boa criança, agora quer sair do grupo.",
         instagram: "https://instagram.com/",
         youtube: "",
       },

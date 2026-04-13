@@ -50,3 +50,6 @@ html {
   transform-origin: center;
   animation: heartbeat 1.4s ease-in-out infinite;
 }
+select option {
+  color: rgb(9, 11, 90);
+}

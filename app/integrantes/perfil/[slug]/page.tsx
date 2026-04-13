@@ -43,11 +43,11 @@ export default async function PerfilIntegrantePage({ params }: Props) {
 
         {/* voltar */}
         <Link
-  href="/#integrantes"
-  className="mb-8 inline-block text-[#F4C021] hover:underline"
->
-  ← Voltar
-</Link>
+          href="/integrantes"
+          className="mb-8 inline-block text-[#F4C021] hover:underline"
+        >
+          ← Voltar
+        </Link>
 
         <div className="rounded-3xl bg-white/10 p-8 backdrop-blur-md">
 
@@ -79,7 +79,7 @@ export default async function PerfilIntegrantePage({ params }: Props) {
           {/* sobre */}
           <div className="mt-8 text-center">
             <h2 className="text-2xl font-semibold text-[#F4C021]">
-              Mais sobre
+              Biografia
             </h2>
 
             <p className="mt-4 leading-relaxed text-white/90">

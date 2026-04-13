@@ -35,7 +35,7 @@ export default async function CategoriaPage({ params }: Props) {
   }
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#061B5C] px-6 py-24 text-white">
+    <main className="relative min-h-screen overflow-hidden bg-[#061B5C] px-6 py-11 text-white">
       <div className="absolute inset-0 z-0">
         <div className="absolute -top-40 -left-40 h-[400px] w-[400px] rounded-full bg-blue-400/20 blur-3xl"></div>
         <div className="absolute top-[40%] right-[-150px] h-[350px] w-[350px] rounded-full bg-purple-300/20 blur-3xl"></div>
@@ -49,6 +49,8 @@ export default async function CategoriaPage({ params }: Props) {
         >
           ← Voltar
         </Link>
+      <h1 className="mt-0 mb-14 text-center text-4xl font-bold text-[#F4C021]">        {categoriaEncontrada.nome}
+        </h1>
 
         {categoriaEncontrada.integrantes.length === 0 ? (
           <div className="rounded-3xl bg-white/10 p-10 text-center">

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { categorias } from "./dados/integrantes";
+import { FaInstagram, FaYoutube } from "react-icons/fa";
 
 type Pedido = {
   igreja: string;
@@ -25,10 +26,10 @@ export default function Home() {
     hora: "",
     observacoes: "",
   });
-  
-  const [pedidos, setPedidos] = useState<Pedido[]>([]);
 
+  const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [mostrarMaisFotos, setMostrarMaisFotos] = useState(false);
+  const [agenda, setAgenda] = useState<any[]>([]);
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -37,39 +38,39 @@ export default function Home() {
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
-    const resposta = await fetch(
-      "https://script.google.com/macros/s/AKfycbwVh2XcV89W9QxNPaqWDBKaQAoDR0c6swKxFWImBee2jW_nGFUegIebi94SiB-T7w9x/exec",
-      {
-        method: "POST",
-        body: JSON.stringify(form),
+    try {
+      const resposta = await fetch(
+        "https://script.google.com/macros/s/AKfycbwVh2XcV89W9QxNPaqWDBKaQAoDR0c6swKxFWImBee2jW_nGFUegIebi94SiB-T7w9x/exec",
+        {
+          method: "POST",
+          body: JSON.stringify(form),
+        }
+      );
+
+      const data = await resposta.json();
+
+      if (data.ok) {
+        alert("Solicitação enviada com sucesso!");
+
+        setForm({
+          igreja: "",
+          responsavel: "",
+          whatsapp: "",
+          local: "",
+          data: "",
+          hora: "",
+          observacoes: "",
+        });
+      } else {
+        alert("Não foi possível enviar a solicitação.");
       }
-    );
-
-    const data = await resposta.json();
-
-    if (data.ok) {
-      alert("Solicitação enviada com sucesso!");
-
-      setForm({
-        igreja: "",
-        responsavel: "",
-        whatsapp: "",
-        local: "",
-        data: "",
-        hora: "",
-        observacoes: "",
-      });
-    } else {
-      alert("Não foi possível enviar a solicitação.");
+    } catch (error) {
+      console.error("Erro ao enviar:", error);
+      alert("Erro ao enviar solicitação.");
     }
-  } catch (error) {
-    console.error("Erro ao enviar:", error);
-    alert("Erro ao enviar solicitação.");
   }
-}
 
   const fotos = [
     "/ftantiga1.jpeg",
@@ -80,32 +81,32 @@ export default function Home() {
     "/foto6.jpeg",
   ];
 
-  const [agenda, setAgenda] = useState<any[]>([]);
   useEffect(() => {
-  fetch(
-    "https://opensheet.elk.sh/1tIzkJBwIc0urjHafhqkhzljjWfkUfSeP8HyGAoLdQHQ/Agendamento%20Luminuss%20(respostas)"
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      console.log("Dados da planilha:", data);
+    fetch(
+      "https://opensheet.elk.sh/1tIzkJBwIc0urjHafhqkhzljjWfkUfSeP8HyGAoLdQHQ/Agendamento%20Luminuss%20(respostas)"
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Dados da planilha:", data);
 
-      if (!Array.isArray(data)) {
-        console.error("A resposta não veio como lista:", data);
+        if (!Array.isArray(data)) {
+          console.error("A resposta não veio como lista:", data);
+          setAgenda([]);
+          return;
+        }
+
+        const aprovados = data.filter(
+          (item) => item.aprovado && item.aprovado.toLowerCase() === "sim"
+        );
+
+        setAgenda(aprovados);
+      })
+      .catch((err) => {
+        console.error("Erro ao carregar agenda:", err);
         setAgenda([]);
-        return;
-      }
+      });
+  }, []);
 
-      const aprovados = data.filter(
-        (item) => item.aprovado && item.aprovado.toLowerCase() === "sim"
-      );
-
-      setAgenda(aprovados);
-    })
-    .catch((err) => {
-      console.error("Erro ao carregar agenda:", err);
-      setAgenda([]);
-    });
-}, []);
   return (
     <main className="bg-white text-[#061B5C]">
       <header className="fixed top-0 left-0 z-50 w-full border-b border-white/10 bg-[#061B5C]/95 backdrop-blur">
@@ -117,12 +118,12 @@ export default function Home() {
               className="h-12 w-12 rounded-full object-cover cursor-pointer"
             />
             <span className="text-xl font-bold tracking-wide transition duration-300 hover:text-[#F4C021] hover:drop-shadow-[0_0_8px_#F4C021]">
-                  Lúminuss
+              Lúminuss
             </span>
           </Link>
 
-          <div className="hidden gap-6 md:flex" >
-            <a href="#inicio" className="transition hover:text-[#F4C021] ">
+          <div className="hidden gap-6 md:flex">
+            <a href="#inicio" className="transition hover:text-[#F4C021]">
               Início
             </a>
             <a href="#sobre" className="transition hover:text-[#F4C021]">
@@ -138,89 +139,106 @@ export default function Home() {
               Doações
             </a>
           </div>
-        </nav> 
+        </nav>
       </header>
 
       <section
-  id="inicio"
-  className="min-h-screen bg-[#061B5C] pt-21 text-white"
->
-  <div className="grid min-h-[calc(100vh-89px)] grid-cols-1 md:grid-cols-2">
-    <div className="flex items-center px-6 md:px-16">
-      <div>
-        <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#F4C021]">
-          Ministério musical
-        </p>
+        id="inicio"
+        className="min-h-screen bg-[#061B5C] pt-21 text-white"
+      >
+        <div className="grid min-h-[calc(100vh-89px)] grid-cols-1 md:grid-cols-2">
+          <div className="flex items-center px-6 md:px-16">
+            <div>
+              <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#F4C021]">
+                Ministério musical
+              </p>
 
-        <h1 className="mb-6 text-5xl font-bold leading-tight md:text-6xl text-[#f0f6ff] drop-shadow-[0_0_8px_#3b82f6] transition duration-300 hover:text-[#28bbf5] hover:drop-shadow-[0_0_30px_#60a5fa]">
-          Lúminuss
-        </h1>
+              <h1 className="mb-6 text-5xl font-bold leading-tight text-[#f0f6ff] drop-shadow-[0_0_8px_#3b82f6] transition duration-300 hover:text-[#28bbf5] hover:drop-shadow-[0_0_30px_#60a5fa] md:text-6xl">
+                Lúminuss
+              </h1>
 
-        <p className="mb-8 max-w-xl text-lg text-white/90">
-          Levando louvor, adoração e mensagens de esperança às igrejas por
-          meio da música.
-        </p>
+              <p className="mb-8 max-w-xl text-lg text-white/90">
+                Levando louvor, adoração e mensagens de esperança às igrejas por
+                meio da música.
+              </p>
 
-        <div className="flex flex-wrap gap-4">
-          <Link
-            href="/agendamento"
-            className="rounded-full bg-[#e9ebfc] px-6 py-3 font-semibold text-[#061B5C] transition hover:scale-105"
-          >
-            Solicitar agendamento
-          </Link>
+              <div className="flex flex-wrap items-center gap-4">
+  <Link
+    href="/agendamento"
+    className="rounded-full bg-[#e9ebfc] px-6 py-3 font-semibold text-[#061B5C] transition hover:scale-105"
+  >
+    Solicitar agendamento
+  </Link>
 
-          <a
-            href="#sobre"
-            className="rounded-full border border-white px-6 py-3 font-semibold text-white transition hover:bg-white hover:text-[#061B5C]"
-          >
-            Conhecer o grupo
-          </a>
-        </div>
-      </div>
-    </div>
+  <a
+    href="#sobre"
+    className="rounded-full border border-white px-6 py-3 font-semibold text-white transition hover:bg-white hover:text-[#061B5C]"
+  >
+    Conhecer o grupo
+  </a>
 
-    <div className="relative w-full overflow-hidden md:h-full">
-      <img
-        src="/img1.jpeg"
-        alt="Grupo Lúminuss"
-        className="absolute inset-0 h-full w-full object-cover"
-      />
+  {/* 🔥 ÍCONES MINIMALISTAS */}
+  <div className="ml-2 flex items-center gap-3">
+    <a
+      href="https://instagram.com/SEU_USUARIO"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-lg text-white/80 transition hover:text-pink-400"
+    >
+      <FaInstagram />
+    </a>
 
-      <div className="absolute inset-y-0 left-0 w-28 bg-linear-to-r from-[#061B5C] via-[#3b82f6]/30 to-transparent md:w-56" />
-    </div>
+    <a
+      href="https://youtube.com/SEU_CANAL"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-lg text-white/80 transition hover:text-red-500"
+    >
+      <FaYoutube />
+    </a>
   </div>
-</section>
-<section className="bg-[#f7f9ff] px-6 py-20">
-  <div className="mx-auto max-w-4xl text-center">
-
-    <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#F4C021]">
-      Agenda
-    </p>
-
-    <h2 className="mb-10 text-4xl font-bold text-[#061B5C]">
-      Agenda do mês
-    </h2>
-
-    {agenda.length === 0 ? (
-      <p className="text-lg text-[#17327e]/80">
-        Agenda do mês ainda não definida.
-      </p>
-    ) : (
-      <div className="space-y-4">
-        {agenda.map((evento, index) => (
-          <div
-            key={index}
-            className="rounded-xl bg-white p-4 shadow-sm"
-          >
-            <p className="font-semibold text-[#061B5C]">{evento.data}</p>
-            <p className="text-[#17327e]">{evento.local}</p>
+</div>
+            </div>
           </div>
-        ))}
-      </div>
-    )}
+          <div className="relative w-full overflow-hidden md:h-full">
+            <img
+              src="/img1.jpeg"
+              alt="Grupo Lúminuss"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
 
-  </div>
-</section>
+            <div className="absolute inset-y-0 left-0 w-28 bg-linear-to-r from-[#061B5C] via-[#3b82f6]/30 to-transparent md:w-56" />
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#f7f9ff] px-6 py-20">
+        <div className="mx-auto max-w-4xl text-center">
+          <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#F4C021]">
+            Agenda
+          </p>
+
+          <h2 className="mb-10 text-4xl font-bold text-[#061B5C]">
+            Agenda do mês
+          </h2>
+
+          {agenda.length === 0 ? (
+            <p className="text-lg text-[#17327e]/80">
+              Agenda do mês ainda não definida.
+            </p>
+          ) : (
+            <div className="space-y-4">
+              {agenda.map((evento, index) => (
+                <div key={index} className="rounded-xl bg-white p-4 shadow-sm">
+                  <p className="font-semibold text-[#061B5C]">{evento.data}</p>
+                  <p className="text-[#17327e]">{evento.local}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
       <section id="sobre" className="bg-white px-6 py-24">
         <div className="mx-auto max-w-5xl text-center">
           <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#F4C021]">
@@ -236,88 +254,82 @@ export default function Home() {
           </p>
         </div>
       </section>
-  
-       <section id="integrantes" className="bg-[#f7f9ff] px-6 py-24">
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-12 text-center">
-          <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#F4C021]">
-            Integrantes
-          </p>
-          <h2 className="text-4xl font-bold">Nossa equipe</h2>
-      </div>
 
-    <div className="flex flex-wrap justify-center gap-6">
-  {categorias.map((categoria) => (
-    <Link
-  key={categoria.slug}
-  href={`/integrantes/${categoria.slug}`}
-  className="w-65 rounded-3xl bg-white p-8 text-center shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-xl"
->
-          <div className="mx-auto mb-4 h-20 w-20 overflow-hidden rounded-full bg-[#061B5C]">
-  {categoria.foto ? (
-    <img
-      src={categoria.foto}
-      alt={categoria.nome}
-      className="h-full w-full object-cover"
-    />
-  ) : (
-    <div className="flex h-full w-full items-center justify-center text-2xl font-bold text-[#F4C021]">
-      {categoria.nome.charAt(0)}
-    </div>
-  )}
-</div>
+      <section id="integrantes" className="bg-[#f7f9ff] px-6 py-24">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-12 text-center">
+            <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#F4C021]">
+              Integrantes
+            </p>
+            <h2 className="text-4xl font-bold">Nossa equipe</h2>
+          </div>
 
-          <h3 className="text-2xl font-semibold">{categoria.nome}</h3>
-        </Link>
-      ))}
-    </div>
-  </div>
-</section>
+          <div className="flex flex-wrap justify-center gap-6">
+            {categorias.map((categoria) => (
+              <Link
+                key={categoria.slug}
+                href={`/integrantes/${categoria.slug}`}
+                className="w-65 rounded-3xl bg-white p-8 text-center shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-xl"
+              >
+                <div className="mx-auto mb-4 h-20 w-20 overflow-hidden rounded-full bg-[#061B5C]">
+                  {categoria.foto ? (
+                    <img
+                      src={categoria.foto}
+                      alt={categoria.nome}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center text-2xl font-bold text-[#F4C021]">
+                      {categoria.nome.charAt(0)}
+                    </div>
+                  )}
+                </div>
+
+                <h3 className="text-2xl font-semibold">{categoria.nome}</h3>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <section id="galeria" className="bg-white px-6 py-24">
-  <div className="mx-auto max-w-6xl">
-      
-    <div className="mb-12 text-center">
-      
-      <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#F4C021]">
-        Galeria
-      </p>
-      <h2 className="text-4xl font-bold">Fazendo história...</h2>
-    </div>
-
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-
-      {fotos
-        .slice(0, mostrarMaisFotos ? fotos.length : 3)
-        .map((foto, index) => (
-          <div
-            key={index}
-            className="overflow-hidden rounded-3xl shadow-lg"
-          >
-            <img
-              src={foto}
-              alt={`Foto ${index + 1} do grupo Lúminuss`}
-              className="h-64 w-full object-cover transition duration-300 hover:scale-105"
-            />
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-12 text-center">
+            <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#F4C021]">
+              Galeria
+            </p>
+            <h2 className="text-4xl font-bold">Fazendo história...</h2>
           </div>
-        ))}
 
-    </div>
-    
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {fotos
+              .slice(0, mostrarMaisFotos ? fotos.length : 3)
+              .map((foto, index) => (
+                <div
+                  key={index}
+                  className="overflow-hidden rounded-3xl shadow-lg"
+                >
+                  <img
+                    src={foto}
+                    alt={`Foto ${index + 1} do grupo Lúminuss`}
+                    className="h-64 w-full object-cover transition duration-300 hover:scale-105"
+                  />
+                </div>
+              ))}
+          </div>
 
-    {fotos.length > 3 && (
-      <div className="mt-10 text-center">
-        <button
-          onClick={() => setMostrarMaisFotos(!mostrarMaisFotos)}
-          className="rounded-full bg-[#061B5C] px-6 py-3 font-semibold text-white transition hover:scale-105"
-        >
-          {mostrarMaisFotos ? "Ver menos" : "Ver mais"}
-        </button>
-      </div>
-    )}
-
-  </div>
-</section>
+          {fotos.length > 3 && (
+            <div className="mt-10 text-center">
+              <button
+                onClick={() => setMostrarMaisFotos(!mostrarMaisFotos)}
+                className="rounded-full bg-[#061B5C] px-6 py-3 font-semibold text-white transition hover:scale-105"
+              >
+                {mostrarMaisFotos ? "Ver menos" : "Ver mais"}
+              </button>
+            </div>
+          )}
+        </div>
+      </section>
 
       <section id="doacoes" className="bg-white px-6 py-24">
         <div className="mx-auto max-w-2xl text-center">
@@ -335,9 +347,7 @@ export default function Home() {
             <p className="mb-4 text-2xl font-bold text-[#F4C021]">
               mluminuss.oficial@gmail.com
             </p>
-            <p className="text-white/80">
-              QR Code
-            </p>
+            <p className="text-white/80">QR Code</p>
           </div>
         </div>
       </section>
@@ -346,9 +356,8 @@ export default function Home() {
         <p className="text-sm text-white/80">© 2026 Lúminuss</p>
 
         <p className="mt-1 text-sm text-white/70">
-          Desenvolvido com{" "}
-          <span className="heart-beat text-red-500">❤</span>
-          {" "}por Vitória Kelly
+          Desenvolvido com <span className="heart-beat text-red-500">❤</span>{" "}
+          por Vitória Kelly
         </p>
       </footer>
 

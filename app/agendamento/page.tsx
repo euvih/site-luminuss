@@ -1,156 +1,209 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
-import Link from "next/link";
 
-export default function Agendamento() {
-  const [form, setForm] = useState({
-    igreja: "",
-    responsavel: "",
-    whatsapp: "",
-    local: "",
-    data: "",
-    hora: "",
-    observacoes: "",
-  });
+export default function AgendamentoPage() {
+  const [nome, setNome] = useState("");
+  const [local, setLocal] = useState("");
+  const [data, setData] = useState("");
+  const [horario, setHorario] = useState("");
+  const [telefone, setTelefone] = useState("");
+  const [tipoEvento, setTipoEvento] = useState("");
+  const [detalhes, setDetalhes] = useState("");
 
-  function handleChange(
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  }
+  function enviarParaWhatsApp(e: React.FormEvent) {
+    e.preventDefault();
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-  e.preventDefault();
+    const numero = "5584991319600"; 
 
-  try {
-    await fetch(
-      "https://script.google.com/macros/s/AKfycbwVh2XcV89W9QxNPaqWDBKaQAoDR0c6swKxFWImBee2jW_nGFUegIebi94SiB-T7w9x/exec",
-      {
-        method: "POST",
-        mode: "no-cors",
-        body: JSON.stringify(form),
-      }
+    const mensagem = encodeURIComponent(
+      `Olá! Gostaria de solicitar um agendamento.\n\n` +
+        `Nome: ${nome}\n` +
+        `Telefone: ${telefone}\n` +
+        `Local do evento: ${local}\n` +
+        `Data: ${data}\n` +
+        `Horário: ${horario}\n` +
+        `Tipo de evento: ${tipoEvento}\n` +
+        `Detalhes: ${detalhes}`
     );
 
-    alert("Solicitação enviada com sucesso!");
-
-    setForm({
-      igreja: "",
-      responsavel: "",
-      whatsapp: "",
-      local: "",
-      data: "",
-      hora: "",
-      observacoes: "",
-    });
-  } catch (error) {
-    console.error("Erro ao enviar:", error);
-    alert("Erro ao enviar solicitação.");
+    const link = `https://wa.me/${numero}?text=${mensagem}`;
+    window.open(link, "_blank");
   }
-}
 
   return (
-    <main className="min-h-screen bg-[#061B5C] px-6 py-24 text-white">
-      <div className="mx-auto max-w-3xl">
-        <Link
-          href="/"
-          className="mb-8 inline-block text-[#F4C021] hover:underline"
-        >
-          ← Voltar
-        </Link>
+    <main className="relative min-h-screen overflow-hidden text-white">
+      <Image
+        src="/img3.jpg"
+        alt="Fundo agendamento"
+        fill
+        className="object-cover"
+        priority
+      />
 
-        <div className="mb-10 text-center">
-          <h1 className="text-5xl font-bold">Agendamento</h1>
-          <p className="mt-4 text-lg text-white/85">
-            Preencha o formulário abaixo para solicitar um convite do Lúminuss.
-          </p>
-        </div>
+      <div className="absolute inset-0 bg-black/50" />
 
-        <form
-          onSubmit={handleSubmit}
-          className="space-y-4 rounded-3xl bg-white p-8 text-[#061B5C] shadow-xl"
-        >
-          <input
-            type="text"
-            name="igreja"
-            placeholder="Nome da igreja"
-            value={form.igreja}
-            onChange={handleChange}
-            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none"
-            required
-          />
+      <section className="relative z-10 flex min-h-screen pt-20">
+        <div className="grid w-full grid-cols-1 lg:grid-cols-2">
+          <div className="flex h-full flex-col justify-center bg-black/70 px-8 py-10 lg:px-10">
+            <div className="mx-auto w-full max-w-xl">
+              <div className="mb-4">
+                <h1 className="text-3xl font-bold text-white">
+                  Agendamento
+                </h1>
+                <p className="mt-1 text-sm text-white/80">
+                  Preencha o formulário para solicitar um agendamento.
+                </p>
+              </div>
 
-          <input
-            type="text"
-            name="responsavel"
-            placeholder="Responsável"
-            value={form.responsavel}
-            onChange={handleChange}
-            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none"
-            required
-          />
+              <form onSubmit={enviarParaWhatsApp} className="grid gap-3">
+                <input
+                  type="text"
+                  placeholder="Seu nome"
+                  value={nome}
+                  onChange={(e) => setNome(e.target.value)}
+                  className="rounded-xl bg-white/10 px-4 py-3 outline-none placeholder:text-white/60"
+                />
 
-          <input
-            type="text"
-            name="whatsapp"
-            placeholder="WhatsApp"
-            value={form.whatsapp}
-            onChange={handleChange}
-            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none"
-            required
-          />
+                <input
+                  type="text"
+                  placeholder="Local do evento"
+                  value={local}
+                  onChange={(e) => setLocal(e.target.value)}
+                  className="rounded-xl bg-white/10 px-4 py-3 outline-none placeholder:text-white/60"
+                />
 
-          <input
-            type="text"
-            name="local"
-            placeholder="Local do evento"
-            value={form.local}
-            onChange={handleChange}
-            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none"
-            required
-          />
+                <div className="grid grid-cols-2 gap-3">
+                  <input
+                    type="date"
+                    value={data}
+                    onChange={(e) => setData(e.target.value)}
+                    className="rounded-xl bg-white/10 px-4 py-3 outline-none"
+                  />
 
-          <div className="grid gap-4 md:grid-cols-2">
-            <input
-              type="date"
-              name="data"
-              value={form.data}
-              onChange={handleChange}
-              className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none"
-              required
-            />
+                  <input
+                    type="time"
+                    value={horario}
+                    onChange={(e) => setHorario(e.target.value)}
+                    className="rounded-xl bg-white/10 px-4 py-3 outline-none"
+                  />
+                </div>
 
-            <input
-              type="time"
-              name="hora"
-              value={form.hora}
-              onChange={handleChange}
-              className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none"
-              required
-            />
+                <p className="text-xs leading-relaxed text-yellow-200">
+                  Observação: considerar a presença de alguém no local com 1h30
+                  de antecedência para organização do som, instrumentos e
+                  passagem de som.
+                </p>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <input
+                    type="text"
+                    placeholder="Telefone"
+                    value={telefone}
+                    onChange={(e) => setTelefone(e.target.value)}
+                    className="rounded-xl bg-white/10 px-4 py-3 outline-none placeholder:text-white/60"
+                  />
+
+                  <select
+                    value={tipoEvento}
+                    onChange={(e) => setTipoEvento(e.target.value)}
+                    className="rounded-xl bg-white/10 px-4 py-3 text-white outline-none"
+                  >
+                    <option value="" className="text-black">
+                      Tipo de evento
+                    </option>
+                    <option value="Culto" className="text-black">
+                      Culto
+                    </option>
+                    <option value="Congresso" className="text-black">
+                      Congresso
+                    </option>
+                    <option value="Convenção" className="text-black">
+                      Convenção
+                    </option>
+                    <option value="Recital" className="text-black">
+                      Recital
+                    </option>
+                    <option value="Outros" className="text-black">
+                      Outros
+                    </option>
+                  </select>
+                </div>
+
+                <textarea
+                  rows={3}
+                  placeholder="Detalhes do evento"
+                  value={detalhes}
+                  onChange={(e) => setDetalhes(e.target.value)}
+                  className="resize-none rounded-xl bg-white/10 px-4 py-3 outline-none placeholder:text-white/60"
+                />
+
+                <button
+                  type="submit"
+                  className="mt-2 rounded-xl bg-white py-3 font-semibold text-[#061B5C] transition hover:opacity-90"
+                >
+                  Enviar pelo WhatsApp
+                </button>
+              </form>
+            </div>
           </div>
 
-          <textarea
-            name="observacoes"
-            placeholder="Observações"
-            value={form.observacoes}
-            onChange={handleChange}
-            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none"
-            rows={5}
-          />
+          <div className="flex h-full flex-col justify-center bg-[#061B5C] px-8 py-10 lg:border-l lg:border-white/10 lg:px-10">
+            <div className="mx-auto w-full max-w-xl">
+              <h2 className="text-3xl font-bold text-[#F4C021]">
+                Informações importantes
+              </h2>
 
-          <button
-            type="submit"
-            className="w-full rounded-xl bg-[#061B5C] px-6 py-3 font-semibold text-white transition hover:opacity-90"
-          >
-            Enviar solicitação
-          </button>
-        </form>
-      </div>
+              <div className="mt-6 space-y-5 text-sm leading-relaxed text-white/90">
+                <div>
+                  <h3 className="mb-1 text-lg font-semibold text-white">
+                    Sobre o agendamento
+                  </h3>
+                  <p>
+                    Após o envio do formulário, entraremos em contato para
+                    confirmar a disponibilidade da data e alinhar os detalhes do
+                    convite.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="mb-1 text-lg font-semibold text-white">
+                    Horário
+                  </h3>
+                  <p>
+                    Ao definir o horário da apresentação, considere a
+                    necessidade de chegada antecipada da equipe para organização
+                    do som, instrumentos e passagem de som.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="mb-1 text-lg font-semibold text-white">
+                    Locais mais distantes
+                  </h3>
+                  <p>
+                    Para convites em locais mais distantes, é importante
+                    considerar suportes como transporte, alimentação e outros
+                    detalhes logísticos necessários para a participação da
+                    equipe.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="mb-1 text-lg font-semibold text-white">
+                    Informações importantes
+                  </h3>
+                  <p>
+                    Quanto mais detalhes forem informados no formulário, mais
+                    fácil será organizar e responder ao seu convite.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
