@@ -83,7 +83,7 @@ export default function Home() {
 
   useEffect(() => {
     fetch(
-      "https://opensheet.elk.sh/1tIzkJBwIc0urjHafhqkhzljjWfkUfSeP8HyGAoLdQHQ/Agendamento%20Luminuss%20(respostas)"
+      "https://script.google.com/macros/s/AKfycbzfBROjxwP4NMc4TaHmEs9OFDwdEqy8rwzbU1DjtlbXsYAUCMAwFEuTiz4jMSr7H6tIBQ/exec"
     )
       .then((res) => res.json())
       .then((data) => {
@@ -180,7 +180,7 @@ export default function Home() {
   {/* 🔥 ÍCONES MINIMALISTAS */}
   <div className="ml-2 flex items-center gap-3">
     <a
-      href="https://instagram.com/SEU_USUARIO"
+      href="https://instagram.com/mluminuss/"
       target="_blank"
       rel="noopener noreferrer"
       className="text-lg text-white/80 transition hover:text-pink-400"
@@ -226,6 +226,7 @@ export default function Home() {
             <p className="text-lg text-[#17327e]/80">
               Agenda do mês ainda não definida.
             </p>
+            
           ) : (
             <div className="space-y-4">
               {agenda.map((evento, index) => (

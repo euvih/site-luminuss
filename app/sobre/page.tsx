@@ -231,54 +231,104 @@ export default function SobreNosLuminuss() {
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="relative"
+            className="relative mx-auto w-full max-w-[430px]"
           >
-            <div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-yellow-300/20 to-blue-400/20 blur-2xl" />
-            <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-2xl">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem]">
-                <AnimatePresence mode="wait">
-                  <motion.img
-                    key={fotos[fotoAtiva]}
-                    src={fotos[fotoAtiva]}
-                    alt="Fotos do Lúminuss"
-                    initial={{ opacity: 0, scale: 1.04 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.5 }}
-                    className="absolute inset-0 h-full w-full object-cover"
-                  />
-                </AnimatePresence>
+            <div className="absolute left-1/2 top-6 h-72 w-72 -translate-x-1/2 rounded-full bg-yellow-300/10 blur-3xl" />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-[#04184d]/85 via-transparent to-transparent" />
+            <div className="relative mx-auto w-[290px] rounded-[3rem] border-4 border-[#d7df59] bg-[#111] p-2 shadow-[0_25px_80px_rgba(0,0,0,0.45)]">
+              <div className="relative overflow-hidden rounded-[2.5rem] bg-[#ececec]">
+                <div className="absolute left-1/2 top-3 z-30 h-6 w-28 -translate-x-1/2 rounded-full bg-black" />
 
-                <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-4">
-                  <div>
-                    <p className="text-sm uppercase tracking-[0.25em] text-[#F4C021]">
-                      Lúminuss
-                    </p>
-                    <p className="mt-2 max-w-xs text-sm text-white/85">
-                      Uma jornada de louvor, excelência e esperança construída em equipe.
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={fotoAnterior}
-                      className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 transition hover:bg-white/20"
+                <div className="relative h-[580px] w-full overflow-hidden">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={fotos[fotoAtiva]}
+                      initial={{ opacity: 0.18, x: 30 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0.18, x: -30 }}
+                      transition={{ duration: 0.45 }}
+                      className="absolute inset-0"
                     >
-                      <ChevronLeft className="h-5 w-5" />
-                    </button>
-                    <button
-                      onClick={proximaFoto}
-                      className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 transition hover:bg-white/20"
-                    >
-                      <ChevronRight className="h-5 w-5" />
-                    </button>
-                  </div>
+                      <div className="absolute inset-0">
+                        <img
+                          src={fotos[fotoAtiva]}
+                          alt="Foto do Instagram do Lúminuss"
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+
+                      <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30" />
+
+                      <div className="absolute inset-x-0 top-0 z-10 bg-white/92 px-4 pb-3 pt-10 backdrop-blur-sm">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#061B5C]/60">
+                              Instagram
+                            </p>
+                            <p className="mt-1 text-sm font-semibold text-[#061B5C]">
+                              @mluminuss
+                            </p>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <div className="h-2.5 w-2.5 rounded-full bg-[#F4C021]" />
+                            <div className="h-2.5 w-2.5 rounded-full bg-[#061B5C]/25" />
+                            <div className="h-2.5 w-2.5 rounded-full bg-[#061B5C]/25" />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="absolute inset-x-4 bottom-20 z-20 rounded-[1.75rem] border border-white/40 bg-white/88 p-4 text-[#061B5C] shadow-lg backdrop-blur-md">
+                        <div className="flex items-center gap-3">
+                          <div className="h-11 w-11 overflow-hidden rounded-full ring-2 ring-[#F4C021]/40">
+                            <img
+                              src="/logo.jpeg"
+                              alt="Perfil do Lúminuss"
+                              className="h-full w-full object-cover"
+                            />
+                          </div>
+                          <div>
+                            <p className="text-sm font-semibold">mluminuss</p>
+                            <p className="text-xs text-[#061B5C]/65">Ministério musical</p>
+                          </div>
+                        </div>
+
+                        <p className="mt-3 text-sm leading-6 text-[#061B5C]/85">
+                          Louvor, comunhão e missão em cada detalhe. Um pedacinho da nossa caminhada registrado em imagem.
+                        </p>
+
+                        <div className="mt-4 flex items-center justify-between text-xs text-[#061B5C]/60">
+                          <span>❤️ Curtidas e comentários</span>
+                          <span>#{fotoAtiva + 1}</span>
+                        </div>
+                      </div>
+
+                      <div className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-between bg-white/92 px-6 py-4 backdrop-blur-sm">
+                        <button className="text-sm font-semibold text-[#061B5C] opacity-80">
+                          Início
+                        </button>
+                        <button className="rounded-full bg-[#061B5C] px-5 py-2 text-sm font-semibold text-[#F4C021] shadow-sm">
+                          Ver
+                        </button>
+                        <button className="text-sm font-semibold text-[#061B5C] opacity-80">
+                          Perfil
+                        </button>
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
                 </div>
               </div>
+            </div>
 
-              <div className="mt-4 flex justify-center gap-2">
+            <div className="mt-5 flex items-center justify-center gap-3">
+              <button
+                onClick={fotoAnterior}
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 transition hover:bg-white/10"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+
+              <div className="flex items-center gap-2">
                 {fotos.map((_, index) => (
                   <button
                     key={index}
@@ -290,6 +340,13 @@ export default function SobreNosLuminuss() {
                   />
                 ))}
               </div>
+
+              <button
+                onClick={proximaFoto}
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 transition hover:bg-white/10"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
             </div>
           </motion.div>
         </div>
