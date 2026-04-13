@@ -17,7 +17,7 @@ export default function RedesSociais() {
 
         <div className="mt-8 flex items-center justify-center gap-6">
           <a
-            href="https://instagram.com/SEU_USUARIO"
+            href="https://instagram.com/mluminuss/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram do Lúminuss"

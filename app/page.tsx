@@ -150,7 +150,7 @@ export default function Home() {
           <div className="flex items-center px-6 md:px-16">
             <div>
               <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#F4C021]">
-                Ministério musical
+                Ministério
               </p>
 
               <h1 className="mb-6 text-5xl font-bold leading-tight text-[#f0f6ff] drop-shadow-[0_0_8px_#3b82f6] transition duration-300 hover:text-[#28bbf5] hover:drop-shadow-[0_0_30px_#60a5fa] md:text-6xl">
@@ -252,6 +252,16 @@ export default function Home() {
             mensagem de Cristo, inspirar vidas e contribuir para momentos de
             adoração sincera.
           </p>
+           {/* 🔥 BOTÃO NOVO */}
+          <div className="mt-10">
+            <Link
+              href="/sobre"
+              className="inline-block rounded-full bg-[#061B5C] px-8 py-3 font-semibold text-white transition hover:scale-105 hover:bg-[#0a2a8a]"
+            >
+              Nos conheça melhor →
+            </Link>
+          </div>
+
         </div>
       </section>
 
