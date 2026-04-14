@@ -371,15 +371,6 @@ export default function Home() {
           por Vitória Kelly
         </p>
       </footer>
-
-      <a
-        href="https://wa.me/5584998512666"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 rounded-full bg-green-500 px-5 py-3 font-semibold text-white shadow-lg transition hover:scale-105"
-      >
-        WhatsApp
-      </a>
     </main>
   );
 }

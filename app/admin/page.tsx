@@ -46,7 +46,8 @@ export default function AdminPage() {
   const [agendamentos, setAgendamentos] = useState<Agendamento[]>([]);
   const [loading, setLoading] = useState(false);
   const [atualizandoId, setAtualizandoId] = useState<string | null>(null);
-
+  const [filtroStatus, setFiltroStatus] = useState("todos");
+  const [abertos, setAbertos] = useState<{ [key: string]: boolean }>({});
   const CODIGO_CORRETO = "LUMADMIN2026";
   const URL_SCRIPT =
     "https://script.google.com/macros/s/AKfycbzfBROjxwP4NMc4TaHmEs9OFDwdEqy8rwzbU1DjtlbXsYAUCMAwFEuTiz4jMSr7H6tIBQ/exec";
@@ -77,8 +78,9 @@ export default function AdminPage() {
         setLoading(false);
         return;
       }
-
-      setAgendamentos(data.reverse());
+      
+      const ultimos = data.slice(-50).reverse();
+      setAgendamentos(ultimos);
       setLoading(false);
     } catch (err) {
       console.error("Erro ao carregar pedidos:", err);
@@ -94,7 +96,7 @@ export default function AdminPage() {
 
   async function atualizarStatus(id: string, novoStatus: string) {
     setAtualizandoId(id);
-
+    
     try {
       const resposta = await fetch(URL_SCRIPT, {
         method: "POST",
@@ -104,11 +106,13 @@ export default function AdminPage() {
           status: novoStatus,
         }),
       });
-
+      
       const resultado = await resposta.json();
 
       if (!resultado.ok) {
-        alert(`Erro ao atualizar status.\n\n${resultado.error || "Erro desconhecido"}`);
+        alert(
+          `Erro ao atualizar status.\n\n${resultado.error || "Erro desconhecido"}`
+        );
         setAtualizandoId(null);
         return;
       }
@@ -128,14 +132,26 @@ export default function AdminPage() {
       setAtualizandoId(null);
     }
   }
+    function toggleObservacao(id: string) {
+    setAbertos((prev) => ({
+        ...prev,
+        [id]: !prev[id],
+    }));
+    }
+
+  const agendamentosFiltrados = agendamentos.filter((item) => {
+    if (filtroStatus === "todos") return true;
+    return item.status?.toLowerCase().trim() === filtroStatus;
+  });
+  
 
   if (!acessoLiberado) {
     return (
       <main className="min-h-screen bg-[#061B5C] px-6 py-24 text-white">
         <div className="mx-auto max-w-xl rounded-3xl border border-white/10 bg-white/10 p-8 backdrop-blur">
           <div className="mb-6">
-  <p className="text-sm text-white/60">Acesso restrito</p>
-</div>
+            <p className="text-sm text-white/60">Acesso restrito</p>
+          </div>
 
           <form onSubmit={entrarNoPainel} className="mt-8 grid gap-4">
             <input
@@ -163,6 +179,7 @@ export default function AdminPage() {
       </main>
     );
   }
+  
 
   return (
     <main className="min-h-screen bg-[#061B5C] px-6 py-24 text-white">
@@ -177,22 +194,68 @@ export default function AdminPage() {
           </p>
         </div>
 
+        <div className="mb-8 flex flex-wrap justify-center gap-3">
+          <button
+            onClick={() => setFiltroStatus("todos")}
+            className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+              filtroStatus === "todos"
+                ? "bg-white text-[#061B5C]"
+                : "bg-white/10 text-white hover:bg-white/20"
+            }`}
+          >
+            Todos
+          </button>
+
+          <button
+            onClick={() => setFiltroStatus("pendente")}
+            className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+              filtroStatus === "pendente"
+                ? "bg-yellow-400 text-[#061B5C]"
+                : "bg-white/10 text-white hover:bg-white/20"
+            }`}
+          >
+            Pendentes
+          </button>
+
+          <button
+            onClick={() => setFiltroStatus("aceito")}
+            className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+              filtroStatus === "aceito"
+                ? "bg-green-500 text-white"
+                : "bg-white/10 text-white hover:bg-white/20"
+            }`}
+          >
+            Aceitos
+          </button>
+
+          <button
+            onClick={() => setFiltroStatus("recusado")}
+            className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+              filtroStatus === "recusado"
+                ? "bg-red-500 text-white"
+                : "bg-white/10 text-white hover:bg-white/20"
+            }`}
+          >
+            Recusados
+          </button>
+        </div>
+
         {loading ? (
           <p className="text-center text-white/80">Carregando pedidos...</p>
-        ) : agendamentos.length === 0 ? (
+        ) : agendamentosFiltrados.length === 0 ? (
           <p className="text-center text-white/80">
             Nenhum pedido encontrado.
           </p>
         ) : (
-          <div className="grid gap-6">
-            {agendamentos.map((item) => (
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {agendamentosFiltrados.map((item) => (
               <div
                 key={item.id}
-                className="rounded-3xl border border-white/10 bg-white/10 p-6 shadow-lg backdrop-blur"
+                className="rounded-3xl border border-white/10 bg-white/10 p-3 shadow-lg backdrop-blur"
               >
                 <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                   <div>
-                    <h2 className="text-2xl font-bold text-[#F4C021]">
+                    <h2 className="text-xl font-bold text-[#F4C021]">
                       {item.igreja || "Sem igreja"}
                     </h2>
                     <p className="mt-1 text-white/80">
@@ -206,60 +269,90 @@ export default function AdminPage() {
                   <StatusBadge status={item.status} />
                 </div>
 
-                <div className="mt-6 grid gap-4 md:grid-cols-2">
-                  <div className="rounded-2xl bg-black/20 p-4">
-                    <p className="text-sm text-white/60">WhatsApp</p>
-                    <p className="mt-1 font-medium">{item.whatsapp || "-"}</p>
+                <div className="mt-1 grid grid-cols-2 gap-1">
+                  <div className="rounded-xl bg-black/20 p-3">
+                    <p className="text-xs text-white/60">WhatsApp</p>
+                    <p className="mt-0.5 text-sm font-medium">{item.whatsapp || "-"}</p>
                   </div>
 
-                  <div className="rounded-2xl bg-black/20 p-4">
-                    <p className="text-sm text-white/60">Local</p>
-                    <p className="mt-1 font-medium">{item.local || "-"}</p>
+                  <div className="rounded-xl bg-black/20 p-3">
+                    <p className="text-xs text-white/60">Local</p>
+                    <p className="mt-0.5 text-sm font-medium">{item.local || "-"}</p>
                   </div>
 
-                  <div className="rounded-2xl bg-black/20 p-4">
-                    <p className="text-sm text-white/60">Data</p>
-                    <p className="mt-1 font-medium">{item.data || "-"}</p>
+                  <div className="rounded-xl bg-black/20 p-3">
+                    <p className="text-xs text-white/60">Data</p>
+                    <p className="mt-0.5 text-sm font-medium">{item.data || "-"}</p>
                   </div>
 
-                  <div className="rounded-2xl bg-black/20 p-4">
-                    <p className="text-sm text-white/60">Hora</p>
-                    <p className="mt-1 font-medium">{item.hora || "-"}</p>
+                  <div className="rounded-xl bg-black/20 p-3">
+                    <p className="text-xs text-white/60">Hora</p>
+                    <p className="mt-0.5 text-sm font-medium">{item.hora || "-"}</p>
                   </div>
                 </div>
 
-                <div className="mt-4 rounded-2xl bg-black/20 p-4">
-                  <p className="text-sm text-white/60">Observações</p>
-                  <p className="mt-1 whitespace-pre-line leading-7 text-white/90">
-                    {item.observacoes || "Sem observações."}
-                  </p>
+                <div className="mt-3 rounded-xl bg-black/20 p-2.5">
+                <p className="text-xs text-white/60">Observações</p>
+
+                {(() => {
+                    const texto = item.observacoes?.trim() || "Sem observações.";
+                    const limite = 60;
+                    const expandido = abertos[item.id];
+                    const precisaBotao = texto.length > limite;
+
+                    return (
+                    <>
+                        <p className="mt-1 whitespace-pre-line leading-5 text-white/90">
+                        {expandido || !precisaBotao ? texto : `${texto.slice(0, limite)}...`}
+                        </p>
+
+                        {precisaBotao && (
+                        <button
+                            type="button"
+                            onClick={() => toggleObservacao(item.id)}
+                            className="mt-1 text-xs font-semibold text-[#F4C021] hover:underline"
+                        >
+                            {expandido ? "Ver menos" : "Ver mais"}
+                        </button>
+                        )}
+                    </>
+                    );
+                })()}
                 </div>
 
-                <div className="mt-5 flex flex-wrap gap-3">
-                  <button
-                    onClick={() => atualizarStatus(String(item.id), "aceito")}
-                    disabled={atualizandoId === String(item.id)}
-                    className="rounded-xl bg-green-500 px-5 py-2 font-semibold text-white transition hover:opacity-90 disabled:opacity-50"
-                  >
-                    Aceitar
-                  </button>
+                <div className="mt-3 flex flex-wrap gap-2">
 
-                  <button
-                    onClick={() => atualizarStatus(String(item.id), "recusado")}
-                    disabled={atualizandoId === String(item.id)}
-                    className="rounded-xl bg-red-500 px-5 py-2 font-semibold text-white transition hover:opacity-90 disabled:opacity-50"
-                  >
-                    Recusar
-                  </button>
+            {item.status !== "aceito" && (
+                <button
+                onClick={() => atualizarStatus(String(item.id), "aceito")}
+                disabled={atualizandoId === String(item.id)}
+                className="rounded-xl bg-green-500 px-3 py-1.5 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-50"
+                >
+                Aceitar
+                </button>
+            )}
 
-                  <button
-                    onClick={() => atualizarStatus(String(item.id), "pendente")}
-                    disabled={atualizandoId === String(item.id)}
-                    className="rounded-xl bg-yellow-500 px-5 py-2 font-semibold text-[#061B5C] transition hover:opacity-90 disabled:opacity-50"
-                  >
-                    Voltar para pendente
-                  </button>
-                </div>
+            {item.status !== "recusado" && (
+                <button
+                onClick={() => atualizarStatus(String(item.id), "recusado")}
+                disabled={atualizandoId === String(item.id)}
+                className="rounded-xl bg-red-500 px-3 py-1.5 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-50"
+                >
+                Recusar
+                </button>
+            )}
+
+            {item.status !== "pendente" && (
+                <button
+                onClick={() => atualizarStatus(String(item.id), "pendente")}
+                disabled={atualizandoId === String(item.id)}
+                className="rounded-xl bg-yellow-500 px-3 py-1.5 text-sm font-semibold text-[#061B5C] transition hover:opacity-90 disabled:opacity-50"
+                >
+                Voltar para pendente
+                </button>
+            )}
+
+            </div>
               </div>
             ))}
           </div>

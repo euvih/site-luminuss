@@ -56,7 +56,7 @@ export const categorias: Categoria[] = [
         slug: "ana-paula",
         nome: "Ana Paula",
         funcao: "Soprano",
-        foto: "/ana-paula.jpeg",
+        foto: "/anapaula.jpeg",
         sobre:
           "Ana Paula participa do vocal como soprano, trazendo leveza e brilho às músicas do grupo.",
         instagram: "https://instagram.com/",
@@ -277,7 +277,7 @@ export const categorias: Categoria[] = [
       {
         slug: "patricia",
         nome: "Patricia",
-        funcao: "Apoio",
+        funcao: "Jurídico",
         foto: "/patricia.jpeg",
         sobre:
           "Patricia integra a equipe de apoio, auxiliando no suporte necessário para as apresentações.",
@@ -287,7 +287,7 @@ export const categorias: Categoria[] = [
       {
         slug: "paulo-apoio",
         nome: "Paulo",
-        funcao: "Apoio/Som",
+        funcao: "Apoio/Sonoplastia",
         foto: "/paulo.jpeg",
         sobre:
           "Paulo contribui na equipe de apoio e som, ajudando no suporte técnico e organizacional do grupo.",
@@ -311,16 +311,6 @@ export const categorias: Categoria[] = [
         foto: "/vivianne.jpeg",
         sobre:
           "Vivianne integra a equipe de apoio, servindo com dedicação nas necessidades do ministério.",
-        instagram: "https://instagram.com/",
-        youtube: "",
-      },
-      {
-        slug: "geilson",
-        nome: "Geilson",
-        funcao: "Palestrante",
-        foto: "/geilson.jpeg",
-        sobre:
-          "Geilson contribui com ministrações e mensagens, participando do ministério como palestrante.",
         instagram: "https://instagram.com/",
         youtube: "",
       },
