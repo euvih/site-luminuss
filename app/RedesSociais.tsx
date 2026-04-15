@@ -26,7 +26,7 @@ export default function RedesSociais() {
         </a>
 
           <a
-            href="https://youtube.com/SEU_CANAL"
+            href="https://www.youtube.com/@ministerioluminuss"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="YouTube do Lúminuss"

@@ -203,7 +203,7 @@ export default function Home() {
                   </a>
 
                   <a
-                    href="https://youtube.com/SEU_CANAL"
+                    href="https://www.youtube.com/@ministerioluminuss"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-lg text-white/80 transition hover:text-red-500"
@@ -289,13 +289,12 @@ export default function Home() {
             <h2 className="text-4xl font-bold">Nossa equipe</h2>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-6">
+          <div className="grid grid-cols-2 gap-4 md:flex md:flex-wrap md:justify-center md:gap-6">            
             {categorias.map((categoria) => (
               <Link
                 key={categoria.slug}
                 href={`/integrantes/${categoria.slug}`}
-                className="w-65 rounded-3xl bg-white p-8 text-center shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-xl"
-              >
+                className="w-full rounded-3xl bg-white p-6 text-center shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-xl md:w-65 md:p-8"              >
                 <div className="mx-auto mb-4 h-20 w-20 overflow-hidden rounded-full bg-[#061B5C]">
                   {categoria.foto ? (
                     <img

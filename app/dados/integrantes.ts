@@ -18,6 +18,43 @@ export type Categoria = {
 
 export const categorias: Categoria[] = [
   {
+    slug: "direcao",
+    nome: "Direção",
+    descricao: "Equipe responsável pela direção e organização do ministério",
+    integrantes: [
+      {
+        slug: "reginaldo-direcao",
+        nome: "Reginaldo",
+        funcao: "Diretor",
+        foto: "/reginaldo.jpeg",
+        sobre:
+          "Reginaldo faz parte da direção do ministério, coordenando a organização e a visão do grupo.",
+        instagram: "https://instagram.com/",
+        youtube: "",
+      },
+      {
+        slug: "socorro",
+        nome: "Socorro",
+        funcao: "Secretária",
+        foto: "/socorro.jpeg",
+        sobre:
+          "Socorro atua na secretaria, contribuindo na organização e administração das atividades do ministério.",
+        instagram: "https://instagram.com/",
+        youtube: "",
+      },
+      {
+        slug: "rejane-direcao",
+        nome: "Rejane",
+        funcao: "Secretaria/Vocal",
+        foto: "/rejane.jpeg",
+        sobre:
+          "Rejane também contribui na direção e secretaria, além de participar do vocal do grupo.",
+        instagram: "https://instagram.com/",
+        youtube: "",
+      },
+    ],
+  },
+  {
     slug: "vocais",
     nome: "Vocal",
     descricao: "Vozes do grupo",
@@ -38,7 +75,7 @@ export const categorias: Categoria[] = [
         funcao: "Tenor",
         foto: "/Guilherme.jpeg",
         sobre:
-          "Filho do diretor Reginaldo, Guilherme participa do grupo desde novo, hoje com 19 anos mostra sua fase mais rebelde, talvez por sempre ter sido uma boa criança, agora quer sair do grupo.",
+          "Filho do diretor Reginaldo, Guilherme participa do grupo desde novo, hoje com 19 anos estuda odontologia e ama fazer Jiu-Jitsu.",
         instagram: "https://instagram.com/",
         youtube: "",
       },
@@ -213,6 +250,44 @@ export const categorias: Categoria[] = [
     ],
   },
   {
+    slug: "sonoplastia",
+    nome: "Sonoplastia",
+    descricao:
+      "Equipe responsável pelo som, mixagem e qualidade sonora das apresentações",
+    integrantes: [
+      {
+        slug: "hugo",
+        nome: "Hugo",
+        funcao: "Sonoplasta",
+        foto: "/hugo.jpeg",
+        sobre:
+          "Hugo atua na sonoplastia, cuidando da qualidade sonora e da experiência musical nas apresentações.",
+        instagram: "https://instagram.com/",
+        youtube: "",
+      },
+      {
+        slug: "eudes",
+        nome: "Eudes",
+        funcao: "Sonoplasta/Vocal",
+        foto: "/eudes.jpeg",
+        sobre:
+          "Eudes participa da sonoplastia e também do vocal, contribuindo em diferentes áreas do ministério.",
+        instagram: "https://instagram.com/",
+        youtube: "",
+      },
+      {
+        slug: "paulo-sonoplastia",
+        nome: "Paulo",
+        funcao: "Sonoplasta",
+        foto: "/paulo.jpeg",
+        sobre:
+          "Paulo integra a equipe de sonoplastia, ajudando no controle e qualidade do som.",
+        instagram: "https://instagram.com/",
+        youtube: "",
+      },
+    ],
+  },
+  {
     slug: "midia",
     nome: "Mídia",
     descricao: "Equipe de mídia",
@@ -311,81 +386,6 @@ export const categorias: Categoria[] = [
         foto: "/vivianne.jpeg",
         sobre:
           "Vivianne integra a equipe de apoio, servindo com dedicação nas necessidades do ministério.",
-        instagram: "https://instagram.com/",
-        youtube: "",
-      },
-    ],
-  },
-  {
-    slug: "sonoplastia",
-    nome: "Sonoplastia",
-    descricao:
-      "Equipe responsável pelo som, mixagem e qualidade sonora das apresentações",
-    integrantes: [
-      {
-        slug: "hugo",
-        nome: "Hugo",
-        funcao: "Sonoplasta",
-        foto: "/hugo.jpeg",
-        sobre:
-          "Hugo atua na sonoplastia, cuidando da qualidade sonora e da experiência musical nas apresentações.",
-        instagram: "https://instagram.com/",
-        youtube: "",
-      },
-      {
-        slug: "eudes",
-        nome: "Eudes",
-        funcao: "Sonoplasta/Vocal",
-        foto: "/eudes.jpeg",
-        sobre:
-          "Eudes participa da sonoplastia e também do vocal, contribuindo em diferentes áreas do ministério.",
-        instagram: "https://instagram.com/",
-        youtube: "",
-      },
-      {
-        slug: "paulo-sonoplastia",
-        nome: "Paulo",
-        funcao: "Sonoplasta",
-        foto: "/paulo.jpeg",
-        sobre:
-          "Paulo integra a equipe de sonoplastia, ajudando no controle e qualidade do som.",
-        instagram: "https://instagram.com/",
-        youtube: "",
-      },
-    ],
-  },
-  {
-    slug: "direcao",
-    nome: "Direção",
-    descricao: "Equipe responsável pela direção e organização do ministério",
-    integrantes: [
-      {
-        slug: "reginaldo-direcao",
-        nome: "Reginaldo",
-        funcao: "Diretor",
-        foto: "/reginaldo.jpeg",
-        sobre:
-          "Reginaldo faz parte da direção do ministério, coordenando a organização e a visão do grupo.",
-        instagram: "https://instagram.com/",
-        youtube: "",
-      },
-      {
-        slug: "socorro",
-        nome: "Socorro",
-        funcao: "Secretária",
-        foto: "/socorro.jpeg",
-        sobre:
-          "Socorro atua na secretaria, contribuindo na organização e administração das atividades do ministério.",
-        instagram: "https://instagram.com/",
-        youtube: "",
-      },
-      {
-        slug: "rejane-direcao",
-        nome: "Rejane",
-        funcao: "Secretaria/Vocal",
-        foto: "/rejane.jpeg",
-        sobre:
-          "Rejane também contribui na direção e secretaria, além de participar do vocal do grupo.",
         instagram: "https://instagram.com/",
         youtube: "",
       },
