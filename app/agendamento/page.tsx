@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function StatusBadge({ status }: { status: string }) {
   const valor = status?.toLowerCase().trim();
@@ -28,13 +28,41 @@ function StatusBadge({ status }: { status: string }) {
 }
 
 export default function AgendamentoPage() {
-  const [nome, setNome] = useState("");
-  const [local, setLocal] = useState("");
-  const [data, setData] = useState("");
-  const [horario, setHorario] = useState("");
-  const [telefone, setTelefone] = useState("");
-  const [tipoEvento, setTipoEvento] = useState("");
-  const [detalhes, setDetalhes] = useState("");
+  const [nome, setNome] = useState(() => {
+    if (typeof window === "undefined") return "";
+    return localStorage.getItem("agendamento-nome") || "";
+  });
+
+  const [local, setLocal] = useState(() => {
+    if (typeof window === "undefined") return "";
+    return localStorage.getItem("agendamento-local") || "";
+  });
+
+  const [data, setData] = useState(() => {
+    if (typeof window === "undefined") return "";
+    return localStorage.getItem("agendamento-data") || "";
+  });
+
+  const [horario, setHorario] = useState(() => {
+    if (typeof window === "undefined") return "";
+    return localStorage.getItem("agendamento-horario") || "";
+  });
+
+  const [telefone, setTelefone] = useState(() => {
+    if (typeof window === "undefined") return "";
+    return localStorage.getItem("agendamento-telefone") || "";
+  });
+
+  const [tipoEvento, setTipoEvento] = useState(() => {
+    if (typeof window === "undefined") return "";
+    return localStorage.getItem("agendamento-tipoEvento") || "";
+  });
+
+  const [detalhes, setDetalhes] = useState(() => {
+    if (typeof window === "undefined") return "";
+    return localStorage.getItem("agendamento-detalhes") || "";
+  });
+
   const [codigoGerado, setCodigoGerado] = useState("");
   const [mostrarCodigo, setMostrarCodigo] = useState(false);
 
@@ -72,6 +100,14 @@ export default function AgendamentoPage() {
     setTelefone("");
     setTipoEvento("");
     setDetalhes("");
+
+    localStorage.removeItem("agendamento-nome");
+    localStorage.removeItem("agendamento-local");
+    localStorage.removeItem("agendamento-data");
+    localStorage.removeItem("agendamento-horario");
+    localStorage.removeItem("agendamento-telefone");
+    localStorage.removeItem("agendamento-tipoEvento");
+    localStorage.removeItem("agendamento-detalhes");
   }
 
   async function enviarAgendamento(e: React.FormEvent) {
@@ -204,155 +240,23 @@ export default function AgendamentoPage() {
     }
   }
 
+  useEffect(() => {
+    localStorage.setItem("agendamento-nome", nome);
+    localStorage.setItem("agendamento-local", local);
+    localStorage.setItem("agendamento-data", data);
+    localStorage.setItem("agendamento-horario", horario);
+    localStorage.setItem("agendamento-telefone", telefone);
+    localStorage.setItem("agendamento-tipoEvento", tipoEvento);
+    localStorage.setItem("agendamento-detalhes", detalhes);
+  }, [nome, local, data, horario, telefone, tipoEvento, detalhes]);
+
   return (
     <main className="min-h-screen bg-[#061B5C] px-6 py-8 text-white flex justify-center">
       <div className="w-full max-w-[1400px] scale-[0.92] origin-top">
         <main className="relative min-h-screen overflow-hidden text-white">
           <section className="relative z-10 flex min-h-screen pt-20">
             <div className="grid w-full grid-cols-1 lg:grid-cols-2">
-              <div className="relative flex h-full flex-col justify-center overflow-hidden px-8 py-10 lg:px-10">
-                <Image
-                  src="/img3.jpeg"
-                  alt="Fundo agendamento"
-                  fill
-                  className="object-cover opacity-30"
-                  priority
-                />
-
-                <div className="absolute inset-0 bg-black/70" />
-
-                <div className="relative z-10 mx-auto w-full max-w-xl">
-                  <div className="mb-4">
-                    <h1 className="text-3xl font-bold text-white">
-                      Agendamento
-                    </h1>
-                    <p className="mt-1 text-sm text-white/80">
-                      Preencha o formulário para solicitar um agendamento.
-                    </p>
-                  </div>
-
-                  {mostrarCodigo && (
-                    <div className="mb-6 rounded-2xl border border-green-400/30 bg-green-500/10 p-4 text-green-100">
-                      <p className="text-sm">Agendamento enviado com sucesso.</p>
-                      <p className="mt-2 text-lg font-bold">
-                        Código de acompanhamento: {codigoGerado}
-                      </p>
-                      <p className="mt-2 text-sm text-green-100/80">
-                        Guarde esse código para acompanhar o status do seu pedido no site.
-                      </p>
-                    </div>
-                  )}
-
-                  {erroEnvio && (
-                    <div className="mb-4 rounded-2xl border border-red-400/30 bg-red-500/10 p-4 text-red-200">
-                      {erroEnvio}
-                    </div>
-                  )}
-
-                  <form onSubmit={enviarAgendamento} className="grid gap-3">
-                    <input
-                      type="text"
-                      placeholder="Seu nome"
-                      value={nome}
-                      onChange={(e) => setNome(e.target.value)}
-                      className="rounded-xl bg-white/10 px-4 py-3 outline-none placeholder:text-white/60"
-                      required
-                    />
-
-                    <input
-                      type="text"
-                      placeholder="Local do evento"
-                      value={local}
-                      onChange={(e) => setLocal(e.target.value)}
-                      className="rounded-xl bg-white/10 px-4 py-3 outline-none placeholder:text-white/60"
-                      required
-                    />
-
-                    <div className="grid grid-cols-2 gap-3">
-                      <input
-                        type="date"
-                        value={data}
-                        onChange={(e) => setData(e.target.value)}
-                        className="rounded-xl bg-white/10 px-4 py-3 outline-none"
-                        required
-                      />
-
-                      <input
-                        type="time"
-                        value={horario}
-                        onChange={(e) => setHorario(e.target.value)}
-                        className="rounded-xl bg-white/10 px-4 py-3 outline-none"
-                        required
-                      />
-                    </div>
-
-                    <p className="text-xs leading-relaxed text-yellow-200">
-                      Observação: considerar a presença de alguém no local com 1h30
-                      de antecedência para organização do som, instrumentos e
-                      passagem de som.
-                    </p>
-
-                    <div className="grid grid-cols-2 gap-3">
-                      <input
-                        type="text"
-                        placeholder="Telefone"
-                        value={telefone}
-                        onChange={(e) => setTelefone(formatarTelefone(e.target.value))}
-                        className="rounded-xl bg-white/10 px-4 py-3 outline-none placeholder:text-white/60"
-                        required
-                      />
-
-                      <select
-                        value={tipoEvento}
-                        onChange={(e) => setTipoEvento(e.target.value)}
-                        className="rounded-xl bg-white/10 px-4 py-3 text-white outline-none"
-                        required
-                      >
-                        <option value="" className="text-black">
-                          Tipo de evento
-                        </option>
-                        <option value="Culto" className="text-black">
-                          Culto
-                        </option>
-                        <option value="Congresso" className="text-black">
-                          Congresso
-                        </option>
-                        <option value="Convenção" className="text-black">
-                          Convenção
-                        </option>
-                        <option value="Recital" className="text-black">
-                          Recital
-                        </option>
-                        <option value="Outros" className="text-black">
-                          Outros
-                        </option>
-                      </select>
-                    </div>
-
-                    <textarea
-                      rows={3}
-                      placeholder="Detalhes do evento"
-                      value={detalhes}
-                      onChange={(e) => setDetalhes(e.target.value.slice(0, 600))}
-                      className="resize-none rounded-xl bg-white/10 px-4 py-3 outline-none placeholder:text-white/60"
-                    />
-
-                    <p className="text-right text-xs text-white/60">
-                      {detalhes.length}/600
-                    </p>
-
-                    <button
-                      type="submit"
-                      disabled={enviando}
-                      className="mt-2 rounded-xl bg-white py-3 font-semibold text-[#061B5C] transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
-                    >
-                      {enviando ? "Enviando..." : "Enviar agendamento"}
-                    </button>
-                  </form>
-                </div>
-              </div>
-
-              <div className="flex h-full flex-col justify-center bg-[#061B5C] px-8 py-10 lg:border-l lg:border-white/10 lg:px-10">
+              <div className="order =-1 flex h-full flex-col justify-center bg-[#061B5C] px-8 py-10 lg:border-r lg:border-white/10 lg:px-10">
                 <div className="mx-auto w-full max-w-xl">
                   <h2 className="text-3xl font-bold text-[#F4C021]">
                     Informações importantes
@@ -365,21 +269,11 @@ export default function AgendamentoPage() {
                       </h3>
                       <p>
                         Após o envio do formulário, entraremos em contato para
-                        confirmar a disponibilidade da data e alinhar os detalhes do
-                        convite.
+                        confirmar o convite e alinhar os detalhes do
+                        convite, ou então poderá acompanhar o status do pedido utilizando o código de acompanhamento gerado.
                       </p>
                     </div>
 
-                    <div>
-                      <h3 className="mb-1 text-lg font-semibold text-white">
-                        Horário
-                      </h3>
-                      <p>
-                        Ao definir o horário da apresentação, considere a
-                        necessidade de chegada antecipada da equipe para organização
-                        do som, instrumentos e passagem de som.
-                      </p>
-                    </div>
 
                     <div>
                       <h3 className="mb-1 text-lg font-semibold text-white">
@@ -515,6 +409,148 @@ export default function AgendamentoPage() {
                       </div>
                     )}
                   </div>
+                </div>
+              </div>
+
+              <div className="relative flex h-full flex-col justify-center overflow-hidden px-8 py-10 lg:px-10">
+                <Image
+                  src="/img3.jpeg"
+                  alt="Fundo agendamento"
+                  fill
+                  className="object-cover opacity-30"
+                  priority
+                />
+
+                <div className="absolute inset-0 bg-black/70" />
+
+                <div className="order-2 relative z-10 mx-auto w-full max-w-xl">
+                  <div className="mb-4">
+                    <h1 className="text-3xl font-bold text-white">
+                      Agendamento
+                    </h1>
+                    <p className="mt-1 text-sm text-white/80">
+                      Preencha o formulário para solicitar um agendamento.
+                    </p>
+                  </div>
+
+                  {mostrarCodigo && (
+                    <div className="mb-6 rounded-2xl border border-green-400/30 bg-green-500/10 p-4 text-green-100">
+                      <p className="text-sm">Agendamento enviado com sucesso.</p>
+                      <p className="mt-2 text-lg font-bold">
+                        Código de acompanhamento: {codigoGerado}
+                      </p>
+                      <p className="mt-2 text-sm text-green-100/80">
+                        Guarde esse código para acompanhar o status do seu pedido no site.
+                      </p>
+                    </div>
+                  )}
+
+                  {erroEnvio && (
+                    <div className="mb-4 rounded-2xl border border-red-400/30 bg-red-500/10 p-4 text-red-200">
+                      {erroEnvio}
+                    </div>
+                  )}
+
+                  <form onSubmit={enviarAgendamento} className="grid gap-3">
+                    <input
+                      type="text"
+                      placeholder="Seu nome"
+                      value={nome}
+                      onChange={(e) => setNome(e.target.value)}
+                      className="rounded-xl bg-white/10 px-4 py-3 outline-none placeholder:text-white/60"
+                      required
+                    />
+
+                    <input
+                      type="text"
+                      placeholder="Local do evento"
+                      value={local}
+                      onChange={(e) => setLocal(e.target.value)}
+                      className="rounded-xl bg-white/10 px-4 py-3 outline-none placeholder:text-white/60"
+                      required
+                    />
+
+                    <div className="grid grid-cols-2 gap-3">
+                      <input
+                        type="date"
+                        value={data}
+                        onChange={(e) => setData(e.target.value)}
+                        className="rounded-xl bg-white/10 px-4 py-3 outline-none"
+                        required
+                      />
+
+                      <input
+                        type="time"
+                        value={horario}
+                        onChange={(e) => setHorario(e.target.value)}
+                        className="rounded-xl bg-white/10 px-4 py-3 outline-none"
+                        required
+                      />
+                    </div>
+
+                    <p className="text-xs leading-relaxed text-yellow-200">
+                      Observação: considerar a presença de alguém no local com 1h30
+                      de antecedência para organização do som, instrumentos e
+                      passagem de som.
+                    </p>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      <input
+                        type="text"
+                        placeholder="Telefone"
+                        value={telefone}
+                        onChange={(e) => setTelefone(formatarTelefone(e.target.value))}
+                        className="rounded-xl bg-white/10 px-4 py-3 outline-none placeholder:text-white/60"
+                        required
+                      />
+
+                      <select
+                        value={tipoEvento}
+                        onChange={(e) => setTipoEvento(e.target.value)}
+                        className="rounded-xl bg-white/10 px-4 py-3 text-white outline-none"
+                        required
+                      >
+                        <option value="" className="text-black">
+                          Tipo de evento
+                        </option>
+                        <option value="Culto" className="text-black">
+                          Culto
+                        </option>
+                        <option value="Congresso" className="text-black">
+                          Congresso
+                        </option>
+                        <option value="Convenção" className="text-black">
+                          Convenção
+                        </option>
+                        <option value="Recital" className="text-black">
+                          Recital
+                        </option>
+                        <option value="Outros" className="text-black">
+                          Outros
+                        </option>
+                      </select>
+                    </div>
+
+                    <textarea
+                      rows={3}
+                      placeholder="Detalhes do evento"
+                      value={detalhes}
+                      onChange={(e) => setDetalhes(e.target.value.slice(0, 600))}
+                      className="resize-none rounded-xl bg-white/10 px-4 py-3 outline-none placeholder:text-white/60"
+                    />
+
+                    <p className="text-right text-xs text-white/60">
+                      {detalhes.length}/600
+                    </p>
+
+                    <button
+                      type="submit"
+                      disabled={enviando}
+                      className="mt-2 rounded-xl bg-white py-3 font-semibold text-[#061B5C] transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      {enviando ? "Enviando..." : "Enviar agendamento"}
+                    </button>
+                  </form>
                 </div>
               </div>
             </div>

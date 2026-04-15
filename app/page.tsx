@@ -144,9 +144,25 @@ export default function Home() {
 
       <section
         id="inicio"
-        className="min-h-screen bg-[#061B5C] pt-21 text-white"
+        className="relative min-h-screen overflow-hidden bg-[#061B5C] pt-21 text-white"
       >
-        <div className="grid min-h-[calc(100vh-89px)] grid-cols-1 md:grid-cols-2">
+        
+         {/* FUNDO COM CÉU */}
+  <div className="absolute inset-0">
+    <img
+      src="/ceu6.jpg"
+      alt="Fundo céu"
+      className="h-full w-full object-cover"
+    />
+  </div>
+
+  {/* DEGRADÊ ESCURO PARA DESTACAR O TEXTO */}
+  <div className="absolute inset-0 bg-gradient-to-r from-[#061B5C]/90 via-[#061B5C]/70 to-[#061B5C]/35" />
+
+  {/* LUZ DOURADA SUAVE */}
+  <div className="pointer-events-none absolute left-20 top-24 h-[260px] w-[260px] rounded-full bg-[#2e1479] blur-3xl" />
+
+        <div className="relative z-10 grid min-h-[calc(100vh-89px)] grid-cols-1 md:grid-cols-2">
           <div className="flex items-center px-6 md:px-16">
             <div>
               <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#F4C021]">
@@ -158,48 +174,47 @@ export default function Home() {
               </h1>
 
               <p className="mb-8 max-w-xl text-lg text-white/90">
-                Levando louvor, adoração e mensagens de esperança às igrejas por
-                meio da música.
+                Louvor, adoração e mensagens de esperança por meio da música.
               </p>
 
               <div className="flex flex-wrap items-center gap-4">
-  <Link
-    href="/agendamento"
-    className="rounded-full bg-[#e9ebfc] px-6 py-3 font-semibold text-[#061B5C] transition hover:scale-105"
-  >
-    Solicitar agendamento
-  </Link>
+                <Link
+                  href="/agendamento"
+                  className="rounded-full bg-[#e9ebfc] px-6 py-3 font-semibold text-[#061B5C] transition hover:scale-105"
+                >
+                  Solicitar agendamento
+                </Link>
 
-  <a
-    href="#sobre"
-    className="rounded-full border border-white px-6 py-3 font-semibold text-white transition hover:bg-white hover:text-[#061B5C]"
-  >
-    Conhecer o grupo
-  </a>
+                <a
+                  href="#sobre"
+                  className="rounded-full border border-white px-6 py-3 font-semibold text-white transition hover:bg-white hover:text-[#061B5C]"
+                >
+                  Conhecer o grupo
+                </a>
 
-  {/* 🔥 ÍCONES MINIMALISTAS */}
-  <div className="ml-2 flex items-center gap-3">
-    <a
-      href="https://instagram.com/mluminuss/"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-lg text-white/80 transition hover:text-pink-400"
-    >
-      <FaInstagram />
-    </a>
+                <div className="ml-2 flex items-center gap-3">
+                  <a
+                    href="https://instagram.com/mluminuss/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-lg text-white/80 transition hover:text-pink-400"
+                  >
+                    <FaInstagram />
+                  </a>
 
-    <a
-      href="https://youtube.com/SEU_CANAL"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-lg text-white/80 transition hover:text-red-500"
-    >
-      <FaYoutube />
-    </a>
-  </div>
-</div>
+                  <a
+                    href="https://youtube.com/SEU_CANAL"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-lg text-white/80 transition hover:text-red-500"
+                  >
+                    <FaYoutube />
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
+
           <div className="relative w-full overflow-hidden md:h-full">
             <img
               src="/img1.jpeg"
@@ -207,6 +222,7 @@ export default function Home() {
               className="absolute inset-0 h-full w-full object-cover"
             />
 
+            <div className="absolute inset-0 bg-black/10" />
             <div className="absolute inset-y-0 left-0 w-28 bg-linear-to-r from-[#061B5C] via-[#3b82f6]/30 to-transparent md:w-56" />
           </div>
         </div>
@@ -226,7 +242,6 @@ export default function Home() {
             <p className="text-lg text-[#17327e]/80">
               Agenda do mês ainda não definida.
             </p>
-            
           ) : (
             <div className="space-y-4">
               {agenda.map((evento, index) => (
@@ -253,7 +268,7 @@ export default function Home() {
             mensagem de Cristo, inspirar vidas e contribuir para momentos de
             adoração sincera.
           </p>
-           {/* 🔥 BOTÃO NOVO */}
+
           <div className="mt-10">
             <Link
               href="/sobre"
@@ -262,7 +277,6 @@ export default function Home() {
               Nos conheça melhor →
             </Link>
           </div>
-
         </div>
       </section>
 

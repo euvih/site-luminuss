@@ -25,9 +25,9 @@ const fotos = [
   "/ftantiga1.jpeg",
   "/ftantiga2.jpeg",
   "/ftantiga3.jpeg",
-  "/foto4.jpeg",
-  "/foto5.jpeg",
-  "/foto6.jpeg",
+  "/céu.jpg",
+  "/galaxyaroxa.avif",
+  "/ceu2.jpg",
 ];
 
 const destaques = [
@@ -171,7 +171,7 @@ export default function SobreNosLuminuss() {
               transition={{ delay: 0.08 }}
               className="max-w-3xl text-4xl font-bold leading-tight text-white md:text-6xl"
             >
-              Mais que um ministério: <span className="text-[#F4C021]">Uma família em propósito.</span>
+              Mais que um ministério: <span className="text-[#8b4e83]">Uma família em propósito.</span>
             </motion.h1>
 
             <motion.p
@@ -191,7 +191,7 @@ export default function SobreNosLuminuss() {
             >
               <button
                 onClick={() => setMostrarTextoCompleto((prev) => !prev)}
-                className="rounded-full bg-[#F4C021] px-6 py-3 font-semibold text-[#061B5C] transition hover:scale-[1.02]"
+                className="rounded-full bg-[#e89af8] px-6 py-3 font-semibold text-[#061B5C] transition hover:scale-[1.02]"
               >
                 {mostrarTextoCompleto ? "Ver menos" : "Nos conheça melhor"}
               </button>
@@ -235,7 +235,7 @@ export default function SobreNosLuminuss() {
           >
             <div className="absolute left-1/2 top-6 h-72 w-72 -translate-x-1/2 rounded-full bg-yellow-300/10 blur-3xl" />
                 {/* celular */}
-            <div className="relative mx-auto w-[230px] rounded-[2.4rem] border-4 border-[#d7df59] bg-[#111] p-2 shadow-[0_25px_80px_rgba(0,0,0,0.45)]">
+            <div className="relative mx-auto w-[230px] rounded-[2.4rem] border-4 border-[#b433c0] bg-[#111] p-2 shadow-[0_25px_80px_rgba(0,0,0,0.45)]">
   <div className="relative overflow-hidden rounded-[2rem] bg-[#ececec]">
     <div className="absolute left-1/2 top-3 z-30 h-5 w-20 -translate-x-1/2 rounded-full bg-black" />
 
@@ -288,39 +288,39 @@ export default function SobreNosLuminuss() {
                 />
               </div>
               <div>
-                <p className="text-xs font-semibold">mluminuss</p>
-                <p className="text-[10px] text-[#061B5C]/65">
-                  Ministério musical
-                </p>
+                      <p className="text-xs font-semibold">mluminuss</p>
+                      <p className="text-[10px] text-[#061B5C]/65">
+                        Ministério musical
+                      </p>
+                    </div>
+                  </div>
+
+                  <p className="mt-2 text-xs leading-5 text-[#061B5C]/85">
+                    Louvor, comunhão e missão em cada detalhe. Um pedacinho da nossa caminhada registrado em imagem.
+                  </p>
+
+                  <div className="mt-3 flex items-center justify-between text-[10px] text-[#061B5C]/60">
+                    <span>❤️ Curtidas e comentários</span>
+                    <span>#{fotoAtiva + 1}</span>
+                  </div>
+                </div>
+
+                    <div className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-between bg-white/92 px-4 py-3 backdrop-blur-sm">
+                      <button className="text-xs font-semibold text-[#061B5C] opacity-80">
+                        Início
+                      </button>
+                      <button className="rounded-full bg-[#061B5C] px-4 py-1.5 text-xs font-semibold text-[#F4C021] shadow-sm">
+                        Ver
+                      </button>
+                      <button className="text-xs font-semibold text-[#061B5C] opacity-80">
+                        Perfil
+                      </button>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
               </div>
             </div>
-
-            <p className="mt-2 text-xs leading-5 text-[#061B5C]/85">
-              Louvor, comunhão e missão em cada detalhe. Um pedacinho da nossa caminhada registrado em imagem.
-            </p>
-
-            <div className="mt-3 flex items-center justify-between text-[10px] text-[#061B5C]/60">
-              <span>❤️ Curtidas e comentários</span>
-              <span>#{fotoAtiva + 1}</span>
-            </div>
           </div>
-
-          <div className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-between bg-white/92 px-4 py-3 backdrop-blur-sm">
-            <button className="text-xs font-semibold text-[#061B5C] opacity-80">
-              Início
-            </button>
-            <button className="rounded-full bg-[#061B5C] px-4 py-1.5 text-xs font-semibold text-[#F4C021] shadow-sm">
-              Ver
-            </button>
-            <button className="text-xs font-semibold text-[#061B5C] opacity-80">
-              Perfil
-            </button>
-          </div>
-        </motion.div>
-      </AnimatePresence>
-    </div>
-  </div>
-</div>
 
             <div className="mt-5 flex items-center justify-center gap-3">
               <button
@@ -430,48 +430,6 @@ export default function SobreNosLuminuss() {
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-6 py-16 md:px-10">
-        <div className="mb-10 text-center">
-          <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm uppercase tracking-[0.25em] text-[#F4C021]">
-            <Star className="h-4 w-4" />
-            Galeria viva
-          </p>
-          <h2 className="text-3xl font-bold text-white md:text-4xl">
-            Um pouco da nossa caminhada em imagens
-          </h2>
-        </div>
-
-        <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-          {fotos.slice(0, 4).map((foto, index) => (
-            <motion.div
-              key={foto}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.07 }}
-              className="group overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/5"
-            >
-              <div className="relative aspect-[4/5] overflow-hidden">
-                <img
-                  src={foto}
-                  alt={`Foto ${index + 1} do Lúminuss`}
-                  className="h-full w-full object-cover transition duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#04184d]/85 via-transparent to-transparent opacity-90" />
-                <div className="absolute bottom-4 left-4 right-4">
-                  <p className="text-sm uppercase tracking-[0.25em] text-[#F4C021]">
-                    Lúminuss
-                  </p>
-                  <p className="mt-2 text-sm text-white/85">
-                    Memórias de uma missão construída em conjunto.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
         </div>
       </section>
     </main>
