@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { FaArrowLeft } from "react-icons/fa";
 
 function StatusBadge({ status }: { status: string }) {
   const valor = status?.toLowerCase().trim();
@@ -19,7 +21,7 @@ function StatusBadge({ status }: { status: string }) {
     classes = "bg-red-500/20 text-red-300 border border-red-400/30";
     texto = "Recusado";
   }
-
+  
   return (
     <span className={`rounded-full px-3 py-1 text-sm font-semibold ${classes}`}>
       {texto}
@@ -252,6 +254,13 @@ export default function AgendamentoPage() {
 
   return (
     <main className="min-h-screen bg-[#061B5C] px-6 py-8 text-white flex justify-center">
+       <Link
+      href="/"
+      className="fixed left-4 top-24 z-50 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-md text-white shadow-lg transition hover:scale-110 hover:bg-[#F4C021]/80 hover:text-[#061B5C] md:left-6 md:top-28 md:h-12 md:w-12"
+    >
+      <FaArrowLeft className="text-sm md:text-lg" />
+    </Link>
+
       <div className="w-full max-w-[1400px] scale-[0.92] origin-top">
         <main className="relative min-h-screen overflow-hidden text-white">
           <section className="relative z-10 flex min-h-screen pt-20">

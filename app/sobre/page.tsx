@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { FaArrowLeft } from "react-icons/fa";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -147,10 +149,16 @@ export default function SobreNosLuminuss() {
 
   return (
     <main className="min-h-screen bg-[#04184d] text-white">
+        <Link
+      href="/"
+      className="fixed left-4 top-24 z-50 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-md text-white shadow-lg transition hover:scale-110 hover:bg-[#F4C021]/80 hover:text-[#061B5C] md:left-6 md:top-28 md:h-12 md:w-12"
+    >
+      <FaArrowLeft className="text-sm md:text-lg" />
+    </Link>
       <audio ref={audioRef} loop preload="none" src="/musica-luminuss.mp3" />
 
-      <section className="relative overflow-hidden border-b border-white/10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(244,192,33,0.22),transparent_25%),radial-gradient(circle_at_80%_20%,rgba(96,165,250,0.22),transparent_25%),linear-gradient(180deg,#061B5C_0%,#04184d_100%)]" />
+      <section className="relative overflow-hidden border-b border-white/10 pl-7 pt-16 md:pt-0">        
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(244,192,33,0.22),transparent_25%),radial-gradient(circle_at_80%_20%,rgba(96,165,250,0.22),transparent_25%),linear-gradient(180deg,#061B5C_0%,#04184d_100%)]" />
         <div className="absolute -left-20 top-16 h-56 w-56 rounded-full bg-yellow-300/10 blur-3xl" />
         <div className="absolute right-0 top-24 h-64 w-64 rounded-full bg-blue-400/10 blur-3xl" />
 
