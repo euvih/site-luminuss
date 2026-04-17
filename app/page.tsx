@@ -15,9 +15,41 @@ type Pedido = {
   hora: string;
   observacoes: string;
   status: string;
+  aprovado?: string;
 };
 
 export default function Home() {
+  function parseData(dataString: string) {
+    if (!dataString) return null;
+
+    const limpa = dataString.trim().split(" ")[0];
+
+    if (limpa.includes("/")) {
+      const [dia, mes, ano] = limpa.split("/");
+      if (!dia || !mes || !ano) return null;
+      return new Date(Number(ano), Number(mes) - 1, Number(dia));
+    }
+
+    if (limpa.includes("-")) {
+      const [ano, mes, dia] = limpa.split("-");
+      if (!dia || !mes || !ano) return null;
+      return new Date(Number(ano), Number(mes) - 1, Number(dia));
+    }
+
+    return null;
+  }
+
+  function formatarMesAbreviado(data: Date) {
+    return data
+      .toLocaleDateString("pt-BR", { month: "short" })
+      .replace(".", "")
+      .toUpperCase();
+  }
+
+  function formatarDiaSemana(data: Date) {
+    return data.toLocaleDateString("pt-BR", { weekday: "long" });
+  }
+
   const [menuAberto, setMenuAberto] = useState(false);
   const [form, setForm] = useState({
     igreja: "",
@@ -87,11 +119,11 @@ export default function Home() {
 
   useEffect(() => {
     fetch(
-      "https://script.google.com/macros/s/AKfycbzfBROjxwP4NMc4TaHmEs9OFDwdEqy8rwzbU1DjtlbXsYAUCMAwFEuTiz4jMSr7H6tIBQ/exec"
-    )
-      .then((res) => res.json())
+    "https://opensheet.elk.sh/1_EsxHvUXbh8VQnmCLOCoIbvoC1VGtyl3YMr9TiSsgD4/agendamentos"
+)      .then((res) => res.json())
       .then((data) => {
         console.log("Dados da planilha:", data);
+        console.log("Primeiro item recebido:", data?.[0]);
 
         if (!Array.isArray(data)) {
           console.error("A resposta não veio como lista:", data);
@@ -99,11 +131,36 @@ export default function Home() {
           return;
         }
 
-        const aprovados = data.filter(
-          (item) => item.aprovado && item.aprovado.toLowerCase() === "sim"
-        );
+        const hoje = new Date();
+        hoje.setHours(0, 0, 0, 0);
+        
 
-        setAgenda(aprovados);
+        const aceitosDoMes = data
+          .filter((item) => {
+            const status = item.status?.toLowerCase().trim();
+            const aprovado = item.aprovado?.toLowerCase().trim();
+
+            return status === "aceito" || aprovado === "sim";
+          })
+          .map((item) => {
+            const dataConvertida = parseData(item.data);
+
+            return {
+              ...item,
+              dataConvertida,
+            };
+          })
+          .filter(
+            (item) =>
+              item.dataConvertida &&
+              item.dataConvertida >= hoje
+          )
+          .sort(
+            (a, b) =>
+              a.dataConvertida.getTime() - b.dataConvertida.getTime()
+          );
+
+        setAgenda(aceitosDoMes);
       })
       .catch((err) => {
         console.error("Erro ao carregar agenda:", err);
@@ -141,92 +198,92 @@ export default function Home() {
   return (
     <main className="bg-white text-[#061B5C]">
       <header className="fixed top-0 left-0 z-50 w-full border-b border-white/10 bg-[#061B5C]/95 backdrop-blur">
-  <nav className="mx-auto max-w-6xl px-4 py-4 text-white">
-    <div className="flex items-center justify-between">
-      <Link href="#inicio" className="flex items-center gap-3">
-        <img
-          src="/logo.jpeg"
-          alt="Logo Lúminuss"
-          className="h-12 w-12 rounded-full object-cover cursor-pointer"
-        />
-        <span className="text-xl font-bold tracking-wide transition duration-300 hover:text-[#F4C021] hover:drop-shadow-[0_0_8px_#F4C021]">
-          Lúminuss
-        </span>
-      </Link>
+        <nav className="mx-auto max-w-6xl px-4 py-4 text-white">
+          <div className="flex items-center justify-between">
+            <Link href="#inicio" className="flex items-center gap-3">
+              <img
+                src="/logo.jpeg"
+                alt="Logo Lúminuss"
+                className="h-12 w-12 rounded-full object-cover cursor-pointer"
+              />
+              <span className="text-xl font-bold tracking-wide transition duration-300 hover:text-[#F4C021] hover:drop-shadow-[0_0_8px_#F4C021]">
+                Lúminuss
+              </span>
+            </Link>
 
-      <div className="hidden gap-6 md:flex">
-        <a href="#inicio" className="transition hover:text-[#F4C021]">
-          Início
-        </a>
-        <a href="#sobre" className="transition hover:text-[#F4C021]">
-          Sobre
-        </a>
-        <a href="#integrantes" className="transition hover:text-[#F4C021]">
-          Integrantes
-        </a>
-        <a href="#galeria" className="transition hover:text-[#F4C021]">
-          Galeria
-        </a>
-        <a href="#doacoes" className="transition hover:text-[#F4C021]">
-          Doações
-        </a>
-      </div>
+            <div className="hidden gap-6 md:flex">
+              <a href="#inicio" className="transition hover:text-[#F4C021]">
+                Início
+              </a>
+              <a href="#sobre" className="transition hover:text-[#F4C021]">
+                Sobre
+              </a>
+              <a href="#integrantes" className="transition hover:text-[#F4C021]">
+                Integrantes
+              </a>
+              <a href="#galeria" className="transition hover:text-[#F4C021]">
+                Galeria
+              </a>
+              <a href="#doacoes" className="transition hover:text-[#F4C021]">
+                Doações
+              </a>
+            </div>
 
-      <button
-        type="button"
-        onClick={() => setMenuAberto(!menuAberto)}
-        className="rounded-lg p-2 transition hover:bg-white/10 md:hidden"
-        aria-label={menuAberto ? "Fechar menu" : "Abrir menu"}
-      >
-        {menuAberto ? <HiOutlineX size={28} /> : <HiOutlineMenu size={28} />}
-      </button>
-    </div>
+            <button
+              type="button"
+              onClick={() => setMenuAberto(!menuAberto)}
+              className="rounded-lg p-2 transition hover:bg-white/10 md:hidden"
+              aria-label={menuAberto ? "Fechar menu" : "Abrir menu"}
+            >
+              {menuAberto ? <HiOutlineX size={28} /> : <HiOutlineMenu size={28} />}
+            </button>
+          </div>
 
-    <div
-      className={`overflow-hidden transition-all duration-300 md:hidden ${
-        menuAberto ? "max-h-96 pt-4 opacity-100" : "max-h-0 opacity-0"
-      }`}
-    >
-      <div className="mt-3 rounded-2xl border border-white/10 bg-white/8 p-3 shadow-lg backdrop-blur">
-        <a
-          href="#inicio"
-          onClick={() => setMenuAberto(false)}
-          className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
-        >
-          Início
-        </a>
-        <a
-          href="#sobre"
-          onClick={() => setMenuAberto(false)}
-          className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
-        >
-          Sobre
-        </a>
-        <a
-          href="#integrantes"
-          onClick={() => setMenuAberto(false)}
-          className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
-        >
-          Integrantes
-        </a>
-        <a
-          href="#galeria"
-          onClick={() => setMenuAberto(false)}
-          className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
-        >
-          Galeria
-        </a>
-        <a
-          href="#doacoes"
-          onClick={() => setMenuAberto(false)}
-          className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
-        >
-          Doações
-        </a>
-      </div>
-    </div>
-  </nav>
-</header>
+          <div
+            className={`overflow-hidden transition-all duration-300 md:hidden ${
+              menuAberto ? "max-h-96 pt-4 opacity-100" : "max-h-0 opacity-0"
+            }`}
+          >
+            <div className="mt-3 rounded-2xl border border-white/10 bg-white/8 p-3 shadow-lg backdrop-blur">
+              <a
+                href="#inicio"
+                onClick={() => setMenuAberto(false)}
+                className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
+              >
+                Início
+              </a>
+              <a
+                href="#sobre"
+                onClick={() => setMenuAberto(false)}
+                className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
+              >
+                Sobre
+              </a>
+              <a
+                href="#integrantes"
+                onClick={() => setMenuAberto(false)}
+                className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
+              >
+                Integrantes
+              </a>
+              <a
+                href="#galeria"
+                onClick={() => setMenuAberto(false)}
+                className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
+              >
+                Galeria
+              </a>
+              <a
+                href="#doacoes"
+                onClick={() => setMenuAberto(false)}
+                className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
+              >
+                Doações
+              </a>
+            </div>
+          </div>
+        </nav>
+      </header>
 
       <section
         id="inicio"
@@ -289,54 +346,84 @@ export default function Home() {
           </div>
 
           <div className="relative mt-15 w-full overflow-hidden md:mt-0 md:h-full">
-  <img
-    src="/img1.jpeg"
-    alt="Grupo Lúminuss"
-    className="block h-full w-full object-cover md:object-bottom"
-  />
+            <img
+              src="/img1.jpeg"
+              alt="Grupo Lúminuss"
+              className="block h-full w-full object-cover md:object-bottom"
+            />
 
-  <div className="absolute inset-0 bg-black/10" />
+            <div className="absolute inset-0 bg-black/10" />
 
-  <div className="pointer-events-none absolute inset-0 md:hidden">
-    <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#061B5C] to-transparent" />
-    <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#061B5C] to-transparent" />
-    <div className="absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[#061B5C] to-transparent" />
-    <div className="absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#061B5C] to-transparent" />
-  </div>
+            <div className="pointer-events-none absolute inset-0 md:hidden">
+              <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#061B5C] to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#061B5C] to-transparent" />
+              <div className="absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[#061B5C] to-transparent" />
+              <div className="absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#061B5C] to-transparent" />
+            </div>
 
-  <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-28 bg-gradient-to-r from-[#061B5C] via-[#3b82f6]/30 to-transparent md:block md:w-56" />
-</div>
+            <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-28 bg-gradient-to-r from-[#061B5C] via-[#3b82f6]/30 to-transparent md:block md:w-56" />
+          </div>
         </div>
       </section>
 
       <section className="bg-[#f7f9ff] px-6 py-20">
-        <div className="mx-auto max-w-4xl text-center">
-          <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#F4C021]">
-            Agenda
-          </p>
+        <div className="mx-auto max-w-4xl">
+          <div className="mb-12 text-center">
+            <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#F4C021]">
+              Agenda
+            </p>
 
-          <h2 className="mb-10 text-4xl font-bold text-[#061B5C]">
-            Agenda do mês
-          </h2>
+            <h2 className="text-4xl font-bold text-[#061B5C]">
+              Agenda do mês
+            </h2>
+          </div>
 
           {agenda.length === 0 ? (
-            <p className="text-lg text-[#17327e]/80">
-              Agenda do mês ainda não definida.
+            <p className="text-center text-lg text-[#17327e]/80">
+              Ainda não há eventos aceitos para este mês.
             </p>
           ) : (
-            <div className="space-y-4">
-              {agenda.map((evento, index) => (
-                <div key={index} className="rounded-xl bg-white p-4 shadow-sm">
-                  <p className="font-semibold text-[#061B5C]">{evento.data}</p>
-                  <p className="text-[#17327e]">{evento.local}</p>
-                </div>
-              ))}
+            <div className="space-y-5">
+              {agenda.map((evento, index) => {
+                const dataEvento = evento.dataConvertida;
+                if (!dataEvento) return null;
+
+                return (
+                  <div
+                    key={index}
+                    className="flex items-center gap-5 rounded-2xl border border-[#e3e8f5] bg-white px-5 py-5 shadow-sm transition hover:shadow-md"
+                  >
+                    <div className="min-w-[58px] text-center leading-none">
+                      <p className="text-4xl font-light text-[#7d8fb3]">
+                        {dataEvento.getDate()}
+                      </p>
+                      <p className="mt-1 text-sm uppercase tracking-wide text-[#8ea0bf]">
+                        {formatarMesAbreviado(dataEvento)}
+                      </p>
+                    </div>
+
+                    <div className="flex-1">
+                      <p className="text-xl font-semibold text-[#0053a6]">
+                        {evento.local || "Local não informado"}
+                      </p>
+
+                      <p className="mt-2 text-lg text-[#3f4f6a]">
+                        {formatarDiaSemana(dataEvento)},{" "}
+                        {evento.hora || "Horário a definir"}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>
       </section>
 
-      <section id="sobre" className="bg-[#c7d5ff] px-6 py-24 min-h-[80vh] md:min-h-screen flex items-center justify-center">
+      <section
+        id="sobre"
+        className="bg-[#c7d5ff] px-6 py-24 min-h-[80vh] md:min-h-screen flex items-center justify-center"
+      >
         <div className="mx-auto max-w-5xl text-center px-4 space-y-6">
           <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#e4b425]">
             Sobre o grupo
@@ -358,8 +445,9 @@ export default function Home() {
                 } transition-transform duration-700`}
               />
 
-              <span className="relative z-10">Clique e conheça mais o Lúminuss ✨</span>
-
+              <span className="relative z-10">
+                Clique e conheça mais o Lúminuss ✨
+              </span>
             </Link>
           </div>
         </div>
