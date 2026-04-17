@@ -132,33 +132,34 @@ export default function Home() {
         }
 
         const hoje = new Date();
-        hoje.setHours(0, 0, 0, 0);
-        
+const mesAtual = hoje.getMonth();
+const anoAtual = hoje.getFullYear();
 
-        const aceitosDoMes = data
-          .filter((item) => {
-            const status = item.status?.toLowerCase().trim();
-            const aprovado = item.aprovado?.toLowerCase().trim();
+const aceitosDoMes = data
+  .filter((item) => {
+    const status = item.status?.toLowerCase().trim();
+    const aprovado = item.aprovado?.toLowerCase().trim();
 
-            return status === "aceito" || aprovado === "sim";
-          })
-          .map((item) => {
-            const dataConvertida = parseData(item.data);
+    return status === "aceito" || aprovado === "sim";
+  })
+  .map((item) => {
+    const dataConvertida = parseData(item.data);
 
-            return {
-              ...item,
-              dataConvertida,
-            };
-          })
-          .filter(
-            (item) =>
-              item.dataConvertida &&
-              item.dataConvertida >= hoje
-          )
-          .sort(
-            (a, b) =>
-              a.dataConvertida.getTime() - b.dataConvertida.getTime()
-          );
+    return {
+      ...item,
+      dataConvertida,
+    };
+  })
+  .filter(
+    (item) =>
+      item.dataConvertida &&
+      item.dataConvertida.getMonth() === mesAtual &&
+      item.dataConvertida.getFullYear() === anoAtual
+  )
+  .sort(
+    (a, b) =>
+      a.dataConvertida.getTime() - b.dataConvertida.getTime()
+  );
 
         setAgenda(aceitosDoMes);
       })
@@ -383,8 +384,7 @@ export default function Home() {
               Ainda não há eventos aceitos para este mês.
             </p>
           ) : (
-            <div className="space-y-5">
-              {agenda.map((evento, index) => {
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">              {agenda.map((evento, index) => {
                 const dataEvento = evento.dataConvertida;
                 if (!dataEvento) return null;
 
