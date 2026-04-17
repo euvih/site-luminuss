@@ -471,8 +471,7 @@ export default function AgendamentoPage() {
                       required
                     />
 
-                    <div className="grid grid-cols-2 gap-3">
-                      <input
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">                      <input
                         type="date"
                         value={data}
                         onChange={(e) => setData(e.target.value)}
@@ -495,8 +494,7 @@ export default function AgendamentoPage() {
                       passagem de som.
                     </p>
 
-                    <div className="grid grid-cols-2 gap-3">
-                      <input
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">                      <input
                         type="text"
                         placeholder="Telefone"
                         value={telefone}
