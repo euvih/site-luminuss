@@ -278,8 +278,7 @@ export default function AgendamentoPage() {
                       </h3>
                       <p>
                         Após o envio do formulário, entraremos em contato para
-                        confirmar o convite e alinhar os detalhes do
-                        convite, ou então poderá ACOMPANHAR o status do pedido utilizando o CÓDIGO de acompanhamento gerado no botão "Acompanhar pedido"
+                        confirmar o convite e alinhar os detalhes, ou então poderá ACOMPANHAR o status do pedido utilizando o CÓDIGO de acompanhamento gerado no botão "Acompanhar pedido"
                       </p>
                     </div>
 
@@ -305,7 +304,7 @@ export default function AgendamentoPage() {
                         onClick={() =>
                           setMostrarAcompanhamento((prev) => !prev)
                         }
-                        className="rounded-full border border-white/20 bg-white/10 px-5 py-2.5 text-sm font-medium text-white/90 transition hover:bg-white hover:text-[#061B5C]"
+                        className="rounded-full border border-amber-300- bg-white/10 px-5 py-2.5 text-sm font-medium text-amber-300/90 transition hover:bg-white hover:text-[#061B5C]"
                       >
                         Acompanhar pedido
                       </button>
