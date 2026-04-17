@@ -15,26 +15,25 @@ export default function RedesSociais() {
           sociais.
         </p>
 
-        <div className="mt-8 flex items-center justify-center gap-6">
-          <a
-          href="https://www.instagram.com/mluminuss/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-lg text-white/80 transition hover:text-pink-400"
-        >
-          <FaInstagram />
-        </a>
+        <div className="mt-1 flex items-center gap-5 md:ml-2 md:mt-0 md:gap-3">
+  <a
+    href="https://instagram.com/mluminuss/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-lg text-white/80 transition hover:text-pink-400"
+  >
+    <FaInstagram size={30}/> 
+  </a>
 
-          <a
-            href="https://www.youtube.com/@ministerioluminuss"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="YouTube do Lúminuss"
-            className="flex h-14 w-14 items-center justify-center rounded-full bg-white/10 text-2xl text-white transition duration-300 hover:scale-110 hover:bg-red-500"
-          >
-            <FaYoutube />
-          </a>
-        </div>
+  <a
+    href="https://www.youtube.com/@ministerioluminuss"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-lg text-white/80 transition hover:text-red-500"
+  >
+    <FaYoutube size={30}/>
+  </a>
+</div>
       </div>
     </section>
   );

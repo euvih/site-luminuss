@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { categorias } from "./dados/integrantes";
 import { FaInstagram, FaYoutube } from "react-icons/fa";
+import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 
 type Pedido = {
   igreja: string;
@@ -17,6 +18,7 @@ type Pedido = {
 };
 
 export default function Home() {
+  const [menuAberto, setMenuAberto] = useState(false);
   const [form, setForm] = useState({
     igreja: "",
     responsavel: "",
@@ -30,6 +32,8 @@ export default function Home() {
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [mostrarMaisFotos, setMostrarMaisFotos] = useState(false);
   const [agenda, setAgenda] = useState<any[]>([]);
+  const botaoSobreRef = useRef<HTMLDivElement | null>(null);
+  const [animarBotaoSobre, setAnimarBotaoSobre] = useState(false);
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -107,60 +111,128 @@ export default function Home() {
       });
   }, []);
 
+  useEffect(() => {
+    const botao = botaoSobreRef.current;
+    if (!botao) return;
+
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    if (!isMobile) return;
+
+    let jaAnimou = false;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !jaAnimou) {
+          jaAnimou = true;
+          setAnimarBotaoSobre(true);
+          observer.disconnect();
+        }
+      },
+      {
+        threshold: 0.6,
+      }
+    );
+
+    observer.observe(botao);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <main className="bg-white text-[#061B5C]">
       <header className="fixed top-0 left-0 z-50 w-full border-b border-white/10 bg-[#061B5C]/95 backdrop-blur">
-        <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 text-white">
-          <Link href="#inicio" className="flex items-center gap-3">
-            <img
-              src="/logo.jpeg"
-              alt="Logo Lúminuss"
-              className="h-12 w-12 rounded-full object-cover cursor-pointer"
-            />
-            <span className="text-xl font-bold tracking-wide transition duration-300 hover:text-[#F4C021] hover:drop-shadow-[0_0_8px_#F4C021]">
-              Lúminuss
-            </span>
-          </Link>
+  <nav className="mx-auto max-w-6xl px-4 py-4 text-white">
+    <div className="flex items-center justify-between">
+      <Link href="#inicio" className="flex items-center gap-3">
+        <img
+          src="/logo.jpeg"
+          alt="Logo Lúminuss"
+          className="h-12 w-12 rounded-full object-cover cursor-pointer"
+        />
+        <span className="text-xl font-bold tracking-wide transition duration-300 hover:text-[#F4C021] hover:drop-shadow-[0_0_8px_#F4C021]">
+          Lúminuss
+        </span>
+      </Link>
 
-          <div className="hidden gap-6 md:flex">
-            <a href="#inicio" className="transition hover:text-[#F4C021]">
-              Início
-            </a>
-            <a href="#sobre" className="transition hover:text-[#F4C021]">
-              Sobre
-            </a>
-            <a href="#integrantes" className="transition hover:text-[#F4C021]">
-              Integrantes
-            </a>
-            <a href="#galeria" className="transition hover:text-[#F4C021]">
-              Galeria
-            </a>
-            <a href="#doacoes" className="transition hover:text-[#F4C021]">
-              Doações
-            </a>
-          </div>
-        </nav>
-      </header>
+      <div className="hidden gap-6 md:flex">
+        <a href="#inicio" className="transition hover:text-[#F4C021]">
+          Início
+        </a>
+        <a href="#sobre" className="transition hover:text-[#F4C021]">
+          Sobre
+        </a>
+        <a href="#integrantes" className="transition hover:text-[#F4C021]">
+          Integrantes
+        </a>
+        <a href="#galeria" className="transition hover:text-[#F4C021]">
+          Galeria
+        </a>
+        <a href="#doacoes" className="transition hover:text-[#F4C021]">
+          Doações
+        </a>
+      </div>
+
+      <button
+        type="button"
+        onClick={() => setMenuAberto(!menuAberto)}
+        className="rounded-lg p-2 transition hover:bg-white/10 md:hidden"
+        aria-label={menuAberto ? "Fechar menu" : "Abrir menu"}
+      >
+        {menuAberto ? <HiOutlineX size={28} /> : <HiOutlineMenu size={28} />}
+      </button>
+    </div>
+
+    <div
+      className={`overflow-hidden transition-all duration-300 md:hidden ${
+        menuAberto ? "max-h-96 pt-4 opacity-100" : "max-h-0 opacity-0"
+      }`}
+    >
+      <div className="mt-3 rounded-2xl border border-white/10 bg-white/8 p-3 shadow-lg backdrop-blur">
+        <a
+          href="#inicio"
+          onClick={() => setMenuAberto(false)}
+          className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
+        >
+          Início
+        </a>
+        <a
+          href="#sobre"
+          onClick={() => setMenuAberto(false)}
+          className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
+        >
+          Sobre
+        </a>
+        <a
+          href="#integrantes"
+          onClick={() => setMenuAberto(false)}
+          className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
+        >
+          Integrantes
+        </a>
+        <a
+          href="#galeria"
+          onClick={() => setMenuAberto(false)}
+          className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
+        >
+          Galeria
+        </a>
+        <a
+          href="#doacoes"
+          onClick={() => setMenuAberto(false)}
+          className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
+        >
+          Doações
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
 
       <section
         id="inicio"
-        className="relative min-h-screen overflow-hidden bg-[#061B5C] pt-21 text-white"
+        className="relative min-h-screen overflow-hidden bg-[#061B5C] pt-[150px] text-white md:pt-[89px]"
       >
-        
-         {/* FUNDO COM CÉU */}
-  <div className="absolute inset-0">
-    <img
-      src="/ceu6.jpg"
-      alt="Fundo céu"
-      className="h-full w-full object-cover"
-    />
-  </div>
-
-  {/* DEGRADÊ ESCURO PARA DESTACAR O TEXTO */}
-  <div className="absolute inset-0 bg-gradient-to-r from-[#061B5C]/90 via-[#061B5C]/70 to-[#061B5C]/35" />
-
-  {/* LUZ DOURADA SUAVE */}
-  <div className="pointer-events-none absolute left-20 top-24 h-[260px] w-[260px] rounded-full bg-[#2e1479] blur-3xl" />
+        <div className="pointer-events-none absolute left-20 top-24 h-[260px] w-[260px] rounded-full bg-[#2e1479] blur-3xl" />
 
         <div className="relative z-10 grid min-h-[calc(100vh-89px)] grid-cols-1 md:grid-cols-2">
           <div className="flex items-center px-6 md:px-16">
@@ -174,10 +246,11 @@ export default function Home() {
               </h1>
 
               <p className="mb-8 max-w-xl text-lg text-white/90">
-                Louvor, adoração e mensagens de esperança por meio da música.
+                Levando louvor, adoração e mensagens de esperança às igrejas por
+                meio da música.
               </p>
 
-              <div className="flex flex-wrap items-center gap-4">
+              <div className="flex flex-col items-start gap-4">
                 <Link
                   href="/agendamento"
                   className="rounded-full bg-[#e9ebfc] px-6 py-3 font-semibold text-[#061B5C] transition hover:scale-105"
@@ -199,7 +272,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className="text-lg text-white/80 transition hover:text-pink-400"
                   >
-                    <FaInstagram />
+                    <FaInstagram size={30} />
                   </a>
 
                   <a
@@ -208,23 +281,31 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className="text-lg text-white/80 transition hover:text-red-500"
                   >
-                    <FaYoutube />
+                    <FaYoutube size={30} />
                   </a>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="relative w-full overflow-hidden md:h-full">
-            <img
-              src="/img1.jpeg"
-              alt="Grupo Lúminuss"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
+          <div className="relative mt-15 w-full overflow-hidden md:mt-0 md:h-full">
+  <img
+    src="/img1.jpeg"
+    alt="Grupo Lúminuss"
+    className="block h-full w-full object-cover md:object-bottom"
+  />
 
-            <div className="absolute inset-0 bg-black/10" />
-            <div className="absolute inset-y-0 left-0 w-28 bg-linear-to-r from-[#061B5C] via-[#3b82f6]/30 to-transparent md:w-56" />
-          </div>
+  <div className="absolute inset-0 bg-black/10" />
+
+  <div className="pointer-events-none absolute inset-0 md:hidden">
+    <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#061B5C] to-transparent" />
+    <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#061B5C] to-transparent" />
+    <div className="absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[#061B5C] to-transparent" />
+    <div className="absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#061B5C] to-transparent" />
+  </div>
+
+  <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-28 bg-gradient-to-r from-[#061B5C] via-[#3b82f6]/30 to-transparent md:block md:w-56" />
+</div>
         </div>
       </section>
 
@@ -255,32 +336,36 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="sobre" className="bg-white px-6 py-24">
-        <div className="mx-auto max-w-5xl text-center">
-          <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#F4C021]">
+      <section id="sobre" className="bg-[#c7d5ff] px-6 py-24 min-h-[80vh] md:min-h-screen flex items-center justify-center">
+        <div className="mx-auto max-w-5xl text-center px-4 space-y-6">
+          <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#e4b425]">
             Sobre o grupo
           </p>
           <h2 className="mb-6 text-4xl font-bold">Quem somos</h2>
-          <p className="mx-auto max-w-3xl text-lg leading-8 text-[#17327e]">
-            O Lúminuss é um grupo musical cristão dedicado a servir a Deus por
-            meio da música, participando de cultos, congressos, eventos
-            especiais e programações em igrejas. Nosso propósito é transmitir a
-            mensagem de Cristo, inspirar vidas e contribuir para momentos de
-            adoração sincera.
-          </p>
 
-          <div className="mt-10">
+          <div className="mt-10" ref={botaoSobreRef}>
             <Link
               href="/sobre"
-              className="inline-block rounded-full bg-[#061B5C] px-8 py-3 font-semibold text-white transition hover:scale-105 hover:bg-[#0a2a8a]"
+              className={`group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-[#061B5C] px-9 py-4 font-semibold text-white shadow-[0_10px_30px_rgba(6,27,92,0.28)] transition-all duration-300 hover:-translate-y-1 hover:scale-[1.03] hover:bg-[#0a2a8a] hover:shadow-[0_16px_40px_rgba(6,27,92,0.38)] active:scale-[0.98] ${
+                animarBotaoSobre ? "animate-[pulse_0.9s_ease-out_1]" : ""
+              }`}
             >
-              Nos conheça melhor →
+              <span
+                className={`pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent ${
+                  animarBotaoSobre
+                    ? "animate-[brilhoMobile_1.2s_ease-out_1]"
+                    : "translate-x-[-120%] group-hover:translate-x-[120%]"
+                } transition-transform duration-700`}
+              />
+
+              <span className="relative z-10">Clique e conheça mais o Lúminuss ✨</span>
+
             </Link>
           </div>
         </div>
       </section>
 
-      <section id="integrantes" className="bg-[#f7f9ff] px-6 py-24">
+      <section id="integrantes" className="bg-[#edf1fd] px-6 py-24">
         <div className="mx-auto max-w-6xl">
           <div className="mb-12 text-center">
             <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#F4C021]">
@@ -289,12 +374,13 @@ export default function Home() {
             <h2 className="text-4xl font-bold">Nossa equipe</h2>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 md:flex md:flex-wrap md:justify-center md:gap-6">            
+          <div className="grid grid-cols-2 gap-4 md:flex md:flex-wrap md:justify-center md:gap-6">
             {categorias.map((categoria) => (
               <Link
                 key={categoria.slug}
                 href={`/integrantes/${categoria.slug}`}
-                className="w-full rounded-3xl bg-white p-6 text-center shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-xl md:w-65 md:p-8"              >
+                className="w-full rounded-3xl bg-white p-6 text-center shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-xl md:w-65 md:p-8"
+              >
                 <div className="mx-auto mb-4 h-20 w-20 overflow-hidden rounded-full bg-[#061B5C]">
                   {categoria.foto ? (
                     <img
@@ -316,7 +402,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="galeria" className="bg-white px-6 py-24">
+      <section id="galeria" className="bg-[#e2e5ec] px-6 py-24">
         <div className="mx-auto max-w-6xl">
           <div className="mb-12 text-center">
             <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#F4C021]">

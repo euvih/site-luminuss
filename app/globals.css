@@ -53,3 +53,26 @@ html {
 select option {
   color: rgb(9, 11, 90);
 }
+.botao {
+  background: #0b1f5c;
+  color: white;
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.botao:hover {
+  background: #102a7a;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+@keyframes brilhoMobile {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}

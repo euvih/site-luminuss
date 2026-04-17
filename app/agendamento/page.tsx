@@ -279,7 +279,7 @@ export default function AgendamentoPage() {
                       <p>
                         Após o envio do formulário, entraremos em contato para
                         confirmar o convite e alinhar os detalhes do
-                        convite, ou então poderá acompanhar o status do pedido utilizando o código de acompanhamento gerado.
+                        convite, ou então poderá ACOMPANHAR o status do pedido utilizando o CÓDIGO de acompanhamento gerado no botão "Acompanhar pedido"
                       </p>
                     </div>
 
@@ -297,13 +297,6 @@ export default function AgendamentoPage() {
                     </div>
 
                     <div>
-                      <h3 className="mb-1 text-lg font-semibold text-white">
-                        Informações importantes
-                      </h3>
-                      <p>
-                        Quanto mais detalhes forem informados no formulário, mais
-                        fácil será organizar e responder ao seu convite.
-                      </p>
                     </div>
 
                     <div className="mt-6 flex justify-center">
