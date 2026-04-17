@@ -298,13 +298,13 @@ export default function AgendamentoPage() {
                     <div>
                     </div>
 
-                    <div className="mt-6 flex justify-center">
+                    <div className="mt-10 flex justify-center">
                       <button
                         type="button"
                         onClick={() =>
                           setMostrarAcompanhamento((prev) => !prev)
                         }
-                        className="rounded-full border border-amber-300- bg-white/10 px-5 py-2.5 text-sm font-medium text-amber-300/90 transition hover:bg-white hover:text-[#061B5C]"
+                        className="rounded-full border border-amber-300- bg-white/10 px-9 py-4 text-sm font-medium text-amber-300/90 transition hover:bg-white hover:text-[#061B5C]"
                       >
                         Acompanhar pedido
                       </button>
