@@ -471,22 +471,23 @@ export default function AgendamentoPage() {
                       required
                     />
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">                      <input
-                        type="date"
-                        value={data}
-                        onChange={(e) => setData(e.target.value)}
-                        className="rounded-xl bg-white/10 px-4 py-3 outline-none"
-                        required
-                      />
+                        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                <input
+                  type="date"
+                  value={data}
+                  onChange={(e) => setData(e.target.value)}
+                  className="min-w-0 rounded-xl bg-white/10 px-4 py-3 outline-none"
+                  required
+                />
 
-                      <input
-                        type="time"
-                        value={horario}
-                        onChange={(e) => setHorario(e.target.value)}
-                        className="rounded-xl bg-white/10 px-4 py-3 outline-none"
-                        required
-                      />
-                    </div>
+                <input
+                  type="time"
+                  value={horario}
+                  onChange={(e) => setHorario(e.target.value)}
+                  className="min-w-0 rounded-xl bg-white/10 px-4 py-3 outline-none"
+                  required
+                />
+                </div>
 
                     <p className="text-xs leading-relaxed text-yellow-200">
                       Observação: considerar a presença de alguém no local com 1h30
