@@ -19,6 +19,16 @@ type Pedido = {
 };
 
 export default function Home() {
+  const [scrollAtivo, setScrollAtivo] = useState(false);
+
+useEffect(() => {
+  const handleScroll = () => {
+    setScrollAtivo(window.scrollY > 20);
+  };
+
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
   function parseData(dataString: string) {
     if (!dataString) return null;
 
@@ -132,8 +142,8 @@ export default function Home() {
         }
 
         const hoje = new Date();
-const mesAtual = hoje.getMonth();
-const anoAtual = hoje.getFullYear();
+        const mesAtual = hoje.getMonth();
+        const anoAtual = hoje.getFullYear();
 
 const aceitosDoMes = data
   .filter((item) => {
@@ -198,98 +208,104 @@ const aceitosDoMes = data
 
   return (
     <main className="bg-white text-[#061B5C]">
-      <header className="fixed top-0 left-0 z-50 w-full border-b border-white/10 bg-[#061B5C]/95 backdrop-blur">
-        <nav className="mx-auto max-w-6xl px-4 py-4 text-white">
-          <div className="flex items-center justify-between">
-            <Link href="#inicio" className="flex items-center gap-3">
-              <img
-                src="/logo.jpeg"
-                alt="Logo Lúminuss"
-                className="h-12 w-12 rounded-full object-cover cursor-pointer"
-              />
-              <span className="text-xl font-bold tracking-wide transition duration-300 hover:text-[#F4C021] hover:drop-shadow-[0_0_8px_#F4C021]">
-                Lúminuss
-              </span>
-            </Link>
+      <header
+  className={`fixed top-0 left-0 z-50 w-full transition-all duration-300 ${
+    scrollAtivo
+      ? "bg-transparent backdrop-blur-[0.1px] border-b border-white/10"
+      : "bg-transparent border-b border-transparent"
+  }`}
+>
+  <nav className="mx-auto max-w-6xl px-4 py-4 text-white">
+    <div className="flex items-center justify-between">
+      <Link href="#inicio" className="flex items-center gap-3">
+        <img
+          src="/logo.jpeg"
+          alt="Logo Lúminuss"
+          className="h-12 w-12 rounded-full object-cover cursor-pointer"
+        />
+        <span className="text-xl font-bold tracking-wide transition duration-300 hover:text-[#F4C021] hover:drop-shadow-[0_0_8px_#F4C021]">
+          Lúminuss
+        </span>
+      </Link>
 
-            <div className="hidden gap-6 md:flex">
-              <a href="#inicio" className="transition hover:text-[#F4C021]">
-                Início
-              </a>
-              <a href="#sobre" className="transition hover:text-[#F4C021]">
-                Sobre
-              </a>
-              <a href="#integrantes" className="transition hover:text-[#F4C021]">
-                Integrantes
-              </a>
-              <a href="#galeria" className="transition hover:text-[#F4C021]">
-                Galeria
-              </a>
-              <a href="#doacoes" className="transition hover:text-[#F4C021]">
-                Doações
-              </a>
-            </div>
+      <div className="hidden gap-6 md:flex">
+        <a href="#inicio" className="transition hover:text-[#F4C021]">
+          Início
+        </a>
+        <a href="#sobre" className="transition hover:text-[#F4C021]">
+          Sobre
+        </a>
+        <a href="#integrantes" className="transition hover:text-[#F4C021]">
+          Integrantes
+        </a>
+        <a href="#galeria" className="transition hover:text-[#F4C021]">
+          Galeria
+        </a>
+        <a href="#doacoes" className="transition hover:text-[#F4C021]">
+          Doações
+        </a>
+      </div>
 
-            <button
-              type="button"
-              onClick={() => setMenuAberto(!menuAberto)}
-              className="rounded-lg p-2 transition hover:bg-white/10 md:hidden"
-              aria-label={menuAberto ? "Fechar menu" : "Abrir menu"}
-            >
-              {menuAberto ? <HiOutlineX size={28} /> : <HiOutlineMenu size={28} />}
-            </button>
-          </div>
+      <button
+        type="button"
+        onClick={() => setMenuAberto(!menuAberto)}
+        className="rounded-lg p-2 transition hover:bg-white/10 md:hidden"
+        aria-label={menuAberto ? "Fechar menu" : "Abrir menu"}
+      >
+        {menuAberto ? <HiOutlineX size={28} /> : <HiOutlineMenu size={28} />}
+      </button>
+    </div>
 
-          <div
-            className={`overflow-hidden transition-all duration-300 md:hidden ${
-              menuAberto ? "max-h-96 pt-4 opacity-100" : "max-h-0 opacity-0"
-            }`}
-          >
-            <div className="mt-3 rounded-2xl border border-white/10 bg-white/8 p-3 shadow-lg backdrop-blur">
-              <a
-                href="#inicio"
-                onClick={() => setMenuAberto(false)}
-                className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
-              >
-                Início
-              </a>
-              <a
-                href="#sobre"
-                onClick={() => setMenuAberto(false)}
-                className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
-              >
-                Sobre
-              </a>
-              <a
-                href="#integrantes"
-                onClick={() => setMenuAberto(false)}
-                className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
-              >
-                Integrantes
-              </a>
-              <a
-                href="#galeria"
-                onClick={() => setMenuAberto(false)}
-                className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
-              >
-                Galeria
-              </a>
-              <a
-                href="#doacoes"
-                onClick={() => setMenuAberto(false)}
-                className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
-              >
-                Doações
-              </a>
-            </div>
-          </div>
-        </nav>
-      </header>
+    <div
+      className={`overflow-hidden transition-all duration-300 md:hidden ${
+        menuAberto ? "max-h-96 pt-4 opacity-100" : "max-h-0 opacity-0"
+      }`}
+    >
+      <div className="mt-3 rounded-2xl border border-white/10 bg-white/10 p-3 shadow-lg backdrop-blur">
+        <a
+          href="#inicio"
+          onClick={() => setMenuAberto(false)}
+          className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
+        >
+          Início
+        </a>
+        <a
+          href="#sobre"
+          onClick={() => setMenuAberto(false)}
+          className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
+        >
+          Sobre
+        </a>
+        <a
+          href="#integrantes"
+          onClick={() => setMenuAberto(false)}
+          className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
+        >
+          Integrantes
+        </a>
+        <a
+          href="#galeria"
+          onClick={() => setMenuAberto(false)}
+          className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
+        >
+          Galeria
+        </a>
+        <a
+          href="#doacoes"
+          onClick={() => setMenuAberto(false)}
+          className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
+        >
+          Doações
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
 
       <section
         id="inicio"
         className="relative min-h-screen overflow-hidden bg-[#061B5C] pt-[150px] text-white md:pt-[89px]"
-      >
+      > 
         <div className="pointer-events-none absolute left-20 top-24 h-[260px] w-[260px] rounded-full bg-[#1b0952] blur-3xl" />
 
         <div className="relative z-10 grid min-h-[calc(100vh-89px)] grid-cols-1 md:grid-cols-2">

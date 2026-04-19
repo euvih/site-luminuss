@@ -75,7 +75,7 @@ function textoTempoRestante(data: string) {
   const dias = calcularDiasRestantes(data);
 
   if (dias === null) return "Data inválida";
-  if (dias < 0) return `Atrasado há ${Math.abs(dias)} dia${Math.abs(dias) === 1 ? "" : "s"}`;
+  if (dias < 0) return `Há ${Math.abs(dias)} dia${Math.abs(dias) === 1 ? "" : "s"}`;
   if (dias === 0) return "É hoje";
   if (dias === 1) return "Falta 1 dia";
   return `Faltam ${dias} dias`;
@@ -89,7 +89,7 @@ function classesUrgencia(data: string) {
   }
 
   if (dias < 0) {
-    return "border-red-500/50 ring-1 ring-red-500/30";
+    return "border-white/10 opacity-50 grayscale";
   }
 
   if (dias <= 3) {
@@ -103,7 +103,200 @@ function classesUrgencia(data: string) {
   return "border-white/10";
 }
 
+function CardAgendamento({
+  item,
+  abertos,
+  toggleObservacao,
+  atualizarStatus,
+  atualizandoId,
+}: {
+  item: Agendamento;
+  abertos: { [key: string]: boolean };
+  toggleObservacao: (id: string) => void;
+  atualizarStatus: (id: string, novoStatus: string) => void;
+  atualizandoId: string | null;
+}) {
+  const tempoRestante = textoTempoRestante(item.data);
+  const bordaUrgencia = classesUrgencia(item.data);
+  const texto = item.observacoes?.trim() || "Sem observações.";
+  const limite = 60;
+  const expandido = abertos[item.id];
+  const precisaBotao = texto.length > limite;
+
+  return (
+    <div
+      className={`rounded-3xl border bg-white/10 p-3 shadow-lg backdrop-blur ${bordaUrgencia}`}
+    >
+      <div className="mb-2 flex items-center justify-between gap-2">
+        <p className="text-xs font-semibold uppercase tracking-wide text-white/60">
+          {tempoRestante}
+        </p>
+      </div>
+
+      <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+        <div>
+          <h2 className="text-xl font-bold text-[#F4C021]">
+            {item.igreja || "Sem igreja"}
+          </h2>
+          <p className="mt-1 text-white/80">
+            Responsável: {item.responsavel || "Não informado"}
+          </p>
+          <p className="mt-1 text-white/70">Código: {item.codigo || "-"}</p>
+        </div>
+
+        <StatusBadge status={item.status} />
+      </div>
+
+      <div className="mt-1 grid grid-cols-2 gap-1">
+        <div className="rounded-xl bg-black/20 p-3">
+          <p className="text-xs text-white/60">WhatsApp</p>
+          <p className="mt-0.5 text-sm font-medium">{item.whatsapp || "-"}</p>
+        </div>
+
+        <div className="rounded-xl bg-black/20 p-3">
+          <p className="text-xs text-white/60">Local</p>
+          <p className="mt-0.5 text-sm font-medium">{item.local || "-"}</p>
+        </div>
+
+        <div className="rounded-xl bg-black/20 p-3">
+          <p className="text-xs text-white/60">Data</p>
+          <p className="mt-0.5 text-sm font-medium">{item.data || "-"}</p>
+        </div>
+
+        <div className="rounded-xl bg-black/20 p-3">
+          <p className="text-xs text-white/60">Hora</p>
+          <p className="mt-0.5 text-sm font-medium">{item.hora || "-"}</p>
+        </div>
+      </div>
+
+      <div className="mt-3 rounded-xl bg-black/20 p-2.5">
+        <p className="text-xs text-white/60">Observações</p>
+
+        <p className="mt-1 whitespace-pre-line leading-5 text-white/90">
+          {expandido || !precisaBotao
+            ? texto
+            : `${texto.slice(0, limite)}...`}
+        </p>
+
+        {precisaBotao && (
+          <button
+            type="button"
+            onClick={() => toggleObservacao(item.id)}
+            className="mt-1 text-xs font-semibold text-[#F4C021] hover:underline"
+          >
+            {expandido ? "Ver menos" : "Ver mais"}
+          </button>
+        )}
+      </div>
+
+      <div className="mt-3 flex flex-wrap gap-2">
+        {item.status !== "aceito" && (
+          <button
+            onClick={() => atualizarStatus(String(item.id), "aceito")}
+            disabled={atualizandoId === String(item.id)}
+            className="rounded-xl bg-green-500 px-3 py-1.5 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-50"
+          >
+            Aceitar
+          </button>
+        )}
+
+        {item.status !== "recusado" && (
+          <button
+            onClick={() => atualizarStatus(String(item.id), "recusado")}
+            disabled={atualizandoId === String(item.id)}
+            className="rounded-xl bg-red-500 px-3 py-1.5 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-50"
+          >
+            Recusar
+          </button>
+        )}
+
+        {item.status !== "pendente" && (
+          <button
+            onClick={() => atualizarStatus(String(item.id), "pendente")}
+            disabled={atualizandoId === String(item.id)}
+            className="rounded-xl bg-yellow-500 px-3 py-1.5 text-sm font-semibold text-[#061B5C] transition hover:opacity-90 disabled:opacity-50"
+          >
+            Voltar para pendente
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function AdminPage() {
+  const [mostrarFormularioManual, setMostrarFormularioManual] = useState(false);
+  const [salvandoManual, setSalvandoManual] = useState(false);
+  const [formManual, setFormManual] = useState({
+    igreja: "",
+    responsavel: "",
+    whatsapp: "",
+    local: "",
+    data: "",
+    hora: "",
+    observacoes: "",
+    status: "aceito",
+  });
+  function gerarCodigoManual() {
+  const numero = Math.floor(100000 + Math.random() * 900000);
+  return `LUM-${numero}`;
+}
+
+async function adicionarEventoManual(e: React.FormEvent) {
+  e.preventDefault();
+
+  if (!formManual.igreja || !formManual.local || !formManual.data || !formManual.hora) {
+    alert("Preencha pelo menos igreja, local, data e hora.");
+    return;
+  }
+
+  setSalvandoManual(true);
+
+  try {
+    const resposta = await fetch(URL_SCRIPT, {
+      method: "POST",
+      body: JSON.stringify({
+        acao: "criarManual",
+        codigo: gerarCodigoManual(),
+        igreja: formManual.igreja,
+        responsavel: formManual.responsavel || formManual.igreja,
+        whatsapp: formManual.whatsapp,
+        local: formManual.local,
+        data: formManual.data,
+        hora: formManual.hora,
+        observacoes: formManual.observacoes,
+        status: formManual.status,
+      }),
+    });
+
+    const resultado = await resposta.json();
+
+    if (!resultado.ok) {
+      alert(resultado.error || "Não foi possível adicionar o evento.");
+      setSalvandoManual(false);
+      return;
+    }
+
+    setFormManual({
+      igreja: "",
+      responsavel: "",
+      whatsapp: "",
+      local: "",
+      data: "",
+      hora: "",
+      observacoes: "",
+      status: "aceito",
+    });
+
+    setMostrarFormularioManual(false);
+    await carregarPedidos();
+  } catch (erro) {
+    console.error("Erro ao adicionar evento manual:", erro);
+    alert("Erro ao adicionar evento manual.");
+  } finally {
+    setSalvandoManual(false);
+  }
+}
   const [codigoAdmin, setCodigoAdmin] = useState("");
   const [acessoLiberado, setAcessoLiberado] = useState(false);
   const [erro, setErro] = useState("");
@@ -113,19 +306,18 @@ export default function AdminPage() {
   const [filtroStatus, setFiltroStatus] = useState("todos");
   const [abertos, setAbertos] = useState<{ [key: string]: boolean }>({});
   const [busca, setBusca] = useState("");
+
   const totalTodos = agendamentos.length;
+  const totalPendentes = agendamentos.filter(
+    (item) => item.status?.toLowerCase().trim() === "pendente"
+  ).length;
+  const totalAceitos = agendamentos.filter(
+    (item) => item.status?.toLowerCase().trim() === "aceito"
+  ).length;
+  const totalRecusados = agendamentos.filter(
+    (item) => item.status?.toLowerCase().trim() === "recusado"
+  ).length;
 
-const totalPendentes = agendamentos.filter(
-  (item) => item.status?.toLowerCase().trim() === "pendente"
-).length;
-
-const totalAceitos = agendamentos.filter(
-  (item) => item.status?.toLowerCase().trim() === "aceito"
-).length;
-
-const totalRecusados = agendamentos.filter(
-  (item) => item.status?.toLowerCase().trim() === "recusado"
-).length;
   const CODIGO_CORRETO = "LUMADMIN2026";
   const URL_SCRIPT =
     "https://script.google.com/macros/s/AKfycbzfBROjxwP4NMc4TaHmEs9OFDwdEqy8rwzbU1DjtlbXsYAUCMAwFEuTiz4jMSr7H6tIBQ/exec";
@@ -226,10 +418,10 @@ const totalRecusados = agendamentos.filter(
     }));
   }
 
-  const agendamentosFiltrados = useMemo(() => {
+  const { eventosDesteMes, proximosEventos, eventosPassados } = useMemo(() => {
     const termo = busca.toLowerCase().trim();
 
-    return agendamentos
+    const filtrados = agendamentos
       .filter((item) => {
         if (filtroStatus !== "todos") {
           if (item.status?.toLowerCase().trim() !== filtroStatus) return false;
@@ -260,6 +452,55 @@ const totalRecusados = agendamentos.filter(
 
         return dataA.getTime() - dataB.getTime();
       });
+
+    const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0);
+
+    const mesAtual = hoje.getMonth();
+    const anoAtual = hoje.getFullYear();
+
+    const eventosDesteMes = filtrados.filter((item) => {
+      const dataEvento = converterDataParaDate(item.data);
+      if (!dataEvento) return false;
+
+      const evento = new Date(dataEvento);
+      evento.setHours(0, 0, 0, 0);
+
+      return (
+        evento.getMonth() === mesAtual &&
+        evento.getFullYear() === anoAtual &&
+        evento.getTime() >= hoje.getTime()
+      );
+    });
+
+    const proximosEventos = filtrados.filter((item) => {
+      const dataEvento = converterDataParaDate(item.data);
+      if (!dataEvento) return false;
+
+      const evento = new Date(dataEvento);
+      evento.setHours(0, 0, 0, 0);
+
+      return (
+        evento.getTime() > hoje.getTime() &&
+        !(evento.getMonth() === mesAtual && evento.getFullYear() === anoAtual)
+      );
+    });
+
+    const eventosPassados = filtrados.filter((item) => {
+      const dataEvento = converterDataParaDate(item.data);
+      if (!dataEvento) return false;
+
+      const evento = new Date(dataEvento);
+      evento.setHours(0, 0, 0, 0);
+
+      return (
+        evento.getMonth() === mesAtual &&
+        evento.getFullYear() === anoAtual &&
+        evento.getTime() < hoje.getTime()
+      );
+    });
+
+    return { eventosDesteMes, proximosEventos, eventosPassados };
   }, [agendamentos, filtroStatus, busca]);
 
   if (!acessoLiberado) {
@@ -278,6 +519,7 @@ const totalRecusados = agendamentos.filter(
               placeholder="Código do administrador"
               className="rounded-xl bg-white/10 px-4 py-3 outline-none placeholder:text-white/50"
             />
+            
 
             <button
               type="submit"
@@ -301,14 +543,124 @@ const totalRecusados = agendamentos.filter(
     <main className="min-h-screen bg-[#061B5C] px-6 py-24 text-white">
       <div className="mx-auto max-w-6xl">
         <div className="mb-12 text-center">
-          <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#F4C021]">
-            Painel admin
-          </p>
-          <h1 className="text-4xl font-bold">Todos os agendamentos</h1>
-          <p className="mt-4 text-white/80">
-            Visualização completa dos pedidos enviados pelo site.
-          </p>
-        </div>
+  <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#F4C021]">
+    Painel admin
+  </p>
+  <h1 className="text-4xl font-bold">Todos os agendamentos</h1>
+  <p className="mt-4 text-white/80">
+    Visualização completa dos pedidos enviados pelo site.
+  </p>
+</div>
+
+{/* BOTÃO DISCRETO */}
+<div className="mb-6 flex justify-center">
+  <button
+    type="button"
+    onClick={() => setMostrarFormularioManual((prev) => !prev)}
+    className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-white/80 transition hover:bg-white/15 hover:text-white"
+  >
+    {mostrarFormularioManual ? "Fechar" : "+ Adicionar manualmente"}
+  </button>
+</div>
+
+{/* FORMULÁRIO MANUAL */}
+{mostrarFormularioManual && (
+  <div className="mb-8 rounded-3xl border border-white/10 bg-white/10 p-5 backdrop-blur">
+    <form onSubmit={adicionarEventoManual} className="grid gap-3">
+
+      <div className="grid gap-3 md:grid-cols-2">
+        <input
+          placeholder="Igreja"
+          value={formManual.igreja}
+          onChange={(e) =>
+            setFormManual({ ...formManual, igreja: e.target.value })
+          }
+          className="rounded-xl bg-white/10 px-4 py-3"
+        />
+
+        <input
+          placeholder="Responsável"
+          value={formManual.responsavel}
+          onChange={(e) =>
+            setFormManual({ ...formManual, responsavel: e.target.value })
+          }
+          className="rounded-xl bg-white/10 px-4 py-3"
+        />
+      </div>
+
+      <div className="grid gap-3 md:grid-cols-2">
+        <input
+          placeholder="WhatsApp"
+          value={formManual.whatsapp}
+          onChange={(e) =>
+            setFormManual({ ...formManual, whatsapp: e.target.value })
+          }
+          className="rounded-xl bg-white/10 px-4 py-3"
+        />
+
+        <input
+          placeholder="Local"
+          value={formManual.local}
+          onChange={(e) =>
+            setFormManual({ ...formManual, local: e.target.value })
+          }
+          className="rounded-xl bg-white/10 px-4 py-3"
+        />
+      </div>
+
+      <div className="grid gap-3 md:grid-cols-3">
+        <input
+          type="date"
+          value={formManual.data}
+          onChange={(e) =>
+            setFormManual({ ...formManual, data: e.target.value })
+          }
+          className="rounded-xl bg-white/10 px-4 py-3"
+        />
+
+        <input
+          type="time"
+          value={formManual.hora}
+          onChange={(e) =>
+            setFormManual({ ...formManual, hora: e.target.value })
+          }
+          className="rounded-xl bg-white/10 px-4 py-3"
+        />
+
+        <select
+          value={formManual.status}
+          onChange={(e) =>
+            setFormManual({ ...formManual, status: e.target.value })
+          }
+          className="rounded-xl bg-white/10 px-4 py-3 text-black"
+        >
+          <option value="aceito">Aceito</option>
+          <option value="pendente">Pendente</option>
+          <option value="recusado">Recusado</option>
+        </select>
+      </div>
+
+      <textarea
+        rows={3}
+        placeholder="Observações"
+        value={formManual.observacoes}
+        onChange={(e) =>
+          setFormManual({ ...formManual, observacoes: e.target.value })
+        }
+        className="rounded-xl bg-white/10 px-4 py-3"
+      />
+
+      <button
+        type="submit"
+        disabled={salvandoManual}
+        className="mt-2 rounded-xl bg-[#F4C021] px-5 py-3 font-semibold text-[#061B5C]"
+      >
+        {salvandoManual ? "Salvando..." : "Salvar evento"}
+      </button>
+    </form>
+  </div>
+)}
+        
 
         <div className="mb-5">
           <input
@@ -321,194 +673,151 @@ const totalRecusados = agendamentos.filter(
         </div>
 
         <div className="mb-8 flex flex-wrap justify-center gap-3">
-  {/* TODOS */}
-  <button
-    onClick={() => setFiltroStatus("todos")}
-    className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition ${
-      filtroStatus === "todos"
-        ? "bg-white text-[#061B5C]"
-        : "bg-white/10 text-white hover:bg-white/20"
-    }`}
-  >
-    Todos
-    <span className="flex h-6 min-w-[24px] items-center justify-center rounded-full bg-white text-[#061B5C] px-2 text-xs font-bold">
-      {totalTodos}
-    </span>
-  </button>
+          <button
+            onClick={() => setFiltroStatus("todos")}
+            className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition ${
+              filtroStatus === "todos"
+                ? "bg-white text-[#061B5C]"
+                : "bg-white/10 text-white hover:bg-white/20"
+            }`}
+          >
+            Todos
+            <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-white px-2 text-xs font-bold text-[#061B5C]">
+              {totalTodos}
+            </span>
+          </button>
 
-  {/* PENDENTES */}
-  <button
-    onClick={() => setFiltroStatus("pendente")}
-    className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition ${
-      filtroStatus === "pendente"
-        ? "bg-yellow-400 text-[#061B5C]"
-        : "bg-white/10 text-white hover:bg-white/20"
-    }`}
-  >
-    Pendentes
-    <span className="flex h-6 min-w-[24px] items-center justify-center rounded-full bg-yellow-400 text-[#061B5C] px-2 text-xs font-bold">
-      {totalPendentes}
-    </span>
-  </button>
+          <button
+            onClick={() => setFiltroStatus("pendente")}
+            className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition ${
+              filtroStatus === "pendente"
+                ? "bg-yellow-400 text-[#061B5C]"
+                : "bg-white/10 text-white hover:bg-white/20"
+            }`}
+          >
+            Pendentes
+            <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-yellow-400 px-2 text-xs font-bold text-[#061B5C]">
+              {totalPendentes}
+            </span>
+          </button>
 
-  {/* ACEITOS */}
-  <button
-    onClick={() => setFiltroStatus("aceito")}
-    className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition ${
-      filtroStatus === "aceito"
-        ? "bg-green-500 text-white"
-        : "bg-white/10 text-white hover:bg-white/20"
-    }`}
-  >
-    Aceitos
-    <span className="flex h-6 min-w-[24px] items-center justify-center rounded-full bg-green-500 text-white px-2 text-xs font-bold">
-      {totalAceitos}
-    </span>
-  </button>
+          <button
+            onClick={() => setFiltroStatus("aceito")}
+            className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition ${
+              filtroStatus === "aceito"
+                ? "bg-green-500 text-white"
+                : "bg-white/10 text-white hover:bg-white/20"
+            }`}
+          >
+            Aceitos
+            <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-green-500 px-2 text-xs font-bold text-white">
+              {totalAceitos}
+            </span>
+          </button>
 
-  {/* RECUSADOS */}
-  <button
-    onClick={() => setFiltroStatus("recusado")}
-    className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition ${
-      filtroStatus === "recusado"
-        ? "bg-red-500 text-white"
-        : "bg-white/10 text-white hover:bg-white/20"
-    }`}
-  >
-    Recusados
-    <span className="flex h-6 min-w-[24px] items-center justify-center rounded-full bg-red-500 text-white px-2 text-xs font-bold">
-      {totalRecusados}
-    </span>
-  </button>
-</div>
+          <button
+            onClick={() => setFiltroStatus("recusado")}
+            className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition ${
+              filtroStatus === "recusado"
+                ? "bg-red-500 text-white"
+                : "bg-white/10 text-white hover:bg-white/20"
+            }`}
+          >
+            Recusados
+            <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-red-500 px-2 text-xs font-bold text-white">
+              {totalRecusados}
+            </span>
+          </button>
 
+        </div>
+        
         {loading ? (
           <p className="text-center text-white/80">Carregando pedidos...</p>
-        ) : agendamentosFiltrados.length === 0 ? (
+        ) : eventosDesteMes.length === 0 &&
+          proximosEventos.length === 0 &&
+          eventosPassados.length === 0 ? (
           <p className="text-center text-white/80">
             Nenhum pedido encontrado.
           </p>
         ) : (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {agendamentosFiltrados.map((item) => {
-              const tempoRestante = textoTempoRestante(item.data);
-              const bordaUrgencia = classesUrgencia(item.data);
-              const texto = item.observacoes?.trim() || "Sem observações.";
-              const limite = 60;
-              const expandido = abertos[item.id];
-              const precisaBotao = texto.length > limite;
-
-              return (
-                <div
-                  key={item.id}
-                  className={`rounded-3xl border bg-white/10 p-3 shadow-lg backdrop-blur ${bordaUrgencia}`}
-                >
-                  <div className="mb-2 flex items-center justify-between gap-2">
-                    <p className="text-xs font-semibold uppercase tracking-wide text-white/60">
-                      {tempoRestante}
-                    </p>
-                  </div>
-
-                  <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-                    <div>
-                      <h2 className="text-xl font-bold text-[#F4C021]">
-                        {item.igreja || "Sem igreja"}
-                      </h2>
-                      <p className="mt-1 text-white/80">
-                        Responsável: {item.responsavel || "Não informado"}
-                      </p>
-                      <p className="mt-1 text-white/70">
-                        Código: {item.codigo || "-"}
-                      </p>
-                    </div>
-
-                    <StatusBadge status={item.status} />
-                  </div>
-
-                  <div className="mt-1 grid grid-cols-2 gap-1">
-                    <div className="rounded-xl bg-black/20 p-3">
-                      <p className="text-xs text-white/60">WhatsApp</p>
-                      <p className="mt-0.5 text-sm font-medium">
-                        {item.whatsapp || "-"}
-                      </p>
-                    </div>
-
-                    <div className="rounded-xl bg-black/20 p-3">
-                      <p className="text-xs text-white/60">Local</p>
-                      <p className="mt-0.5 text-sm font-medium">
-                        {item.local || "-"}
-                      </p>
-                    </div>
-
-                    <div className="rounded-xl bg-black/20 p-3">
-                      <p className="text-xs text-white/60">Data</p>
-                      <p className="mt-0.5 text-sm font-medium">
-                        {item.data || "-"}
-                      </p>
-                    </div>
-
-                    <div className="rounded-xl bg-black/20 p-3">
-                      <p className="text-xs text-white/60">Hora</p>
-                      <p className="mt-0.5 text-sm font-medium">
-                        {item.hora || "-"}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="mt-3 rounded-xl bg-black/20 p-2.5">
-                    <p className="text-xs text-white/60">Observações</p>
-
-                    <p className="mt-1 whitespace-pre-line leading-5 text-white/90">
-                      {expandido || !precisaBotao
-                        ? texto
-                        : `${texto.slice(0, limite)}...`}
-                    </p>
-
-                    {precisaBotao && (
-                      <button
-                        type="button"
-                        onClick={() => toggleObservacao(item.id)}
-                        className="mt-1 text-xs font-semibold text-[#F4C021] hover:underline"
-                      >
-                        {expandido ? "Ver menos" : "Ver mais"}
-                      </button>
-                    )}
-                  </div>
-
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {item.status !== "aceito" && (
-                      <button
-                        onClick={() => atualizarStatus(String(item.id), "aceito")}
-                        disabled={atualizandoId === String(item.id)}
-                        className="rounded-xl bg-green-500 px-3 py-1.5 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-50"
-                      >
-                        Aceitar
-                      </button>
-                    )}
-
-                    {item.status !== "recusado" && (
-                      <button
-                        onClick={() => atualizarStatus(String(item.id), "recusado")}
-                        disabled={atualizandoId === String(item.id)}
-                        className="rounded-xl bg-red-500 px-3 py-1.5 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-50"
-                      >
-                        Recusar
-                      </button>
-                    )}
-
-                    {item.status !== "pendente" && (
-                      <button
-                        onClick={() => atualizarStatus(String(item.id), "pendente")}
-                        disabled={atualizandoId === String(item.id)}
-                        className="rounded-xl bg-yellow-500 px-3 py-1.5 text-sm font-semibold text-[#061B5C] transition hover:opacity-90 disabled:opacity-50"
-                      >
-                        Voltar para pendente
-                      </button>
-                    )}
-                  </div>
+          <div className="space-y-10">
+            {eventosDesteMes.length > 0 && (
+              <div>
+                <div className="mb-4 text-center">
+                  <h2 className="text-2xl font-bold text-white/90">
+                    Este mês
+                  </h2>
+                  <p className="mt-1 text-sm text-white/60">
+                    Eventos restantes deste mês.
+                  </p>
                 </div>
-              );
-            })}
+
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {eventosDesteMes.map((item) => (
+                    <CardAgendamento
+                      key={item.id}
+                      item={item}
+                      abertos={abertos}
+                      toggleObservacao={toggleObservacao}
+                      atualizarStatus={atualizarStatus}
+                      atualizandoId={atualizandoId}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {proximosEventos.length > 0 && (
+              <div>
+                <div className="mb-4 text-center">
+                  <h2 className="text-2xl font-bold text-white/90">
+                    Próximos eventos
+                  </h2>
+                  <p className="mt-1 text-sm text-white/60">
+                    Eventos futuros dos próximos meses.
+                  </p>
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {proximosEventos.map((item) => (
+                    <CardAgendamento
+                      key={item.id}
+                      item={item}
+                      abertos={abertos}
+                      toggleObservacao={toggleObservacao}
+                      atualizarStatus={atualizarStatus}
+                      atualizandoId={atualizandoId}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {eventosPassados.length > 0 && (
+              <div>
+                <div className="mb-4 text-center">
+                  <h2 className="text-2xl font-bold text-white/90">
+                    Eventos passados do mês
+                  </h2>
+                  <p className="mt-1 text-sm text-white/60">
+                    Eventos que já aconteceram neste mês.
+                  </p>
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {eventosPassados.map((item) => (
+                    <CardAgendamento
+                      key={item.id}
+                      item={item}
+                      abertos={abertos}
+                      toggleObservacao={toggleObservacao}
+                      atualizarStatus={atualizarStatus}
+                      atualizandoId={atualizandoId}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>

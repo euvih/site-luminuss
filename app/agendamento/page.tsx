@@ -276,9 +276,17 @@ export default function AgendamentoPage() {
                       <h3 className="mb-1 text-lg font-semibold text-white">
                         Sobre o agendamento
                       </h3>
-                      <p>
-                        Após o envio do formulário, entraremos em contato para
-                        confirmar o convite e alinhar os detalhes, ou então poderá ACOMPANHAR o status do pedido utilizando o CÓDIGO de acompanhamento gerado no botão "Acompanhar pedido"
+                      <p className="text-white/90">
+                        Após o envio do formulário, poderemos entrar em contato para confirmar o convite e alinhar os detalhes.
+                        Você também pode acompanhar o status do pedido clicando no botão{" "}
+                        <span className="text-[#F4C021] font-semibold">
+                          "Acompanhar pedido"
+                        </span>{" "}
+                        e informando o{" "}
+                        <span className="text-[#F4C021] font-semibold">
+                          código de acompanhamento
+                        </span>{" "}
+                        gerado.
                       </p>
                     </div>
 

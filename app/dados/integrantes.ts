@@ -370,12 +370,12 @@ export const categorias: Categoria[] = [
         youtube: "",
       },
       {
-        slug: "raquel",
-        nome: "Raquel",
+        slug: "Regineide",
+        nome: "Regineide",
         funcao: "Apoio",
-        foto: "/raquel.jpeg",
+        foto: "/regineide.jpeg",
         sobre:
-          "Raquel faz parte da equipe de apoio, colaborando com cuidado, organização e serviço.",
+          "Regineide faz parte da equipe de apoio, colaborando com cuidado, organização e serviço.",
         instagram: "https://instagram.com/",
         youtube: "",
       },
@@ -384,8 +384,7 @@ export const categorias: Categoria[] = [
         nome: "Vivianne",
         funcao: "Apoio",
         foto: "/vivianne.jpeg",
-        sobre:
-          "Vivianne integra a equipe de apoio, servindo com dedicação nas necessidades do ministério.",
+        sobre: "Vivianne integra a equipe de apoio, servindo com dedicação nas necessidades do ministério.",
         instagram: "https://instagram.com/",
         youtube: "",
       },
