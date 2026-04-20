@@ -483,8 +483,7 @@ const aceitosDoMes = data
               <Link
                 key={categoria.slug}
                 href={`/integrantes/${categoria.slug}`}
-                className="w-full rounded-3xl bg-white p-6 text-center shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-xl md:w-65 md:p-8"
-              >
+                className="flex w-full flex-col items-center justify-center rounded-3xl bg-white p-6 text-center shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-xl md:w-65 md:p-8"              >
                 <div className="mx-auto mb-4 h-20 w-20 overflow-hidden rounded-full bg-[#061B5C]">
                   {categoria.foto ? (
                     <img
@@ -499,8 +498,10 @@ const aceitosDoMes = data
                   )}
                 </div>
 
-                <h3 className="text-2xl font-semibold">{categoria.nome}</h3>
-              </Link>
+                <h3 className="mt-3 text-center text-lg font-semibold leading-tight">
+                  {categoria.nome}
+                </h3>              
+                </Link>
             ))}
           </div>
         </div>
