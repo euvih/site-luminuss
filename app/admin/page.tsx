@@ -103,18 +103,33 @@ function classesUrgencia(data: string) {
   return "border-white/10";
 }
 
+function eventoJaPassou(data: string) {
+  const dataEvento = converterDataParaDate(data);
+  if (!dataEvento) return false;
+
+  const hoje = new Date();
+  hoje.setHours(0, 0, 0, 0);
+
+  const evento = new Date(dataEvento);
+  evento.setHours(0, 0, 0, 0);
+
+  return evento.getTime() < hoje.getTime();
+}
+
 function CardAgendamento({
   item,
   abertos,
   toggleObservacao,
   atualizarStatus,
   atualizandoId,
+  apagarEvento,
 }: {
   item: Agendamento;
   abertos: { [key: string]: boolean };
   toggleObservacao: (id: string) => void;
   atualizarStatus: (id: string, novoStatus: string) => void;
   atualizandoId: string | null;
+  apagarEvento: (id: string) => void;
 }) {
   const tempoRestante = textoTempoRestante(item.data);
   const bordaUrgencia = classesUrgencia(item.data);
@@ -122,10 +137,13 @@ function CardAgendamento({
   const limite = 60;
   const expandido = abertos[item.id];
   const precisaBotao = texto.length > limite;
+  const bloqueado = eventoJaPassou(item.data);
 
   return (
     <div
-      className={`rounded-3xl border bg-white/10 p-3 shadow-lg backdrop-blur ${bordaUrgencia}`}
+      className={`rounded-3xl border bg-white/10 p-3 shadow-lg backdrop-blur ${bordaUrgencia} ${
+        bloqueado ? "opacity-50 grayscale" : ""
+      }`}
     >
       <div className="mb-2 flex items-center justify-between gap-2">
         <p className="text-xs font-semibold uppercase tracking-wide text-white/60">
@@ -182,7 +200,8 @@ function CardAgendamento({
           <button
             type="button"
             onClick={() => toggleObservacao(item.id)}
-            className="mt-1 text-xs font-semibold text-[#F4C021] hover:underline"
+            disabled={bloqueado}
+            className="mt-1 text-xs font-semibold text-[#F4C021] hover:underline disabled:cursor-not-allowed disabled:opacity-40"
           >
             {expandido ? "Ver menos" : "Ver mais"}
           </button>
@@ -193,8 +212,8 @@ function CardAgendamento({
         {item.status !== "aceito" && (
           <button
             onClick={() => atualizarStatus(String(item.id), "aceito")}
-            disabled={atualizandoId === String(item.id)}
-            className="rounded-xl bg-green-500 px-3 py-1.5 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-50"
+            disabled={atualizandoId === String(item.id) || bloqueado}
+            className="rounded-xl bg-green-500 px-3 py-1.5 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Aceitar
           </button>
@@ -203,8 +222,8 @@ function CardAgendamento({
         {item.status !== "recusado" && (
           <button
             onClick={() => atualizarStatus(String(item.id), "recusado")}
-            disabled={atualizandoId === String(item.id)}
-            className="rounded-xl bg-red-500 px-3 py-1.5 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-50"
+            disabled={atualizandoId === String(item.id) || bloqueado}
+            className="rounded-xl bg-red-500 px-3 py-1.5 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Recusar
           </button>
@@ -213,12 +232,20 @@ function CardAgendamento({
         {item.status !== "pendente" && (
           <button
             onClick={() => atualizarStatus(String(item.id), "pendente")}
-            disabled={atualizandoId === String(item.id)}
-            className="rounded-xl bg-yellow-500 px-3 py-1.5 text-sm font-semibold text-[#061B5C] transition hover:opacity-90 disabled:opacity-50"
+            disabled={atualizandoId === String(item.id) || bloqueado}
+            className="rounded-xl bg-yellow-500 px-3 py-1.5 text-sm font-semibold text-[#061B5C] transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Voltar para pendente
           </button>
         )}
+
+        <button
+          onClick={() => apagarEvento(String(item.id))}
+          disabled={bloqueado}
+          className="rounded-xl bg-white/10 px-3 py-1.5 text-sm font-semibold text-white transition hover:bg-white/20 disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          Apagar
+        </button>
       </div>
     </div>
   );
@@ -237,66 +264,7 @@ export default function AdminPage() {
     observacoes: "",
     status: "aceito",
   });
-  function gerarCodigoManual() {
-  const numero = Math.floor(100000 + Math.random() * 900000);
-  return `LUM-${numero}`;
-}
 
-async function adicionarEventoManual(e: React.FormEvent) {
-  e.preventDefault();
-
-  if (!formManual.igreja || !formManual.local || !formManual.data || !formManual.hora) {
-    alert("Preencha pelo menos igreja, local, data e hora.");
-    return;
-  }
-
-  setSalvandoManual(true);
-
-  try {
-    const resposta = await fetch(URL_SCRIPT, {
-      method: "POST",
-      body: JSON.stringify({
-        acao: "criarManual",
-        codigo: gerarCodigoManual(),
-        igreja: formManual.igreja,
-        responsavel: formManual.responsavel || formManual.igreja,
-        whatsapp: formManual.whatsapp,
-        local: formManual.local,
-        data: formManual.data,
-        hora: formManual.hora,
-        observacoes: formManual.observacoes,
-        status: formManual.status,
-      }),
-    });
-
-    const resultado = await resposta.json();
-
-    if (!resultado.ok) {
-      alert(resultado.error || "Não foi possível adicionar o evento.");
-      setSalvandoManual(false);
-      return;
-    }
-
-    setFormManual({
-      igreja: "",
-      responsavel: "",
-      whatsapp: "",
-      local: "",
-      data: "",
-      hora: "",
-      observacoes: "",
-      status: "aceito",
-    });
-
-    setMostrarFormularioManual(false);
-    await carregarPedidos();
-  } catch (erro) {
-    console.error("Erro ao adicionar evento manual:", erro);
-    alert("Erro ao adicionar evento manual.");
-  } finally {
-    setSalvandoManual(false);
-  }
-}
   const [codigoAdmin, setCodigoAdmin] = useState("");
   const [acessoLiberado, setAcessoLiberado] = useState(false);
   const [erro, setErro] = useState("");
@@ -323,6 +291,11 @@ async function adicionarEventoManual(e: React.FormEvent) {
     "https://script.google.com/macros/s/AKfycbzfBROjxwP4NMc4TaHmEs9OFDwdEqy8rwzbU1DjtlbXsYAUCMAwFEuTiz4jMSr7H6tIBQ/exec";
   const URL_OPENSHEET =
     "https://opensheet.elk.sh/1_EsxHvUXbh8VQnmCLOCoIbvoC1VGtyl3YMr9TiSsgD4/agendamentos";
+
+  function gerarCodigoManual() {
+    const numero = Math.floor(100000 + Math.random() * 900000);
+    return `LUM-${numero}`;
+  }
 
   function entrarNoPainel(e: React.FormEvent) {
     e.preventDefault();
@@ -356,6 +329,94 @@ async function adicionarEventoManual(e: React.FormEvent) {
       console.error("Erro ao carregar pedidos:", err);
       setAgendamentos([]);
       setLoading(false);
+    }
+  }
+
+  async function adicionarEventoManual(e: React.FormEvent) {
+    e.preventDefault();
+
+    if (
+      !formManual.igreja ||
+      !formManual.local ||
+      !formManual.data ||
+      !formManual.hora
+    ) {
+      alert("Preencha pelo menos igreja, local, data e hora.");
+      return;
+    }
+
+    setSalvandoManual(true);
+
+    try {
+      const resposta = await fetch(URL_SCRIPT, {
+        method: "POST",
+        body: JSON.stringify({
+          acao: "criarManual",
+          codigo: gerarCodigoManual(),
+          igreja: formManual.igreja,
+          responsavel: formManual.responsavel || formManual.igreja,
+          whatsapp: formManual.whatsapp,
+          local: formManual.local,
+          data: formManual.data,
+          hora: formManual.hora,
+          observacoes: formManual.observacoes,
+          status: formManual.status,
+        }),
+      });
+
+      const resultado = await resposta.json();
+
+      if (!resultado.ok) {
+        alert(resultado.error || "Não foi possível adicionar o evento.");
+        setSalvandoManual(false);
+        return;
+      }
+
+      setFormManual({
+        igreja: "",
+        responsavel: "",
+        whatsapp: "",
+        local: "",
+        data: "",
+        hora: "",
+        observacoes: "",
+        status: "aceito",
+      });
+
+      setMostrarFormularioManual(false);
+      await carregarPedidos();
+    } catch (erro) {
+      console.error("Erro ao adicionar evento manual:", erro);
+      alert("Erro ao adicionar evento manual.");
+    } finally {
+      setSalvandoManual(false);
+    }
+  }
+
+  async function apagarEvento(id: string) {
+    const confirmar = window.confirm("Tem certeza que deseja apagar este evento?");
+    if (!confirmar) return;
+
+    try {
+      const resposta = await fetch(URL_SCRIPT, {
+        method: "POST",
+        body: JSON.stringify({
+          acao: "apagarEvento",
+          id,
+        }),
+      });
+
+      const resultado = await resposta.json();
+
+      if (!resultado.ok) {
+        alert(resultado.error || "Erro ao apagar evento.");
+        return;
+      }
+
+      await carregarPedidos();
+    } catch (erro) {
+      console.error("Erro ao apagar:", erro);
+      alert("Erro ao apagar evento.");
     }
   }
 
@@ -519,7 +580,6 @@ async function adicionarEventoManual(e: React.FormEvent) {
               placeholder="Código do administrador"
               className="rounded-xl bg-white/10 px-4 py-3 outline-none placeholder:text-white/50"
             />
-            
 
             <button
               type="submit"
@@ -543,124 +603,123 @@ async function adicionarEventoManual(e: React.FormEvent) {
     <main className="min-h-screen bg-[#061B5C] px-6 py-24 text-white">
       <div className="mx-auto max-w-6xl">
         <div className="mb-12 text-center">
-  <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#F4C021]">
-    Painel admin
-  </p>
-  <h1 className="text-4xl font-bold">Todos os agendamentos</h1>
-  <p className="mt-4 text-white/80">
-    Visualização completa dos pedidos enviados pelo site.
-  </p>
-</div>
+          <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#F4C021]">
+            Painel admin
+          </p>
+          <h1 className="text-4xl font-bold">Todos os agendamentos</h1>
+          <p className="mt-4 text-white/80">
+            Visualização completa dos pedidos enviados pelo site.
+          </p>
+        </div>
 
-{/* BOTÃO DISCRETO */}
-<div className="mb-6 flex justify-center">
-  <button
-    type="button"
-    onClick={() => setMostrarFormularioManual((prev) => !prev)}
-    className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-white/80 transition hover:bg-white/15 hover:text-white"
-  >
-    {mostrarFormularioManual ? "Fechar" : "+ Adicionar manualmente"}
-  </button>
-</div>
+        <div className="mb-6 flex justify-center">
+          <button
+            type="button"
+            onClick={() => setMostrarFormularioManual((prev) => !prev)}
+            className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-white/80 transition hover:bg-white/15 hover:text-white"
+          >
+            {mostrarFormularioManual ? "Fechar" : "+ Adicionar manualmente"}
+          </button>
+        </div>
 
-{/* FORMULÁRIO MANUAL */}
-{mostrarFormularioManual && (
-  <div className="mb-8 rounded-3xl border border-white/10 bg-white/10 p-5 backdrop-blur">
-    <form onSubmit={adicionarEventoManual} className="grid gap-3">
+        {mostrarFormularioManual && (
+          <div className="mb-8 rounded-3xl border border-white/10 bg-white/10 p-5 backdrop-blur">
+            <form onSubmit={adicionarEventoManual} className="grid gap-3">
+              <div className="grid gap-3 md:grid-cols-2">
+                <input
+                  placeholder="Igreja"
+                  value={formManual.igreja}
+                  onChange={(e) =>
+                    setFormManual({ ...formManual, igreja: e.target.value })
+                  }
+                  className="rounded-xl bg-white/10 px-4 py-3"
+                />
 
-      <div className="grid gap-3 md:grid-cols-2">
-        <input
-          placeholder="Igreja"
-          value={formManual.igreja}
-          onChange={(e) =>
-            setFormManual({ ...formManual, igreja: e.target.value })
-          }
-          className="rounded-xl bg-white/10 px-4 py-3"
-        />
+                <input
+                  placeholder="Responsável"
+                  value={formManual.responsavel}
+                  onChange={(e) =>
+                    setFormManual({ ...formManual, responsavel: e.target.value })
+                  }
+                  className="rounded-xl bg-white/10 px-4 py-3"
+                />
+              </div>
 
-        <input
-          placeholder="Responsável"
-          value={formManual.responsavel}
-          onChange={(e) =>
-            setFormManual({ ...formManual, responsavel: e.target.value })
-          }
-          className="rounded-xl bg-white/10 px-4 py-3"
-        />
-      </div>
+              <div className="grid gap-3 md:grid-cols-2">
+                <input
+                  placeholder="WhatsApp"
+                  value={formManual.whatsapp}
+                  onChange={(e) =>
+                    setFormManual({ ...formManual, whatsapp: e.target.value })
+                  }
+                  className="rounded-xl bg-white/10 px-4 py-3"
+                />
 
-      <div className="grid gap-3 md:grid-cols-2">
-        <input
-          placeholder="WhatsApp"
-          value={formManual.whatsapp}
-          onChange={(e) =>
-            setFormManual({ ...formManual, whatsapp: e.target.value })
-          }
-          className="rounded-xl bg-white/10 px-4 py-3"
-        />
+                <input
+                  placeholder="Local"
+                  value={formManual.local}
+                  onChange={(e) =>
+                    setFormManual({ ...formManual, local: e.target.value })
+                  }
+                  className="rounded-xl bg-white/10 px-4 py-3"
+                />
+              </div>
 
-        <input
-          placeholder="Local"
-          value={formManual.local}
-          onChange={(e) =>
-            setFormManual({ ...formManual, local: e.target.value })
-          }
-          className="rounded-xl bg-white/10 px-4 py-3"
-        />
-      </div>
+              <div className="grid gap-3 md:grid-cols-3">
+                <input
+                  type="date"
+                  value={formManual.data}
+                  onChange={(e) =>
+                    setFormManual({ ...formManual, data: e.target.value })
+                  }
+                  className="rounded-xl bg-white/10 px-4 py-3"
+                />
 
-      <div className="grid gap-3 md:grid-cols-3">
-        <input
-          type="date"
-          value={formManual.data}
-          onChange={(e) =>
-            setFormManual({ ...formManual, data: e.target.value })
-          }
-          className="rounded-xl bg-white/10 px-4 py-3"
-        />
+                <input
+                  type="time"
+                  value={formManual.hora}
+                  onChange={(e) =>
+                    setFormManual({ ...formManual, hora: e.target.value })
+                  }
+                  className="rounded-xl bg-white/10 px-4 py-3"
+                />
 
-        <input
-          type="time"
-          value={formManual.hora}
-          onChange={(e) =>
-            setFormManual({ ...formManual, hora: e.target.value })
-          }
-          className="rounded-xl bg-white/10 px-4 py-3"
-        />
+                <select
+                  value={formManual.status}
+                  onChange={(e) =>
+                    setFormManual({ ...formManual, status: e.target.value })
+                  }
+                  className="rounded-xl bg-white/10 px-4 py-3 text-black"
+                >
+                  <option value="aceito">Aceito</option>
+                  <option value="pendente">Pendente</option>
+                  <option value="recusado">Recusado</option>
+                </select>
+              </div>
 
-        <select
-          value={formManual.status}
-          onChange={(e) =>
-            setFormManual({ ...formManual, status: e.target.value })
-          }
-          className="rounded-xl bg-white/10 px-4 py-3 text-black"
-        >
-          <option value="aceito">Aceito</option>
-          <option value="pendente">Pendente</option>
-          <option value="recusado">Recusado</option>
-        </select>
-      </div>
+              <textarea
+                rows={3}
+                placeholder="Observações"
+                value={formManual.observacoes}
+                onChange={(e) =>
+                  setFormManual({
+                    ...formManual,
+                    observacoes: e.target.value,
+                  })
+                }
+                className="rounded-xl bg-white/10 px-4 py-3"
+              />
 
-      <textarea
-        rows={3}
-        placeholder="Observações"
-        value={formManual.observacoes}
-        onChange={(e) =>
-          setFormManual({ ...formManual, observacoes: e.target.value })
-        }
-        className="rounded-xl bg-white/10 px-4 py-3"
-      />
-
-      <button
-        type="submit"
-        disabled={salvandoManual}
-        className="mt-2 rounded-xl bg-[#F4C021] px-5 py-3 font-semibold text-[#061B5C]"
-      >
-        {salvandoManual ? "Salvando..." : "Salvar evento"}
-      </button>
-    </form>
-  </div>
-)}
-        
+              <button
+                type="submit"
+                disabled={salvandoManual}
+                className="mt-2 rounded-xl bg-[#F4C021] px-5 py-3 font-semibold text-[#061B5C]"
+              >
+                {salvandoManual ? "Salvando..." : "Salvar evento"}
+              </button>
+            </form>
+          </div>
+        )}
 
         <div className="mb-5">
           <input
@@ -728,9 +787,8 @@ async function adicionarEventoManual(e: React.FormEvent) {
               {totalRecusados}
             </span>
           </button>
-
         </div>
-        
+
         {loading ? (
           <p className="text-center text-white/80">Carregando pedidos...</p>
         ) : eventosDesteMes.length === 0 &&
@@ -761,6 +819,7 @@ async function adicionarEventoManual(e: React.FormEvent) {
                       toggleObservacao={toggleObservacao}
                       atualizarStatus={atualizarStatus}
                       atualizandoId={atualizandoId}
+                      apagarEvento={apagarEvento}
                     />
                   ))}
                 </div>
@@ -787,6 +846,7 @@ async function adicionarEventoManual(e: React.FormEvent) {
                       toggleObservacao={toggleObservacao}
                       atualizarStatus={atualizarStatus}
                       atualizandoId={atualizandoId}
+                      apagarEvento={apagarEvento}
                     />
                   ))}
                 </div>
@@ -813,6 +873,7 @@ async function adicionarEventoManual(e: React.FormEvent) {
                       toggleObservacao={toggleObservacao}
                       atualizarStatus={atualizarStatus}
                       atualizandoId={atualizandoId}
+                      apagarEvento={apagarEvento}
                     />
                   ))}
                 </div>
