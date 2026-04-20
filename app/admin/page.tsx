@@ -13,7 +13,43 @@ type Agendamento = {
   hora: string;
   observacoes: string;
   status: string;
+  data_envio?: string;
 };
+
+function formatarDataHora(data: string) {
+  if (!data) return "";
+
+  // Se vier no formato brasileiro: 20/04/2026 14:32:10
+  if (data.includes("/")) {
+    const [dataParte, horaParte] = data.split(" ");
+    const [dia, mes, ano] = dataParte.split("/");
+
+    const iso = `${ano}-${mes}-${dia}T${horaParte || "00:00:00"}`;
+    const d = new Date(iso);
+
+    if (isNaN(d.getTime())) return "Data inválida";
+
+    return d.toLocaleString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  }
+
+  // fallback padrão
+  const d = new Date(data);
+  if (isNaN(d.getTime())) return "Data inválida";
+
+  return d.toLocaleString("pt-BR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
 
 function StatusBadge({ status }: { status: string }) {
   const valor = status?.toLowerCase().trim();
@@ -144,6 +180,7 @@ function CardAgendamento({
       className={`rounded-3xl border bg-white/10 p-3 shadow-lg backdrop-blur ${bordaUrgencia} ${
         bloqueado ? "opacity-50 grayscale" : ""
       }`}
+      
     >
       <div className="mb-2 flex items-center justify-between gap-2">
         <p className="text-xs font-semibold uppercase tracking-wide text-white/60">
@@ -160,6 +197,11 @@ function CardAgendamento({
             Responsável: {item.responsavel || "Não informado"}
           </p>
           <p className="mt-1 text-white/70">Código: {item.codigo || "-"}</p>
+          {item.data_envio && (
+          <p className="text-xs text-white/40 mt-1">
+            Enviado em: {formatarDataHora(item.data_envio)}h
+          </p>
+        )}
         </div>
 
         <StatusBadge status={item.status} />
@@ -394,31 +436,33 @@ export default function AdminPage() {
   }
 
   async function apagarEvento(id: string) {
-    const confirmar = window.confirm("Tem certeza que deseja apagar este evento?");
-    if (!confirmar) return;
+  const confirmar = window.confirm("Tem certeza que deseja apagar este evento?");
+  if (!confirmar) return;
 
-    try {
-      const resposta = await fetch(URL_SCRIPT, {
-        method: "POST",
-        body: JSON.stringify({
-          acao: "apagarEvento",
-          id,
-        }),
-      });
+  try {
+    const resposta = await fetch(URL_SCRIPT, {
+      method: "POST",
+      body: JSON.stringify({
+        acao: "apagarEvento",
+        id,
+      }),
+    });
 
-      const resultado = await resposta.json();
+    const resultado = await resposta.json();
 
-      if (!resultado.ok) {
-        alert(resultado.error || "Erro ao apagar evento.");
-        return;
-      }
-
-      await carregarPedidos();
-    } catch (erro) {
-      console.error("Erro ao apagar:", erro);
-      alert("Erro ao apagar evento.");
+    if (!resultado.ok) {
+      alert(resultado.error || "Erro ao apagar evento.");
+      return;
     }
+
+    setAgendamentos((prev) =>
+      prev.filter((item) => String(item.id) !== String(id))
+    );
+  } catch (erro) {
+    console.error("Erro ao apagar:", erro);
+    alert("Erro ao apagar evento.");
   }
+}
 
   useEffect(() => {
     if (!acessoLiberado) return;
@@ -607,9 +651,6 @@ export default function AdminPage() {
             Painel admin
           </p>
           <h1 className="text-4xl font-bold">Todos os agendamentos</h1>
-          <p className="mt-4 text-white/80">
-            Visualização completa dos pedidos enviados pelo site.
-          </p>
         </div>
 
         <div className="mb-6 flex justify-center">

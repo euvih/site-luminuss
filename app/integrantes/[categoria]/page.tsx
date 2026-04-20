@@ -79,8 +79,7 @@ export default async function CategoriaPage({ params }: Props) {
               <Link
                 key={index}
                 href={`/integrantes/perfil/${integrante.slug}`}
-                className={`block w-full text-center transition duration-300 hover:-translate-y-1 ${
-                  categoriaEncontrada.slug === "vocais"
+                className={`flex w-full flex-col items-center text-center transition duration-300 hover:-translate-y-1 ${                  categoriaEncontrada.slug === "vocais"
                     ? "md:w-52"
                     : "md:w-60"
                 }`}
@@ -99,11 +98,11 @@ export default async function CategoriaPage({ params }: Props) {
                   )}
                 </div>
 
-                <h2 className="text-2xl font-semibold text-white">
+                <h2 className="text-center text-2xl font-semibold leading-tight text-white">
                   {integrante.nome}
                 </h2>
 
-                <p className="mt-1 text-white/80">
+                <p className="mt-1 text-center text-white/80 leading-tight">
                   {integrante.funcao}
                 </p>
               </Link>
