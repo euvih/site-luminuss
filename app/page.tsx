@@ -559,9 +559,12 @@ const aceitosDoMes = data
 
           <div className="rounded-3xl bg-[#061B5C] p-8 text-white shadow-xl">
             <p className="mb-3 text-lg">Chave Pix</p>
-            <p className="mb-4 text-2xl font-bold text-[#F4C021]">
+            <a
+              href="mailto:mluminuss.oficial@gmail.com"
+              className="mb-4 block text-center text-lg font-bold break-words text-[#F4C021] hover:underline sm:text-xl md:text-2xl"
+            >
               mluminuss.oficial@gmail.com
-            </p>
+            </a>
             <p className="text-white/80">QR Code</p>
           </div>
         </div>
