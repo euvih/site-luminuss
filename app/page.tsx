@@ -440,7 +440,7 @@ const aceitosDoMes = data
         className="bg-[#c7d5ff] px-6 py-24 min-h-[80vh] md:min-h-screen flex items-center justify-center"
       >
         <div className="mx-auto max-w-5xl text-center px-4 space-y-6">
-          <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#e4b425]">
+          <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#d4a106]">
             Sobre o grupo
           </p>
           <h2 className="mb-6 text-4xl font-bold">Quem somos</h2>
@@ -509,7 +509,7 @@ const aceitosDoMes = data
       <section id="galeria" className="bg-[#e2e5ec] px-6 py-24">
         <div className="mx-auto max-w-6xl">
           <div className="mb-12 text-center">
-            <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#F4C021]">
+            <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#e9b310]">
               Galeria
             </p>
             <h2 className="text-4xl font-bold">Fazendo história...</h2>

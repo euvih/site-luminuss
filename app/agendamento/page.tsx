@@ -292,7 +292,7 @@ export default function AgendamentoPage() {
 
                     <div>
                       <h3 className="mb-1 text-lg font-semibold text-white">
-                        Observação (banda) 🥁
+                        Observação da banda 🥁
                       </h3>
 
                       <p className="text-white/80">
