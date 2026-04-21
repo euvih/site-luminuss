@@ -489,9 +489,33 @@ const aceitosDoMes = data
     <div className="absolute bottom-0 left-[30%] h-64 w-64 rounded-full bg-[#c9a3d0]/10 blur-3xl" />
   </div>
 
-  <div className="pointer-events-none absolute inset-0 opacity-30">
-    <div className="h-full w-full bg-[radial-gradient(circle,_rgba(255,255,255,0.9)_1px,_transparent_1px)] bg-[length:26px_26px]" />
-  </div>
+  <div className="pointer-events-none absolute inset-0 overflow-hidden">
+  <span className="estrela left-[8%] top-[12%] h-[2px] w-[2px]" />
+  <span className="estrela left-[18%] top-[24%] h-[3px] w-[3px]" />
+  <span className="estrela left-[30%] top-[10%] h-[2px] w-[2px]" />
+  <span className="estrela left-[42%] top-[18%] h-[1.5px] w-[1.5px]" />
+  <span className="estrela left-[55%] top-[8%] h-[2.5px] w-[2.5px]" />
+  <span className="estrela left-[67%] top-[22%] h-[2px] w-[2px]" />
+  <span className="estrela left-[78%] top-[14%] h-[3px] w-[3px]" />
+  <span className="estrela left-[88%] top-[28%] h-[2px] w-[2px]" />
+
+  <span className="estrela left-[12%] top-[38%] h-[2px] w-[2px]" />
+  <span className="estrela left-[24%] top-[46%] h-[3px] w-[3px]" />
+  <span className="estrela left-[36%] top-[34%] h-[2px] w-[2px]" />
+  <span className="estrela left-[49%] top-[42%] h-[1.5px] w-[1.5px]" />
+  <span className="estrela left-[62%] top-[36%] h-[2.5px] w-[2.5px]" />
+  <span className="estrela left-[74%] top-[48%] h-[2px] w-[2px]" />
+  <span className="estrela left-[84%] top-[40%] h-[3px] w-[3px]" />
+
+  <span className="estrela left-[6%] top-[62%] h-[2px] w-[2px]" />
+  <span className="estrela left-[20%] top-[70%] h-[2.5px] w-[2.5px]" />
+  <span className="estrela left-[33%] top-[58%] h-[2px] w-[2px]" />
+  <span className="estrela left-[46%] top-[76%] h-[3px] w-[3px]" />
+  <span className="estrela left-[58%] top-[64%] h-[1.5px] w-[1.5px]" />
+  <span className="estrela left-[70%] top-[72%] h-[2px] w-[2px]" />
+  <span className="estrela left-[82%] top-[60%] h-[2.5px] w-[2.5px]" />
+  <span className="estrela left-[92%] top-[78%] h-[2px] w-[2px]" />
+</div>
 
   <div className="relative mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-2">
     <div>

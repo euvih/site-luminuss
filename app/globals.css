@@ -76,3 +76,56 @@ select option {
     transform: translateX(120%);
   }
 }
+.estrela {
+  position: absolute;
+  display: block;
+  border-radius: 9999px;
+  background: white;
+  opacity: 0.85;
+  box-shadow:
+    0 0 6px rgba(255, 255, 255, 0.7),
+    0 0 12px rgba(201, 163, 208, 0.35);
+  animation: estrelaFloat 6s ease-in-out infinite,
+             estrelaPisca 3.2s ease-in-out infinite;
+}
+
+.estrela:nth-child(2n) {
+  animation-duration: 7.5s, 2.8s;
+}
+
+.estrela:nth-child(3n) {
+  animation-duration: 5.5s, 3.8s;
+}
+
+.estrela:nth-child(4n) {
+  opacity: 0.6;
+}
+
+@keyframes estrelaFloat {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate3d(1px, -2px, 0);
+  }
+  50% {
+    transform: translate3d(-1px, 1px, 0);
+  }
+  75% {
+    transform: translate3d(2px, 1px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes estrelaPisca {
+  0%, 100% {
+    opacity: 0.35;
+    filter: brightness(0.9);
+  }
+  50% {
+    opacity: 1;
+    filter: brightness(1.25);
+  }
+}
