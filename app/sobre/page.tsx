@@ -113,7 +113,7 @@ export default function SobreNosLuminuss() {
 
   const textoResumo = useMemo(
     () =>
-      "O Lúminuss é um ministério musical cristão que atua em cultos, congressos, eventos especiais e programações em igrejas, levando adoração, mensagem e esperança por meio da música.",
+      "O Ministério Lúminuss é um grupo musical da Igreja Adventista do Sétimo Dia Central de Igapó, localizado em Natal - RN. Atuamos em cultos, congressos, eventos especiais e programações em igrejas, levando adoração, mensagem e esperança por meio da música.",
     []
   );
 
@@ -167,7 +167,7 @@ export default function SobreNosLuminuss() {
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-4 flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-[#F4C021]"
+              className="mb-4 flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-[#F4C021]"
             >
               <Sparkles className="h-4 w-4" />
               Sobre nós

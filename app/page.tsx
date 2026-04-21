@@ -235,6 +235,9 @@ const aceitosDoMes = data
         <a href="#sobre" className="transition hover:text-[#F4C021]">
           Sobre
         </a>
+        <a href="#recital" className="transition hover:text-[#F4C021]">
+          Recital
+        </a>
         <a href="#integrantes" className="transition hover:text-[#F4C021]">
           Integrantes
         </a>
@@ -274,6 +277,13 @@ const aceitosDoMes = data
           className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
         >
           Sobre
+        </a>
+         <a
+          href="#recital"
+          onClick={() => setMenuAberto(false)}
+          className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
+        >
+          Recital
         </a>
         <a
           href="#integrantes"
@@ -467,6 +477,65 @@ const aceitosDoMes = data
           </div>
         </div>
       </section>
+
+
+      <section
+  id="recital"
+  className="relative overflow-hidden bg-[#070736] px-6 py-24 text-white"
+>
+  <div className="absolute inset-0">
+    <div className="absolute -top-20 left-10 h-72 w-72 rounded-full bg-[#9b4b8a]/20 blur-3xl" />
+    <div className="absolute top-1/3 right-0 h-80 w-80 rounded-full bg-[#4b2c6f]/30 blur-3xl" />
+    <div className="absolute bottom-0 left-[30%] h-64 w-64 rounded-full bg-[#c9a3d0]/10 blur-3xl" />
+  </div>
+
+  <div className="pointer-events-none absolute inset-0 opacity-30">
+    <div className="h-full w-full bg-[radial-gradient(circle,_rgba(255,255,255,0.9)_1px,_transparent_1px)] bg-[length:26px_26px]" />
+  </div>
+
+  <div className="relative mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-2">
+    <div>
+      <p className="mb-3 text-sm uppercase tracking-[0.35em] text-[#c9a3d0]">
+        Recital 2026
+      </p>
+
+      <h2 className="text-4xl font-bold leading-tight md:text-5xl">
+        Lúminuss
+        <span className="block bg-gradient-to-r from-[#9b4b8a] via-[#c9a3d0] to-[#d9d6e5] bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(155,75,138,0.5)]">
+          Galáxia
+        </span>
+      </h2>
+
+      <p className="mt-6 max-w-xl text-lg leading-8 text-white/80">
+        O recital anual do Ministério Lúminuss, realizado em comemoração ao
+        aniversário do grupo. Em 2026, a temática será{" "}
+        <span className="font-semibold text-[#c9a3d0]">Galáxia</span>, com uma
+        atmosfera inspirada no brilho, na imensidão e na beleza do universo.
+      </p>
+
+      <div className="mt-8 flex flex-wrap gap-4">
+        <Link
+          href="/recital"
+          className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-[#4b2c6f] via-[#9b4b8a] to-[#2a0f3f] px-7 py-3 font-semibold text-white shadow-[0_0_30px_rgba(155,75,138,0.35)] transition duration-300 hover:scale-105"
+        >
+          <span className="absolute inset-0 translate-x-[-120%] bg-gradient-to-r from-transparent via-white/25 to-transparent transition duration-700 group-hover:translate-x-[120%]" />
+          <span className="relative z-10">Saiba mais sobre o recital ✨</span>
+        </Link>
+      </div>
+    </div>
+
+    <div className="relative">
+      <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-[0_0_35px_rgba(155,75,138,0.2)] backdrop-blur-md">
+        <img
+          src="/recital-galaxia.jpg"
+          alt="Recital Lúminuss Galáxia"
+          className="h-[420px] w-full rounded-[1.4rem] object-cover"
+        />
+        <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-t from-[#070736]/70 via-transparent to-transparent" />
+      </div>
+    </div>
+  </div>
+</section>
 
       <section id="integrantes" className="bg-[#edf1fd] px-6 py-24">
         <div className="mx-auto max-w-6xl">
