@@ -274,7 +274,7 @@ export default function AgendamentoPage() {
                   <div className="mt-6 space-y-5 text-sm leading-relaxed text-white/90">
                     <div>
                       <h3 className="mb-1 text-lg font-semibold text-white">
-                        Sobre o agendamento
+                        Sobre o agendamento 📅
                       </h3>
                       <p className="text-white/90">
                         Após o envio do formulário, poderemos entrar em contato para confirmar o convite e alinhar os detalhes.
@@ -290,10 +290,21 @@ export default function AgendamentoPage() {
                       </p>
                     </div>
 
+                    <div>
+                      <h3 className="mb-1 text-lg font-semibold text-white">
+                        Observação (banda) 🥁
+                      </h3>
+
+                      <p className="text-white/80">
+                        Nosso grupo utiliza banda completa, com instrumentos como{" "}
+                        <span className="font-semibold text-[#F4C021]">bateria</span>. Sendo assim,
+                        só conseguimos atender convites em igrejas que estejam de acordo com essa formação.
+                      </p>
+                    </div>
 
                     <div>
                       <h3 className="mb-1 text-lg font-semibold text-white">
-                        Locais mais distantes
+                        Locais mais distantes 📍
                       </h3>
                       <p>
                         Para convites em locais mais distantes, é importante

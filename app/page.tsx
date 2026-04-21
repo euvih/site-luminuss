@@ -261,8 +261,7 @@ const aceitosDoMes = data
         menuAberto ? "max-h-96 pt-4 opacity-100" : "max-h-0 opacity-0"
       }`}
     >
-      <div className="mt-3 rounded-2xl border border-white/10 bg-white/10 p-3 shadow-lg backdrop-blur">
-        <a
+        <div className="mt-3 rounded-2xl border border-white/10 bg-[#061B5C] p-3 shadow-lg">        <a
           href="#inicio"
           onClick={() => setMenuAberto(false)}
           className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"

@@ -25,7 +25,7 @@ export const categorias: Categoria[] = [
       {
         slug: "reginaldo-direcao",
         nome: "Reginaldo",
-        funcao: "Diretor",
+        funcao: "Diretor geral",
         foto: "/reginaldo.jpeg",
         sobre:
           "Reginaldo faz parte da direção do ministério, coordenando a organização e a visão do grupo.",
@@ -82,7 +82,7 @@ export const categorias: Categoria[] = [
       {
         slug: "djanilson",
         nome: "Djanilson",
-        funcao: "Tenor",
+        funcao: "Tenor/capelão",
         foto: "/djanilson.jpeg",
         sobre:
           "Djanilson integra o vocal como tenor, contribuindo para a harmonia e força das apresentações.",
@@ -189,6 +189,16 @@ export const categorias: Categoria[] = [
         instagram: "https://instagram.com/",
         youtube: "",
       },
+      {
+        slug: "eudes",
+        nome: "Eudes",
+        funcao: "Tenor",
+        foto: "/eudes.jpeg",
+        sobre:
+          "Eudes participa da sonoplastia e também do vocal, contribuindo em diferentes áreas do ministério.",
+        instagram: "https://instagram.com/",
+        youtube: "",
+      },
     ],
   },
   {
@@ -268,7 +278,7 @@ export const categorias: Categoria[] = [
       {
         slug: "eudes",
         nome: "Eudes",
-        funcao: "Sonoplasta/Vocal",
+        funcao: "Sonoplasta/Vocal/Orador",
         foto: "/eudes.jpeg",
         sobre:
           "Eudes participa da sonoplastia e também do vocal, contribuindo em diferentes áreas do ministério.",

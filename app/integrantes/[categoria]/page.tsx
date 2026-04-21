@@ -78,11 +78,12 @@ export default async function CategoriaPage({ params }: Props) {
             {categoriaEncontrada.integrantes.map((integrante, index) => (
               <Link
                 key={index}
-                href={`/integrantes/perfil/${integrante.slug}`}
-                className={`flex w-full flex-col items-center text-center transition duration-300 hover:-translate-y-1 ${                  categoriaEncontrada.slug === "vocais"
-                    ? "md:w-52"
-                    : "md:w-60"
-                }`}
+                href={`/integrantes/perfil/${integrante.slug}?categoria=${categoriaEncontrada.slug}`}
+                className={`flex w-full flex-col items-center text-center transition duration-300 hover:-translate-y-1 ${
+                categoriaEncontrada.slug === "vocais"
+                  ? "md:w-52"
+                  : "md:w-60"
+              }`}
               >
                 <div className="mx-auto mb-2 h-36 w-36 overflow-hidden rounded-full bg-[#0b2a87]">
                   {integrante.foto ? (
