@@ -3,30 +3,49 @@ import Link from "next/link";
 import { FaArrowLeft, FaInstagram } from "react-icons/fa";
 
 export default function RecitalPage() {
+  const estrelas = Array.from({ length: 1000 }, (_, i) => {
+    const size = Math.random() * 2.2 + 1;
+    return {
+      id: i,
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      width: `${size}px`,
+      height: `${size}px`,
+      animationDelay: `${Math.random() * 4}s`,
+      animationDuration: `${2 + Math.random() * 3}s`,
+      opacity: 0.4 + Math.random() * 0.6,
+    };
+  });
+
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#6f51a8] px-6 pb-20 pt-28 text-white md:pt-32">
-        {/* estrelas animadas */}
-<div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-  {[...Array(250)].map((_, i) => (
-    <span
-      key={i}
-      className="estrela"
-      style={{
-        left: `${Math.random() * 100}%`,
-        top: `${Math.random() * 100}%`,
-        width: `${Math.random() * 2 + 1}px`,
-        height: `${Math.random() * 2 + 1}px`,
-      }}
-    />
-  ))}
-</div>
+      {/* fundo cosmos */}
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+        <div className="poeira-cosmica" />
+        <div className="nevoa-estelar" />
 
-      <div className="absolute inset-0">
+        {estrelas.map((estrela) => (
+          <span
+            key={estrela.id}
+            className="estrela"
+            style={{
+              left: estrela.left,
+              top: estrela.top,
+              width: estrela.width,
+              height: estrela.height,
+              opacity: estrela.opacity,
+              animationDelay: estrela.animationDelay,
+              animationDuration: estrela.animationDuration,
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="pointer-events-none absolute inset-0">
         <div className="absolute -top-32 left-0 h-[420px] w-[420px] rounded-full bg-purple-500/20 blur-3xl" />
         <div className="absolute top-[25%] right-[-80px] h-[380px] w-[380px] rounded-full bg-blue-500/20 blur-3xl" />
         <div className="absolute bottom-[-80px] left-[28%] h-[320px] w-[320px] rounded-full bg-fuchsia-400/10 blur-3xl" />
       </div>
-
 
       <Link
         href="/#recital"
@@ -35,10 +54,9 @@ export default function RecitalPage() {
         <FaArrowLeft className="text-sm md:text-lg" />
       </Link>
 
-      <section className="relative mx-auto max-w-6xl">
+      <section className="relative z-10 mx-auto max-w-6xl">
         <div className="grid items-center gap-12 md:grid-cols-2">
           <div>
-            
             <p className="mb-3 text-sm uppercase tracking-[0.35em] text-[#c8a8ff]">
               Evento anual 2026
             </p>
@@ -51,9 +69,10 @@ export default function RecitalPage() {
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-white/80">
-              Uma noite especial em comemoração ao aniversário do Ministério Lúminuss.
-            Nesta edição, o recital convida o público a mergulhar em um universo de sensações,
-            inspirado na delicadeza, na profundidade e na beleza dos sonhos.
+              Uma noite especial em comemoração ao aniversário do Ministério
+              Lúminuss. Nesta edição, o recital convida o público a mergulhar em
+              um universo de sensações, inspirado na delicadeza, na profundidade
+              e na beleza dos sonhos.
             </p>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
@@ -85,28 +104,37 @@ export default function RecitalPage() {
         </div>
       </section>
 
-      <section className="relative mx-auto mt-24 max-w-6xl">
+      <section className="relative z-10 mx-auto mt-24 max-w-6xl">
         <div className="grid gap-6 md:grid-cols-3">
           <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-md">
-            <h2 className="text-xl font-semibold text-[#c8a8ff]">Sobre o recital</h2>
+            <h2 className="text-xl font-semibold text-[#c8a8ff]">
+              Sobre o recital
+            </h2>
             <p className="mt-4 leading-7 text-white/80">
-              O recital é realizado todos os anos em comemoração ao aniversário do Ministério Lúminuss,
-  sempre com uma temática especial que transforma o ambiente e a experiência vivida.
-  Cada edição é única — e feita para ser sentida.
+              O recital é realizado todos os anos em comemoração ao aniversário
+              do Ministério Lúminuss, sempre com uma temática especial que
+              transforma o ambiente e a experiência vivida. Cada edição é única
+              — e feita para ser sentida.
             </p>
           </div>
 
           <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-md">
-            <h2 className="text-xl font-semibold text-[#c8a8ff]">Tema deste ano</h2>
+            <h2 className="text-xl font-semibold text-[#c8a8ff]">
+              Tema deste ano
+            </h2>
             <p className="mt-4 leading-7 text-white/80">
-            Em 2026, o recital será marcado pelo tema <span className="font-semibold text-[#d9d6e5]">Sonhos</span>,
-            trazendo uma atmosfera envolvente, com tons suaves, brilho e elementos que remetem
-            ao imaginário, ao silêncio e às emoções mais profundas.
+              Em 2026, o recital será marcado pelo tema{" "}
+              <span className="font-semibold text-[#d9d6e5]">Sonhos</span>,
+              trazendo uma atmosfera envolvente, com tons suaves, brilho e
+              elementos que remetem ao imaginário, ao silêncio e às emoções mais
+              profundas.
             </p>
           </div>
 
           <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-md">
-            <h2 className="text-xl font-semibold text-[#c8a8ff]">Mais informações</h2>
+            <h2 className="text-xl font-semibold text-[#c8a8ff]">
+              Mais informações
+            </h2>
             <p className="mt-4 leading-7 text-white/80">
               Em breve, esta página poderá receber data, horário, local,
               contagem regressiva, galeria e outras informações especiais sobre
@@ -116,7 +144,7 @@ export default function RecitalPage() {
         </div>
       </section>
 
-      <section className="relative mx-auto mt-24 max-w-4xl text-center">
+      <section className="relative z-10 mx-auto mt-24 max-w-4xl text-center">
         <div className="rounded-[2rem] border border-white/10 bg-white/5 px-6 py-10 backdrop-blur-md">
           <p className="text-sm uppercase tracking-[0.35em] text-[#c8a8ff]">
             Acompanhe novidades
