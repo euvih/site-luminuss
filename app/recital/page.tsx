@@ -3,7 +3,7 @@ import { FaArrowLeft, FaInstagram } from "react-icons/fa";
 
 export default function RecitalPage() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#6b275e] px-6 pb-20 pt-28 text-white md:pt-32">
+    <main className="relative min-h-screen overflow-hidden bg-[#7e2e7e] px-6 pb-20 pt-28 text-white md:pt-32">
         
       <div className="absolute inset-0">
         <div className="absolute -top-32 left-0 h-[420px] w-[420px] rounded-full bg-purple-500/20 blur-3xl" />

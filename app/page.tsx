@@ -533,7 +533,7 @@ const aceitosDoMes = data
       <p className="mt-6 max-w-xl text-lg leading-8 text-white/80">
         O recital anual do Ministério Lúminuss, realizado em comemoração ao
         aniversário do grupo. Em 2026, a temática será{" "}
-        <span className="font-semibold text-[#c9a3d0]">Sonho</span>, convidando todos a viver uma experiência leve, profunda e inspiradora, onde a música
+        <span className="font-semibold text-[#c9a3d0]">Sonhos</span>, convidando todos a viver uma experiência leve, profunda e inspiradora, onde a música
   encontra aquilo que muitas vezes só conseguimos sentir… e não explicar.
       </p>
 
