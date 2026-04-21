@@ -1,19 +1,32 @@
+"use client";
 import Link from "next/link";
 import { FaArrowLeft, FaInstagram } from "react-icons/fa";
 
 export default function RecitalPage() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#8c51a8] px-6 pb-20 pt-28 text-white md:pt-32">
-        
+        {/* estrelas animadas */}
+<div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+  {[...Array(250)].map((_, i) => (
+    <span
+      key={i}
+      className="estrela"
+      style={{
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+        width: `${Math.random() * 2 + 1}px`,
+        height: `${Math.random() * 2 + 1}px`,
+      }}
+    />
+  ))}
+</div>
+
       <div className="absolute inset-0">
         <div className="absolute -top-32 left-0 h-[420px] w-[420px] rounded-full bg-purple-500/20 blur-3xl" />
         <div className="absolute top-[25%] right-[-80px] h-[380px] w-[380px] rounded-full bg-blue-500/20 blur-3xl" />
         <div className="absolute bottom-[-80px] left-[28%] h-[320px] w-[320px] rounded-full bg-fuchsia-400/10 blur-3xl" />
       </div>
 
-      <div className="pointer-events-none absolute inset-0 opacity-30">
-        <div className="h-full w-full bg-[radial-gradient(circle,_rgba(255,255,255,0.85)_1px,_transparent_1px)] bg-[length:24px_24px]" />
-      </div>
 
       <Link
         href="/#recital"
