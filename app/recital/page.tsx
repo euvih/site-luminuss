@@ -3,7 +3,7 @@ import { FaArrowLeft, FaInstagram } from "react-icons/fa";
 
 export default function RecitalPage() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#040816] px-6 pb-20 pt-28 text-white md:pt-32">
+    <main className="relative min-h-screen overflow-hidden bg-[#7a2568] px-6 pb-20 pt-28 text-white md:pt-32">
         
       <div className="absolute inset-0">
         <div className="absolute -top-32 left-0 h-[420px] w-[420px] rounded-full bg-purple-500/20 blur-3xl" />
@@ -27,7 +27,7 @@ export default function RecitalPage() {
           <div>
             
             <p className="mb-3 text-sm uppercase tracking-[0.35em] text-[#c8a8ff]">
-              Recital anual 2026
+              Evento anual 2026
             </p>
 
             <h1 className="text-5xl font-bold leading-tight md:text-6xl">
