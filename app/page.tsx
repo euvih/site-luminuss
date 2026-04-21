@@ -502,7 +502,7 @@ const aceitosDoMes = data
       <h2 className="text-4xl font-bold leading-tight md:text-5xl">
         Lúminuss
         <span className="block bg-gradient-to-r from-[#9b4b8a] via-[#c9a3d0] to-[#d9d6e5] bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(155,75,138,0.5)]">
-          Galáxia
+          36 ANOS
         </span>
       </h2>
 
@@ -527,7 +527,7 @@ const aceitosDoMes = data
     <div className="relative">
       <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-[0_0_35px_rgba(155,75,138,0.2)] backdrop-blur-md">
         <img
-          src="/recital-galaxia.jpg"
+          src="/recital-galaxia.jpeg"
           alt="Recital Lúminuss Galáxia"
           className="h-[420px] w-full rounded-[1.4rem] object-cover"
         />

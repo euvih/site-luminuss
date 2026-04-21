@@ -62,7 +62,7 @@ export default function RecitalPage() {
           <div className="relative">
             <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-3 shadow-[0_0_40px_rgba(96,165,250,0.16)] backdrop-blur-md">
               <img
-                src="/recital-galaxia.jpeg"
+                src="/faelton.galaxia.jpeg"
                 alt="Arte do recital Lúminuss Galáxia"
                 className="h-[500px] w-full rounded-[1.4rem] object-cover"
               />
@@ -126,9 +126,9 @@ export default function RecitalPage() {
 
             <Link
               href="/agendamento"
-              className="rounded-full border border-white/20 bg-white/10 px-6 py-3 font-semibold text-white transition hover:bg-white/20"
+              className="rounded-full border border-white/20 bg-black/70 px-6 py-3 font-semibold text-white transition hover:bg-white/20"
             >
-              Ir para agendamento
+              ADQUIRIR INGRESSO
             </Link>
           </div>
         </div>
