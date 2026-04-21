@@ -4,6 +4,7 @@ import { FaArrowLeft, FaInstagram } from "react-icons/fa";
 export default function RecitalPage() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#040816] px-6 pb-20 pt-28 text-white md:pt-32">
+        
       <div className="absolute inset-0">
         <div className="absolute -top-32 left-0 h-[420px] w-[420px] rounded-full bg-purple-500/20 blur-3xl" />
         <div className="absolute top-[25%] right-[-80px] h-[380px] w-[380px] rounded-full bg-blue-500/20 blur-3xl" />
@@ -24,22 +25,22 @@ export default function RecitalPage() {
       <section className="relative mx-auto max-w-6xl">
         <div className="grid items-center gap-12 md:grid-cols-2">
           <div>
+            
             <p className="mb-3 text-sm uppercase tracking-[0.35em] text-[#c8a8ff]">
               Recital anual 2026
             </p>
 
             <h1 className="text-5xl font-bold leading-tight md:text-6xl">
-              Lúminuss
+              Recital
               <span className="block bg-gradient-to-r from-[#c084fc] via-[#60a5fa] to-white bg-clip-text text-transparent drop-shadow-[0_0_18px_rgba(168,85,247,0.45)]">
-                Galáxia
+                Sonhos
               </span>
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-white/80">
-              Uma noite especial em comemoração ao aniversário do Ministério
-              Lúminuss. Nesta edição, o recital convida o público a viver uma
-              experiência inspirada na grandeza do universo, com brilho, música
-              e uma atmosfera marcante.
+              Uma noite especial em comemoração ao aniversário do Ministério Lúminuss.
+            Nesta edição, o recital convida o público a mergulhar em um universo de sensações,
+            inspirado na delicadeza, na profundidade e na beleza dos sonhos.
             </p>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
@@ -47,7 +48,7 @@ export default function RecitalPage() {
                 <p className="text-sm uppercase tracking-wide text-[#c8a8ff]">
                   Tema
                 </p>
-                <p className="mt-2 text-xl font-semibold">Galáxia ✨</p>
+                <p className="mt-2 text-xl font-semibold">Sonhos ✨</p>
               </div>
 
               <div className="rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-md">
@@ -76,19 +77,18 @@ export default function RecitalPage() {
           <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-md">
             <h2 className="text-xl font-semibold text-[#c8a8ff]">Sobre o recital</h2>
             <p className="mt-4 leading-7 text-white/80">
-              O recital é realizado todos os anos em comemoração ao aniversário
-              do Ministério Lúminuss, sempre com uma temática especial que
-              inspira o visual, a atmosfera e a identidade do evento.
+              O recital é realizado todos os anos em comemoração ao aniversário do Ministério Lúminuss,
+  sempre com uma temática especial que transforma o ambiente e a experiência vivida.
+  Cada edição é única — e feita para ser sentida.
             </p>
           </div>
 
           <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-md">
             <h2 className="text-xl font-semibold text-[#c8a8ff]">Tema deste ano</h2>
             <p className="mt-4 leading-7 text-white/80">
-              Em 2026, o recital será marcado pelo tema{" "}
-              <span className="font-semibold text-white">Galáxia</span>, com
-              tons de roxo, azul escuro, brilho e elementos que remetem à
-              beleza do universo.
+            Em 2026, o recital será marcado pelo tema <span className="font-semibold text-[#d9d6e5]">Sonhos</span>,
+            trazendo uma atmosfera envolvente, com tons suaves, brilho e elementos que remetem
+            ao imaginário, ao silêncio e às emoções mais profundas.
             </p>
           </div>
 
@@ -110,7 +110,7 @@ export default function RecitalPage() {
           </p>
 
           <h2 className="mt-4 text-3xl font-bold md:text-4xl">
-            Uma noite para contemplar, sentir e viver a música.
+            Uma noite para contemplar e sentir Jesus através do louvor.
           </h2>
 
           <div className="mt-8 flex flex-wrap justify-center gap-4">
