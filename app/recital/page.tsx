@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FaArrowLeft, FaInstagram } from "react-icons/fa";
 
 export default function RecitalPage() {
-  const estrelas = Array.from({ length: 1000 }, (_, i) => {
+  const estrelas = Array.from({ length: 900 }, (_, i) => {
     const size = Math.random() * 2.2 + 1;
     return {
       id: i,
@@ -68,7 +68,7 @@ export default function RecitalPage() {
               </span>
             </h1>
 
-            <p className="mt-6 max-w-xl text-lg leading-8 text-white/80">
+            <p className="mt-6 max-w-xl text-lg leading-8 text-white/100">
               Uma noite especial em comemoração ao aniversário do Ministério
               Lúminuss. Nesta edição, o recital convida o público a mergulhar em
               um universo de sensações, inspirado na delicadeza, na profundidade
