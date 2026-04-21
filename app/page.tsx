@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { categorias } from "./dados/integrantes";
@@ -71,6 +72,8 @@ useEffect(() => {
     observacoes: "",
   });
 
+  const pathname = usePathname();
+  const esconderHeaderMobile = pathname === "/recital";
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [mostrarMaisFotos, setMostrarMaisFotos] = useState(false);
   const [agenda, setAgenda] = useState<any[]>([]);
@@ -209,7 +212,9 @@ const aceitosDoMes = data
   return (
     <main className="bg-white text-[#061B5C]">
       <header
-  className={`fixed top-0 left-0 z-50 w-full transition-all duration-300 ${
+  className={`fixed top-0 left-0 z-50 w-full transition-all duration-300 
+  ${esconderHeaderMobile ? "hidden md:flex" : ""}
+  ${
     scrollAtivo
       ? "bg-transparent backdrop-blur-[0.1px] border-b border-white/10"
       : "bg-transparent border-b border-transparent"

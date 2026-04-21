@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FaArrowLeft, FaInstagram } from "react-icons/fa";
 
 export default function RecitalPage() {
-  const estrelas = Array.from({ length: 900 }, (_, i) => {
+  const estrelas = Array.from({ length: 650 }, (_, i) => {
     const size = Math.random() * 2.2 + 1;
     return {
       id: i,
@@ -80,7 +80,7 @@ export default function RecitalPage() {
                 <p className="text-sm uppercase tracking-wide text-[#c8a8ff]">
                   Tema
                 </p>
-                <p className="mt-2 text-xl font-semibold">Sonhos ✨</p>
+                <p className="mt-2 text-xl font-semibold">Sonhos</p>
               </div>
 
               <div className="rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-md">
