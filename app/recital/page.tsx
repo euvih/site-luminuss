@@ -4,7 +4,7 @@ import { FaArrowLeft, FaInstagram } from "react-icons/fa";
 
 export default function RecitalPage() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#8c51a8] px-6 pb-20 pt-28 text-white md:pt-32">
+    <main className="relative min-h-screen overflow-hidden bg-[#6f51a8] px-6 pb-20 pt-28 text-white md:pt-32">
         {/* estrelas animadas */}
 <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
   {[...Array(250)].map((_, i) => (
