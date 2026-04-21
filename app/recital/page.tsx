@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FaArrowLeft, FaInstagram } from "react-icons/fa";
 
 export default function RecitalPage() {
-  const estrelas = Array.from({ length: 650 }, (_, i) => {
+  const estrelas = Array.from({ length: 520 }, (_, i) => {
     const size = Math.random() * 2.2 + 1;
     return {
       id: i,
@@ -49,7 +49,7 @@ export default function RecitalPage() {
 
       <Link
         href="/#recital"
-        className="fixed left-4 top-20 z-50 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-lg backdrop-blur-md transition hover:scale-110 hover:bg-[#F4C021]/80 hover:text-[#061B5C] md:left-6 md:top-24 md:h-12 md:w-12"
+        className="fixed left-4 top-6 z-50 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-lg backdrop-blur-md transition hover:scale-110 hover:bg-[#F4C021]/80 hover:text-[#061B5C] md:left-6 md:top-24 md:h-12 md:w-12"
       >
         <FaArrowLeft className="text-sm md:text-lg" />
       </Link>
