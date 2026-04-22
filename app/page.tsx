@@ -530,7 +530,7 @@ const aceitosDoMes = data
 
       <h2 className="text-4xl font-bold leading-tight md:text-5xl">
         Lúminuss
-        <span className="block bg-gradient-to-r from-[#9b4b8a] via-[#c9a3d0] to-[#d9d6e5] bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(155,75,138,0.5)]">
+        <span className="block bg-gradient-to-r from-[#9b4b8a] via-[#b88cc0] to-[#d9d6e5] bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(155,75,138,0.5)]">
           36 ANOS
         </span>
       </h2>
