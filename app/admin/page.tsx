@@ -741,7 +741,7 @@ export default function AdminPage() {
           <h1 className="text-4xl font-bold">Todos os agendamentos</h1>
         </div>
 
-        <div className="mb-6 flex items-center justify-center gap-3">
+        <div className="mb-3 flex items-center justify-center gap-3">
   <button
     type="button"
     onClick={() => setMostrarFormularioManual((prev) => !prev)}
@@ -861,7 +861,7 @@ export default function AdminPage() {
           </div>
         )}
 
-<div className="mb-5 flex items-center justify-center gap-3">
+<div className="mb-3 flex items-center justify-center gap-3">
   <div className="group flex h-11 w-[150px] items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 backdrop-blur transition focus-within:border-white/25 focus-within:bg-white/15">
     <FiSearch className="shrink-0 text-sm text-white/60" />
 
@@ -903,7 +903,7 @@ export default function AdminPage() {
   </div>
 </div>
 
-        <div className="mb-8 mx-auto grid max-w-[340px] grid-cols-3 gap-2">
+        <div className="mb-9 mx-auto grid max-w-[340px] grid-cols-3 gap-2">
   <button
     onClick={() => setFiltroStatus("todos")}
     className={`flex h-11 items-center justify-center gap-1 rounded-full px-2 text-sm font-medium transition ${
