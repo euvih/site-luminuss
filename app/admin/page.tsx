@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { FiSearch, FiSliders, FiX } from "react-icons/fi";
 
 type Agendamento = {
   id: string;
@@ -16,7 +17,7 @@ type Agendamento = {
   data_envio?: string;
 };
 
-type Ordenacao = "data_evento" | "envio_recente" | "pendentes_primeiro";
+type Ordenacao = "padrao" | "envio_recente";
 
 function formatarDataHora(data: string) {
   if (!data) return "";
@@ -348,7 +349,7 @@ export default function AdminPage() {
   const [filtroStatus, setFiltroStatus] = useState("todos");
   const [abertos, setAbertos] = useState<{ [key: string]: boolean }>({});
   const [busca, setBusca] = useState("");
-  const [ordenacao, setOrdenacao] = useState<Ordenacao>("data_evento");
+  const [ordenacao, setOrdenacao] = useState<Ordenacao>("padrao");
 
   const CODIGO_CORRETO = "LUMADMIN2026";
   const URL_SCRIPT =
@@ -363,11 +364,7 @@ export default function AdminPage() {
 
     if (filtroSalvo) setFiltroStatus(filtroSalvo);
     if (buscaSalva) setBusca(buscaSalva);
-    if (
-      ordenacaoSalva === "data_evento" ||
-      ordenacaoSalva === "envio_recente" ||
-      ordenacaoSalva === "pendentes_primeiro"
-    ) {
+    if (ordenacaoSalva === "padrao" || ordenacaoSalva === "envio_recente") {
       setOrdenacao(ordenacaoSalva);
     }
   }, []);
@@ -580,6 +577,7 @@ export default function AdminPage() {
     proximosEventos,
     eventosPassados,
     eventosVisiveis,
+    listaPorEnvio,
   } = useMemo(() => {
     const termo = busca.toLowerCase().trim();
 
@@ -588,64 +586,46 @@ export default function AdminPage() {
       return item.status?.toLowerCase().trim() === filtroStatus;
     };
 
-    const comparar = (a: Agendamento, b: Agendamento) => {
-      if (ordenacao === "pendentes_primeiro") {
-        const pesoStatus = (status: string) => {
-          const valor = status?.toLowerCase().trim();
-          if (valor === "pendente") return 0;
-          if (valor === "aceito") return 1;
-          if (valor === "recusado") return 2;
-          return 3;
-        };
+    const filtrados = agendamentos.filter((item) => {
+      if (!correspondeAoFiltro(item)) return false;
+      if (!termo) return true;
 
-        const diffStatus = pesoStatus(a.status) - pesoStatus(b.status);
-        if (diffStatus !== 0) return diffStatus;
+      const textoCompleto = [
+        item.igreja,
+        item.responsavel,
+        item.codigo,
+        item.local,
+        item.whatsapp,
+        item.data,
+        item.observacoes,
+      ]
+        .join(" ")
+        .toLowerCase();
 
-        const dataA = converterDataParaDate(a.data);
-        const dataB = converterDataParaDate(b.data);
-        if (!dataA && !dataB) return 0;
-        if (!dataA) return 1;
-        if (!dataB) return -1;
-        return dataA.getTime() - dataB.getTime();
-      }
+      return textoCompleto.includes(termo);
+    });
 
-      if (ordenacao === "envio_recente") {
-        const envioA = converterDataEnvioParaDate(a.data_envio);
-        const envioB = converterDataEnvioParaDate(b.data_envio);
-        if (!envioA && !envioB) return 0;
-        if (!envioA) return 1;
-        if (!envioB) return -1;
-        return envioB.getTime() - envioA.getTime();
-      }
-
+    const porDataEvento = [...filtrados].sort((a, b) => {
       const dataA = converterDataParaDate(a.data);
       const dataB = converterDataParaDate(b.data);
+
       if (!dataA && !dataB) return 0;
       if (!dataA) return 1;
       if (!dataB) return -1;
+
       return dataA.getTime() - dataB.getTime();
-    };
+    });
 
-    const filtrados = agendamentos
-      .filter((item) => {
-        if (!correspondeAoFiltro(item)) return false;
-        if (!termo) return true;
+    const porDataEnvio = [...filtrados].sort((a, b) => {
+      const envioA = converterDataEnvioParaDate(a.data_envio);
+      const envioB = converterDataEnvioParaDate(b.data_envio);
 
-        const textoCompleto = [
-          item.igreja,
-          item.responsavel,
-          item.codigo,
-          item.local,
-          item.whatsapp,
-          item.data,
-          item.observacoes,
-        ]
-          .join(" ")
-          .toLowerCase();
+      if (!envioA && !envioB) return 0;
+      if (!envioA) return 1;
+      if (!envioB) return -1;
 
-        return textoCompleto.includes(termo);
-      })
-      .sort(comparar);
+      return envioB.getTime() - envioA.getTime();
+    });
 
     const hoje = new Date();
     hoje.setHours(0, 0, 0, 0);
@@ -653,7 +633,7 @@ export default function AdminPage() {
     const mesAtual = hoje.getMonth();
     const anoAtual = hoje.getFullYear();
 
-    const eventosDesteMes = filtrados.filter((item) => {
+    const eventosDesteMes = porDataEvento.filter((item) => {
       const dataEvento = converterDataParaDate(item.data);
       if (!dataEvento) return false;
 
@@ -667,7 +647,7 @@ export default function AdminPage() {
       );
     });
 
-    const proximosEventos = filtrados.filter((item) => {
+    const proximosEventos = porDataEvento.filter((item) => {
       const dataEvento = converterDataParaDate(item.data);
       if (!dataEvento) return false;
 
@@ -680,7 +660,7 @@ export default function AdminPage() {
       );
     });
 
-    const eventosPassados = filtrados.filter((item) => {
+    const eventosPassados = porDataEvento.filter((item) => {
       const dataEvento = converterDataParaDate(item.data);
       if (!dataEvento) return false;
 
@@ -694,17 +674,17 @@ export default function AdminPage() {
       );
     });
 
-    const eventosVisiveis = [
-      ...eventosDesteMes,
-      ...proximosEventos,
-      ...eventosPassados,
-    ];
+    const eventosVisiveis =
+      ordenacao === "envio_recente"
+        ? porDataEnvio
+        : [...eventosDesteMes, ...proximosEventos, ...eventosPassados];
 
     return {
       eventosDesteMes,
       proximosEventos,
       eventosPassados,
       eventosVisiveis,
+      listaPorEnvio: porDataEnvio,
     };
   }, [agendamentos, filtroStatus, busca, ordenacao]);
 
@@ -882,30 +862,46 @@ export default function AdminPage() {
           </div>
         )}
 
-        <div className="mb-5 grid gap-3 md:grid-cols-[1fr_260px]">
-          <input
-            type="text"
-            value={busca}
-            onChange={(e) => setBusca(e.target.value)}
-            placeholder="Buscar por igreja, responsável, código, local, WhatsApp, observações..."
-            className="w-full rounded-2xl bg-white/10 px-4 py-3 outline-none placeholder:text-white/50"
-          />
+        <div className="mb-5 flex flex-wrap items-center justify-center gap-2">
+          <div className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-2 backdrop-blur transition focus-within:border-white/25 focus-within:bg-white/15">
+            <FiSearch className="text-sm text-white/60" />
 
-          <select
-            value={ordenacao}
-            onChange={(e) => setOrdenacao(e.target.value as Ordenacao)}
-            className="rounded-2xl bg-white/10 px-4 py-3 text-white outline-none"
-          >
-            <option value="data_evento" className="text-black">
-              Ordenar por data do evento
-            </option>
-            <option value="envio_recente" className="text-black">
-              Ordenar por envio mais recente
-            </option>
-            <option value="pendentes_primeiro" className="text-black">
-              Ordenar por pendentes primeiro
-            </option>
-          </select>
+            <input
+              type="text"
+              value={busca}
+              onChange={(e) => setBusca(e.target.value)}
+              placeholder="Buscar evento"
+              className="w-32 bg-transparent text-sm text-white outline-none placeholder:text-white/45 sm:w-40"
+            />
+
+            {busca && (
+              <button
+                type="button"
+                onClick={() => setBusca("")}
+                className="text-white/50 transition hover:text-white"
+                aria-label="Limpar busca"
+              >
+                <FiX className="text-sm" />
+              </button>
+            )}
+          </div>
+
+          <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-2 backdrop-blur">
+            <FiSliders className="text-sm text-white/60" />
+
+            <select
+              value={ordenacao}
+              onChange={(e) => setOrdenacao(e.target.value as Ordenacao)}
+              className="bg-transparent text-sm text-white outline-none"
+            >
+              <option value="padrao" className="text-black">
+                Ordem padrão
+              </option>
+              <option value="envio_recente" className="text-black">
+                Data/Envio
+              </option>
+            </select>
+          </div>
         </div>
 
         <div className="mb-8 flex flex-wrap justify-center gap-3">
@@ -972,6 +968,28 @@ export default function AdminPage() {
           <p className="text-center text-white/80">
             {textoVazio(filtroStatus, busca)}
           </p>
+        ) : ordenacao === "envio_recente" ? (
+          <div>
+            <div className="mb-4 text-center">
+              <h2 className="text-2xl font-bold text-white/90">
+                Ordenado por envio
+              </h2>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {listaPorEnvio.map((item) => (
+                <CardAgendamento
+                  key={item.id}
+                  item={item}
+                  abertos={abertos}
+                  toggleObservacao={toggleObservacao}
+                  atualizarStatus={atualizarStatus}
+                  atualizandoId={atualizandoId}
+                  apagarEvento={apagarEvento}
+                />
+              ))}
+            </div>
+          </div>
         ) : (
           <div className="space-y-10">
             {eventosDesteMes.length > 0 && (
@@ -980,9 +998,6 @@ export default function AdminPage() {
                   <h2 className="text-2xl font-bold text-white/90">
                     Este mês
                   </h2>
-                  <p className="mt-1 text-sm text-white/60">
-                    Eventos restantes deste mês.
-                  </p>
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -1007,9 +1022,6 @@ export default function AdminPage() {
                   <h2 className="text-2xl font-bold text-white/90">
                     Próximos eventos
                   </h2>
-                  <p className="mt-1 text-sm text-white/60">
-                    Eventos futuros dos próximos meses.
-                  </p>
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -1034,9 +1046,6 @@ export default function AdminPage() {
                   <h2 className="text-2xl font-bold text-white/90">
                     Eventos passados do mês
                   </h2>
-                  <p className="mt-1 text-sm text-white/60">
-                    Eventos que já aconteceram neste mês.
-                  </p>
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
