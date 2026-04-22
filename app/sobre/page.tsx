@@ -179,7 +179,7 @@ export default function SobreNosLuminuss() {
               transition={{ delay: 0.08 }}
               className="max-w-3xl text-4xl font-bold leading-tight text-white md:text-6xl"
             >
-              Mais que um ministério: <span className="text-[#8b4e83]">Uma família em propósito.</span>
+              Mais que um ministério: <span className="text-[#81488f]">Uma família em propósito.</span>
             </motion.h1>
 
             <motion.p
