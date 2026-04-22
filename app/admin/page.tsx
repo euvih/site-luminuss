@@ -745,7 +745,7 @@ export default function AdminPage() {
   <button
     type="button"
     onClick={() => setMostrarFormularioManual((prev) => !prev)}
-    className="flex h-14 w-[220px] items-center justify-center rounded-full border border-white/15 bg-white/10 px-4 text-sm text-white/80 transition hover:bg-white/15 hover:text-white"
+    className="flex h-11 w-[220px] items-center justify-center rounded-full border border-white/15 bg-white/10 px-4 text-sm text-white/80 transition hover:bg-white/15 hover:text-white"
   >
     {mostrarFormularioManual ? "Fechar" : "+ Adicionar manualmente"}
   </button>
@@ -754,7 +754,7 @@ export default function AdminPage() {
     type="button"
     onClick={carregarPedidos}
     disabled={loading}
-    className="flex h-14 w-14 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white/80 transition hover:bg-white/15 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+    className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white/80 transition hover:bg-white/15 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
     aria-label="Atualizar lista"
     title="Atualizar lista"
   >
@@ -862,7 +862,7 @@ export default function AdminPage() {
         )}
 
 <div className="mb-5 flex items-center justify-center gap-3">
-  <div className="group flex h-14 w-[150px] items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 backdrop-blur transition focus-within:border-white/25 focus-within:bg-white/15">
+  <div className="group flex h-11 w-[150px] items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 backdrop-blur transition focus-within:border-white/25 focus-within:bg-white/15">
     <FiSearch className="shrink-0 text-sm text-white/60" />
 
     <input
@@ -885,7 +885,7 @@ export default function AdminPage() {
     )}
   </div>
 
-  <div className="flex h-14 w-[150px] items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 backdrop-blur">
+  <div className="flex h-11 w-[150px] items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 backdrop-blur">
     <FiSliders className="shrink-0 text-sm text-white/60" />
 
     <select
@@ -906,7 +906,7 @@ export default function AdminPage() {
         <div className="mb-8 mx-auto grid max-w-[340px] grid-cols-3 gap-2">
   <button
     onClick={() => setFiltroStatus("todos")}
-    className={`flex h-14 items-center justify-center gap-1 rounded-full px-2 text-sm font-medium transition ${
+    className={`flex h-11 items-center justify-center gap-1 rounded-full px-2 text-sm font-medium transition ${
       filtroStatus === "todos"
         ? "bg-white text-[#061B5C]"
         : "bg-white/10 text-white hover:bg-white/20"
@@ -920,7 +920,7 @@ export default function AdminPage() {
 
   <button
     onClick={() => setFiltroStatus("pendente")}
-    className={`flex h-14 items-center justify-center gap-1 rounded-full px-2 text-sm font-medium transition ${
+    className={`flex h-11 items-center justify-center gap-1 rounded-full px-2 text-sm font-medium transition ${
       filtroStatus === "pendente"
         ? "bg-yellow-400 text-[#061B5C]"
         : "bg-white/10 text-white hover:bg-white/20"
@@ -934,7 +934,7 @@ export default function AdminPage() {
 
   <button
     onClick={() => setFiltroStatus("aceito")}
-    className={`flex h-14 items-center justify-center gap-1 rounded-full px-2 text-sm font-medium transition ${
+    className={`flex h-11 items-center justify-center gap-1 rounded-full px-2 text-sm font-medium transition ${
       filtroStatus === "aceito"
         ? "bg-green-500 text-white"
         : "bg-white/10 text-white hover:bg-white/20"
