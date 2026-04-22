@@ -179,7 +179,7 @@ export default function SobreNosLuminuss() {
               transition={{ delay: 0.08 }}
               className="max-w-3xl text-4xl font-bold leading-tight text-white md:text-6xl"
             >
-              Mais que um ministério: <span className="text-[#7a6df0]">Uma família em propósito.</span>
+              Mais que um ministério: <span className="text-[#7589ff]">Uma família em propósito.</span>
             </motion.h1>
 
             <motion.p
@@ -199,7 +199,7 @@ export default function SobreNosLuminuss() {
             >
               <button
                 onClick={() => setMostrarTextoCompleto((prev) => !prev)}
-                className="rounded-full bg-[#e89af8] px-6 py-3 font-semibold text-[#061B5C] transition hover:scale-[1.02]"
+                className="rounded-full bg-[#876cff] px-6 py-3 font-semibold text-[#061B5C] transition hover:scale-[1.02]"
               >
                 {mostrarTextoCompleto ? "Ver menos" : "Nos conheça melhor"}
               </button>
