@@ -297,8 +297,7 @@ export default function AgendamentoPage() {
 
                       <p className="text-white/80">
                         Nosso grupo utiliza banda completa, com instrumentos como{" "}
-                        <span className="font-semibold text-[#F4C021]">bateria</span>. Sendo assim,
-                        só conseguimos atender convites em igrejas que estejam de acordo com essa formação.
+                        <span className="font-semibold text-[#F4C021]">bateria</span>. 
                       </p>
                     </div>
 

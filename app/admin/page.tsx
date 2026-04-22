@@ -16,10 +16,11 @@ type Agendamento = {
   data_envio?: string;
 };
 
+type Ordenacao = "data_evento" | "envio_recente" | "pendentes_primeiro";
+
 function formatarDataHora(data: string) {
   if (!data) return "";
 
-  // Se vier no formato brasileiro: 20/04/2026 14:32:10
   if (data.includes("/")) {
     const [dataParte, horaParte] = data.split(" ");
     const [dia, mes, ano] = dataParte.split("/");
@@ -38,7 +39,6 @@ function formatarDataHora(data: string) {
     });
   }
 
-  // fallback padrão
   const d = new Date(data);
   if (isNaN(d.getTime())) return "Data inválida";
 
@@ -91,6 +91,20 @@ function converterDataParaDate(data: string) {
 
   const tentativa = new Date(data);
   return isNaN(tentativa.getTime()) ? null : tentativa;
+}
+
+function converterDataEnvioParaDate(data?: string) {
+  if (!data) return null;
+
+  if (data.includes("/")) {
+    const [dataParte, horaParte = "00:00:00"] = data.split(" ");
+    const [dia, mes, ano] = dataParte.split("/");
+    const d = new Date(`${ano}-${mes}-${dia}T${horaParte}`);
+    return isNaN(d.getTime()) ? null : d;
+  }
+
+  const d = new Date(data);
+  return isNaN(d.getTime()) ? null : d;
 }
 
 function calcularDiasRestantes(data: string) {
@@ -152,6 +166,26 @@ function eventoJaPassou(data: string) {
   return evento.getTime() < hoje.getTime();
 }
 
+function textoVazio(filtroStatus: string, busca: string) {
+  if (busca.trim()) {
+    return "Nenhum pedido encontrado para essa busca.";
+  }
+
+  if (filtroStatus === "pendente") {
+    return "Nenhum agendamento pendente encontrado.";
+  }
+
+  if (filtroStatus === "aceito") {
+    return "Nenhum agendamento aceito encontrado.";
+  }
+
+  if (filtroStatus === "recusado") {
+    return "Nenhum agendamento recusado encontrado.";
+  }
+
+  return "Nenhum pedido encontrado.";
+}
+
 function CardAgendamento({
   item,
   abertos,
@@ -174,13 +208,13 @@ function CardAgendamento({
   const expandido = abertos[item.id];
   const precisaBotao = texto.length > limite;
   const bloqueado = eventoJaPassou(item.data);
+  const salvandoEste = atualizandoId === String(item.id);
 
   return (
     <div
       className={`rounded-3xl border bg-white/10 p-3 shadow-lg backdrop-blur ${bordaUrgencia} ${
         bloqueado ? "opacity-50 grayscale" : ""
       }`}
-      
     >
       <div className="mb-2 flex items-center justify-between gap-2">
         <p className="text-xs font-semibold uppercase tracking-wide text-white/60">
@@ -198,10 +232,10 @@ function CardAgendamento({
           </p>
           <p className="mt-1 text-white/70">Código: {item.codigo || "-"}</p>
           {item.data_envio && (
-          <p className="text-xs text-white/40 mt-1">
-            Enviado em: {formatarDataHora(item.data_envio)}h
-          </p>
-        )}
+            <p className="mt-1 text-xs text-white/40">
+              Enviado em: {formatarDataHora(item.data_envio)}h
+            </p>
+          )}
         </div>
 
         <StatusBadge status={item.status} />
@@ -233,9 +267,7 @@ function CardAgendamento({
         <p className="text-xs text-white/60">Observações</p>
 
         <p className="mt-1 whitespace-pre-line leading-5 text-white/90">
-          {expandido || !precisaBotao
-            ? texto
-            : `${texto.slice(0, limite)}...`}
+          {expandido || !precisaBotao ? texto : `${texto.slice(0, limite)}...`}
         </p>
 
         {precisaBotao && (
@@ -254,36 +286,36 @@ function CardAgendamento({
         {item.status !== "aceito" && (
           <button
             onClick={() => atualizarStatus(String(item.id), "aceito")}
-            disabled={atualizandoId === String(item.id) || bloqueado}
+            disabled={salvandoEste || bloqueado}
             className="rounded-xl bg-green-500 px-3 py-1.5 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
           >
-            Aceitar
+            {salvandoEste ? "Salvando..." : "Aceitar"}
           </button>
         )}
 
         {item.status !== "recusado" && (
           <button
             onClick={() => atualizarStatus(String(item.id), "recusado")}
-            disabled={atualizandoId === String(item.id) || bloqueado}
+            disabled={salvandoEste || bloqueado}
             className="rounded-xl bg-red-500 px-3 py-1.5 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
           >
-            Recusar
+            {salvandoEste ? "Salvando..." : "Recusar"}
           </button>
         )}
 
         {item.status !== "pendente" && (
           <button
             onClick={() => atualizarStatus(String(item.id), "pendente")}
-            disabled={atualizandoId === String(item.id) || bloqueado}
+            disabled={salvandoEste || bloqueado}
             className="rounded-xl bg-yellow-500 px-3 py-1.5 text-sm font-semibold text-[#061B5C] transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
           >
-            Voltar para pendente
+            {salvandoEste ? "Salvando..." : "Voltar para pendente"}
           </button>
         )}
 
         <button
           onClick={() => apagarEvento(String(item.id))}
-          disabled={bloqueado}
+          disabled={bloqueado || salvandoEste}
           className="rounded-xl bg-white/10 px-3 py-1.5 text-sm font-semibold text-white transition hover:bg-white/20 disabled:cursor-not-allowed disabled:opacity-40"
         >
           Apagar
@@ -316,23 +348,41 @@ export default function AdminPage() {
   const [filtroStatus, setFiltroStatus] = useState("todos");
   const [abertos, setAbertos] = useState<{ [key: string]: boolean }>({});
   const [busca, setBusca] = useState("");
-
-  const totalTodos = agendamentos.length;
-  const totalPendentes = agendamentos.filter(
-    (item) => item.status?.toLowerCase().trim() === "pendente"
-  ).length;
-  const totalAceitos = agendamentos.filter(
-    (item) => item.status?.toLowerCase().trim() === "aceito"
-  ).length;
-  const totalRecusados = agendamentos.filter(
-    (item) => item.status?.toLowerCase().trim() === "recusado"
-  ).length;
+  const [ordenacao, setOrdenacao] = useState<Ordenacao>("data_evento");
 
   const CODIGO_CORRETO = "LUMADMIN2026";
   const URL_SCRIPT =
     "https://script.google.com/macros/s/AKfycbzfBROjxwP4NMc4TaHmEs9OFDwdEqy8rwzbU1DjtlbXsYAUCMAwFEuTiz4jMSr7H6tIBQ/exec";
   const URL_OPENSHEET =
     "https://opensheet.elk.sh/1_EsxHvUXbh8VQnmCLOCoIbvoC1VGtyl3YMr9TiSsgD4/agendamentos";
+
+  useEffect(() => {
+    const filtroSalvo = localStorage.getItem("adminFiltroStatus");
+    const buscaSalva = localStorage.getItem("adminBusca");
+    const ordenacaoSalva = localStorage.getItem("adminOrdenacao");
+
+    if (filtroSalvo) setFiltroStatus(filtroSalvo);
+    if (buscaSalva) setBusca(buscaSalva);
+    if (
+      ordenacaoSalva === "data_evento" ||
+      ordenacaoSalva === "envio_recente" ||
+      ordenacaoSalva === "pendentes_primeiro"
+    ) {
+      setOrdenacao(ordenacaoSalva);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("adminFiltroStatus", filtroStatus);
+  }, [filtroStatus]);
+
+  useEffect(() => {
+    localStorage.setItem("adminBusca", busca);
+  }, [busca]);
+
+  useEffect(() => {
+    localStorage.setItem("adminOrdenacao", ordenacao);
+  }, [ordenacao]);
 
   function gerarCodigoManual() {
     const numero = Math.floor(100000 + Math.random() * 900000);
@@ -360,16 +410,15 @@ export default function AdminPage() {
       if (!Array.isArray(data)) {
         console.error("A resposta não veio como lista:", data);
         setAgendamentos([]);
-        setLoading(false);
         return;
       }
 
       const ultimos = data.slice(-200).reverse();
       setAgendamentos(ultimos);
-      setLoading(false);
     } catch (err) {
       console.error("Erro ao carregar pedidos:", err);
       setAgendamentos([]);
+    } finally {
       setLoading(false);
     }
   }
@@ -410,7 +459,6 @@ export default function AdminPage() {
 
       if (!resultado.ok) {
         alert(resultado.error || "Não foi possível adicionar o evento.");
-        setSalvandoManual(false);
         return;
       }
 
@@ -436,33 +484,33 @@ export default function AdminPage() {
   }
 
   async function apagarEvento(id: string) {
-  const confirmar = window.confirm("Tem certeza que deseja apagar este evento?");
-  if (!confirmar) return;
+    const confirmar = window.confirm("Tem certeza que deseja apagar este evento?");
+    if (!confirmar) return;
 
-  try {
-    const resposta = await fetch(URL_SCRIPT, {
-      method: "POST",
-      body: JSON.stringify({
-        acao: "apagarEvento",
-        id,
-      }),
-    });
+    try {
+      const resposta = await fetch(URL_SCRIPT, {
+        method: "POST",
+        body: JSON.stringify({
+          acao: "apagarEvento",
+          id,
+        }),
+      });
 
-    const resultado = await resposta.json();
+      const resultado = await resposta.json();
 
-    if (!resultado.ok) {
-      alert(resultado.error || "Erro ao apagar evento.");
-      return;
+      if (!resultado.ok) {
+        alert(resultado.error || "Erro ao apagar evento.");
+        return;
+      }
+
+      setAgendamentos((prev) =>
+        prev.filter((item) => String(item.id) !== String(id))
+      );
+    } catch (erro) {
+      console.error("Erro ao apagar:", erro);
+      alert("Erro ao apagar evento.");
     }
-
-    setAgendamentos((prev) =>
-      prev.filter((item) => String(item.id) !== String(id))
-    );
-  } catch (erro) {
-    console.error("Erro ao apagar:", erro);
-    alert("Erro ao apagar evento.");
   }
-}
 
   useEffect(() => {
     if (!acessoLiberado) return;
@@ -470,11 +518,17 @@ export default function AdminPage() {
   }, [acessoLiberado]);
 
   async function atualizarStatus(id: string, novoStatus: string) {
+    if (novoStatus === "aceito") {
+      const confirmado = window.confirm(
+        "Tem certeza que deseja aceitar este agendamento?"
+      );
+      if (!confirmado) return;
+    }
+
     if (novoStatus === "recusado") {
       const confirmado = window.confirm(
         "Tem certeza que deseja recusar este agendamento?"
       );
-
       if (!confirmado) return;
     }
 
@@ -496,7 +550,6 @@ export default function AdminPage() {
         alert(
           `Erro ao atualizar status.\n\n${resultado.error || "Erro desconhecido"}`
         );
-        setAtualizandoId(null);
         return;
       }
 
@@ -507,11 +560,10 @@ export default function AdminPage() {
             : item
         )
       );
-
-      setAtualizandoId(null);
     } catch (erro) {
       console.error("Erro ao atualizar status:", erro);
       alert("Erro ao atualizar status.");
+    } finally {
       setAtualizandoId(null);
     }
   }
@@ -523,15 +575,60 @@ export default function AdminPage() {
     }));
   }
 
-  const { eventosDesteMes, proximosEventos, eventosPassados } = useMemo(() => {
+  const {
+    eventosDesteMes,
+    proximosEventos,
+    eventosPassados,
+    eventosVisiveis,
+  } = useMemo(() => {
     const termo = busca.toLowerCase().trim();
+
+    const correspondeAoFiltro = (item: Agendamento) => {
+      if (filtroStatus === "todos") return true;
+      return item.status?.toLowerCase().trim() === filtroStatus;
+    };
+
+    const comparar = (a: Agendamento, b: Agendamento) => {
+      if (ordenacao === "pendentes_primeiro") {
+        const pesoStatus = (status: string) => {
+          const valor = status?.toLowerCase().trim();
+          if (valor === "pendente") return 0;
+          if (valor === "aceito") return 1;
+          if (valor === "recusado") return 2;
+          return 3;
+        };
+
+        const diffStatus = pesoStatus(a.status) - pesoStatus(b.status);
+        if (diffStatus !== 0) return diffStatus;
+
+        const dataA = converterDataParaDate(a.data);
+        const dataB = converterDataParaDate(b.data);
+        if (!dataA && !dataB) return 0;
+        if (!dataA) return 1;
+        if (!dataB) return -1;
+        return dataA.getTime() - dataB.getTime();
+      }
+
+      if (ordenacao === "envio_recente") {
+        const envioA = converterDataEnvioParaDate(a.data_envio);
+        const envioB = converterDataEnvioParaDate(b.data_envio);
+        if (!envioA && !envioB) return 0;
+        if (!envioA) return 1;
+        if (!envioB) return -1;
+        return envioB.getTime() - envioA.getTime();
+      }
+
+      const dataA = converterDataParaDate(a.data);
+      const dataB = converterDataParaDate(b.data);
+      if (!dataA && !dataB) return 0;
+      if (!dataA) return 1;
+      if (!dataB) return -1;
+      return dataA.getTime() - dataB.getTime();
+    };
 
     const filtrados = agendamentos
       .filter((item) => {
-        if (filtroStatus !== "todos") {
-          if (item.status?.toLowerCase().trim() !== filtroStatus) return false;
-        }
-
+        if (!correspondeAoFiltro(item)) return false;
         if (!termo) return true;
 
         const textoCompleto = [
@@ -541,22 +638,14 @@ export default function AdminPage() {
           item.local,
           item.whatsapp,
           item.data,
+          item.observacoes,
         ]
           .join(" ")
           .toLowerCase();
 
         return textoCompleto.includes(termo);
       })
-      .sort((a, b) => {
-        const dataA = converterDataParaDate(a.data);
-        const dataB = converterDataParaDate(b.data);
-
-        if (!dataA && !dataB) return 0;
-        if (!dataA) return 1;
-        if (!dataB) return -1;
-
-        return dataA.getTime() - dataB.getTime();
-      });
+      .sort(comparar);
 
     const hoje = new Date();
     hoje.setHours(0, 0, 0, 0);
@@ -605,8 +694,30 @@ export default function AdminPage() {
       );
     });
 
-    return { eventosDesteMes, proximosEventos, eventosPassados };
-  }, [agendamentos, filtroStatus, busca]);
+    const eventosVisiveis = [
+      ...eventosDesteMes,
+      ...proximosEventos,
+      ...eventosPassados,
+    ];
+
+    return {
+      eventosDesteMes,
+      proximosEventos,
+      eventosPassados,
+      eventosVisiveis,
+    };
+  }, [agendamentos, filtroStatus, busca, ordenacao]);
+
+  const totalTodos = eventosVisiveis.length;
+  const totalPendentes = eventosVisiveis.filter(
+    (item) => item.status?.toLowerCase().trim() === "pendente"
+  ).length;
+  const totalAceitos = eventosVisiveis.filter(
+    (item) => item.status?.toLowerCase().trim() === "aceito"
+  ).length;
+  const totalRecusados = eventosVisiveis.filter(
+    (item) => item.status?.toLowerCase().trim() === "recusado"
+  ).length;
 
   if (!acessoLiberado) {
     return (
@@ -653,13 +764,22 @@ export default function AdminPage() {
           <h1 className="text-4xl font-bold">Todos os agendamentos</h1>
         </div>
 
-        <div className="mb-6 flex justify-center">
+        <div className="mb-6 flex flex-wrap justify-center gap-3">
           <button
             type="button"
             onClick={() => setMostrarFormularioManual((prev) => !prev)}
             className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-white/80 transition hover:bg-white/15 hover:text-white"
           >
             {mostrarFormularioManual ? "Fechar" : "+ Adicionar manualmente"}
+          </button>
+
+          <button
+            type="button"
+            onClick={carregarPedidos}
+            disabled={loading}
+            className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-white/80 transition hover:bg-white/15 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {loading ? "Atualizando..." : "Atualizar lista"}
           </button>
         </div>
 
@@ -762,14 +882,30 @@ export default function AdminPage() {
           </div>
         )}
 
-        <div className="mb-5">
+        <div className="mb-5 grid gap-3 md:grid-cols-[1fr_260px]">
           <input
             type="text"
             value={busca}
             onChange={(e) => setBusca(e.target.value)}
-            placeholder="Buscar por igreja, responsável, código, local, WhatsApp..."
+            placeholder="Buscar por igreja, responsável, código, local, WhatsApp, observações..."
             className="w-full rounded-2xl bg-white/10 px-4 py-3 outline-none placeholder:text-white/50"
           />
+
+          <select
+            value={ordenacao}
+            onChange={(e) => setOrdenacao(e.target.value as Ordenacao)}
+            className="rounded-2xl bg-white/10 px-4 py-3 text-white outline-none"
+          >
+            <option value="data_evento" className="text-black">
+              Ordenar por data do evento
+            </option>
+            <option value="envio_recente" className="text-black">
+              Ordenar por envio mais recente
+            </option>
+            <option value="pendentes_primeiro" className="text-black">
+              Ordenar por pendentes primeiro
+            </option>
+          </select>
         </div>
 
         <div className="mb-8 flex flex-wrap justify-center gap-3">
@@ -832,11 +968,9 @@ export default function AdminPage() {
 
         {loading ? (
           <p className="text-center text-white/80">Carregando pedidos...</p>
-        ) : eventosDesteMes.length === 0 &&
-          proximosEventos.length === 0 &&
-          eventosPassados.length === 0 ? (
+        ) : eventosVisiveis.length === 0 ? (
           <p className="text-center text-white/80">
-            Nenhum pedido encontrado.
+            {textoVazio(filtroStatus, busca)}
           </p>
         ) : (
           <div className="space-y-10">
