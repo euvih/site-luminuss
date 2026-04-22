@@ -125,8 +125,8 @@ useEffect(() => {
     "/ftantiga1.jpeg",
     "/ftantiga2.jpeg",
     "/ftantiga3.jpeg",
-    "/foto4.jpeg",
-    "/foto5.jpeg",
+    "/auroraboreal.webp",
+    "/logo.jpeg",
     "/foto6.jpeg",
   ];
 
@@ -669,7 +669,7 @@ const aceitosDoMes = data
       <footer className="bg-[#061B5C] px-6 py-8 text-center text-white">
         <p className="text-sm text-white/80">© 2026 Lúminuss</p>
 
-        <p className="mt-1 text-sm text-white/70">
+        <p className="mt-1 text-sm text-white/30">
           Desenvolvido com <span className="heart-beat text-red-500">❤</span>{" "}
           por Vitória Kelly
         </p>
