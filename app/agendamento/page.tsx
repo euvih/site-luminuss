@@ -2,8 +2,12 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
+import { DayPicker } from "react-day-picker";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import "react-day-picker/dist/style.css";
 
 function StatusBadge({ status }: { status: string }) {
   const valor = status?.toLowerCase().trim();
@@ -21,7 +25,7 @@ function StatusBadge({ status }: { status: string }) {
     classes = "bg-red-500/20 text-red-300 border border-red-400/30";
     texto = "Recusado";
   }
-  
+
   return (
     <span className={`rounded-full px-3 py-1 text-sm font-semibold ${classes}`}>
       {texto}
@@ -77,6 +81,50 @@ export default function AgendamentoPage() {
   const [enviando, setEnviando] = useState(false);
   const [erroEnvio, setErroEnvio] = useState("");
 
+  const [mostrarCalendario, setMostrarCalendario] = useState(false);
+
+  // Defina aqui as datas disponíveis
+  const datasDisponiveis = [
+    "2026-05-10",
+    "2026-05-17",
+    "2026-05-24",
+    "2026-06-07",
+    "2026-06-14",
+  ];
+
+  const datasDisponiveisDate = useMemo(() => {
+    return datasDisponiveis.map((data) => {
+      const [ano, mes, dia] = data.split("-").map(Number);
+      return new Date(ano, mes - 1, dia);
+    });
+  }, []);
+
+  const dataSelecionadaDate = useMemo(() => {
+    if (!data) return undefined;
+    const [ano, mes, dia] = data.split("-").map(Number);
+    return new Date(ano, mes - 1, dia);
+  }, [data]);
+
+  function mesmaData(a: Date, b: Date) {
+    return (
+      a.getFullYear() === b.getFullYear() &&
+      a.getMonth() === b.getMonth() &&
+      a.getDate() === b.getDate()
+    );
+  }
+
+  function dataEstaDisponivel(date: Date) {
+    return datasDisponiveisDate.some((d) => mesmaData(d, date));
+  }
+
+  function handleSelecionarData(date: Date | undefined) {
+    if (!date) return;
+    if (!dataEstaDisponivel(date)) return;
+
+    setData(format(date, "yyyy-MM-dd"));
+    setMostrarCalendario(false);
+  }
+
   function gerarCodigoAcompanhamento() {
     const numero = Math.floor(100000 + Math.random() * 900000);
     return `LUM-${numero}`;
@@ -91,7 +139,10 @@ export default function AgendamentoPage() {
       return `(${numeros.slice(0, 2)}) ${numeros.slice(2)}`;
     }
 
-    return `(${numeros.slice(0, 2)}) ${numeros.slice(2, 7)}-${numeros.slice(7)}`;
+    return `(${numeros.slice(0, 2)}) ${numeros.slice(
+      2,
+      7
+    )}-${numeros.slice(7)}`;
   }
 
   function limparFormulario() {
@@ -253,15 +304,15 @@ export default function AgendamentoPage() {
   }, [nome, local, data, horario, telefone, tipoEvento, detalhes]);
 
   return (
-    <main className="min-h-screen bg-[#061B5C] px-6 py-8 text-white flex justify-center">
-       <Link
-      href="/"
-      className="fixed left-4 top-24 z-50 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-md text-white shadow-lg transition hover:scale-110 hover:bg-[#F4C021]/80 hover:text-[#061B5C] md:left-6 md:top-28 md:h-12 md:w-12"
-    >
-      <FaArrowLeft className="text-sm md:text-lg" />
-    </Link>
+    <main className="flex min-h-screen justify-center bg-[#061B5C] px-6 py-8 text-white">
+      <Link
+        href="/"
+        className="fixed left-4 top-24 z-50 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-lg backdrop-blur-md transition hover:scale-110 hover:bg-[#F4C021]/80 hover:text-[#061B5C] md:left-6 md:top-28 md:h-12 md:w-12"
+      >
+        <FaArrowLeft className="text-sm md:text-lg" />
+      </Link>
 
-      <div className="w-full max-w-[1400px] scale-[0.92] origin-top">
+      <div className="origin-top w-full max-w-[1400px] scale-[0.92]">
         <main className="relative min-h-screen overflow-hidden text-white">
           <section className="relative z-10 flex min-h-screen pt-20">
             <div className="grid w-full grid-cols-1 lg:grid-cols-2">
@@ -277,13 +328,15 @@ export default function AgendamentoPage() {
                         Sobre o agendamento 📅
                       </h3>
                       <p className="text-white/90">
-                        Após o envio do formulário, poderemos entrar em contato para confirmar o convite e alinhar os detalhes.
-                        Você também pode acompanhar o status do pedido clicando no botão{" "}
-                        <span className="text-[#F4C021] font-semibold">
+                        Após o envio do formulário, poderemos entrar em contato
+                        para confirmar o convite e alinhar os detalhes. Você
+                        também pode acompanhar o status do pedido clicando no
+                        botão{" "}
+                        <span className="font-semibold text-[#F4C021]">
                           "Acompanhar pedido"
                         </span>{" "}
                         e informando o{" "}
-                        <span className="text-[#F4C021] font-semibold">
+                        <span className="font-semibold text-[#F4C021]">
                           código de acompanhamento
                         </span>{" "}
                         gerado.
@@ -297,7 +350,10 @@ export default function AgendamentoPage() {
 
                       <p className="text-white/80">
                         Nosso grupo utiliza banda completa, com instrumentos como{" "}
-                        <span className="font-semibold text-[#F4C021]">bateria</span>. 
+                        <span className="font-semibold text-[#F4C021]">
+                          bateria
+                        </span>
+                        .
                       </p>
                     </div>
 
@@ -313,15 +369,12 @@ export default function AgendamentoPage() {
                       </p>
                     </div>
 
-                    <div>
-                    </div>
+                    <div></div>
 
                     <div className="mt-10 flex justify-center">
                       <button
                         type="button"
-                        onClick={() =>
-                          setMostrarAcompanhamento((prev) => !prev)
-                        }
+                        onClick={() => setMostrarAcompanhamento((prev) => !prev)}
                         className="rounded-full border border-amber-300- bg-white/10 px-9 py-4 text-sm font-medium text-amber-300/90 transition hover:bg-white hover:text-[#061B5C]"
                       >
                         Acompanhar pedido
@@ -407,7 +460,9 @@ export default function AgendamentoPage() {
                               </div>
 
                               <div className="rounded-2xl bg-black/20 p-4">
-                                <p className="text-sm text-white/60">WhatsApp</p>
+                                <p className="text-sm text-white/60">
+                                  WhatsApp
+                                </p>
                                 <p className="mt-1 font-medium">
                                   {pedidoEncontrado.whatsapp || "-"}
                                 </p>
@@ -454,12 +509,15 @@ export default function AgendamentoPage() {
 
                   {mostrarCodigo && (
                     <div className="mb-6 rounded-2xl border border-green-400/30 bg-green-500/10 p-4 text-green-100">
-                      <p className="text-sm">Agendamento enviado com sucesso.</p>
+                      <p className="text-sm">
+                        Agendamento enviado com sucesso.
+                      </p>
                       <p className="mt-2 text-lg font-bold">
                         Código de acompanhamento: {codigoGerado}
                       </p>
                       <p className="mt-2 text-sm text-green-100/80">
-                        Guarde esse código para acompanhar o status do seu pedido no site.
+                        Guarde esse código para acompanhar o status do seu
+                        pedido no site.
                       </p>
                     </div>
                   )}
@@ -489,35 +547,70 @@ export default function AgendamentoPage() {
                       required
                     />
 
-                        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                <input
-                  type="date"
-                  value={data}
-                  onChange={(e) => setData(e.target.value)}
-                  className="min-w-0 rounded-xl bg-white/10 px-4 py-3 outline-none"
-                  required
-                />
+                    <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                      <div className="relative">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setMostrarCalendario((prev) => !prev)
+                          }
+                          className="flex min-w-0 w-full items-center justify-between rounded-xl bg-white/10 px-4 py-3 text-left outline-none transition hover:bg-white/15"
+                        >
+                          <span className={data ? "text-white" : "text-white/60"}>
+                            {data && dataSelecionadaDate
+                              ? format(dataSelecionadaDate, "dd/MM/yyyy")
+                              : "Escolher data"}
+                          </span>
 
-                <input
-                  type="time"
-                  value={horario}
-                  onChange={(e) => setHorario(e.target.value)}
-                  className="min-w-0 rounded-xl bg-white/10 px-4 py-3 outline-none"
-                  required
-                />
-                </div>
+                          <span className="text-sm text-white/70">📅</span>
+                        </button>
+
+                        {mostrarCalendario && (
+                          <div className="absolute left-0 top-[calc(100%+8px)] z-50 rounded-2xl border border-white/10 bg-[#071f69] p-3 shadow-2xl">
+                            <DayPicker
+                              mode="single"
+                              locale={ptBR}
+                              selected={dataSelecionadaDate}
+                              onSelect={handleSelecionarData}
+                              disabled={(date) => !dataEstaDisponivel(date)}
+                              modifiers={{
+                                disponivel: datasDisponiveisDate,
+                              }}
+                              modifiersClassNames={{
+                                disponivel: "data-disponivel",
+                                selected: "data-selecionada",
+                                disabled: "data-bloqueada",
+                              }}
+                            />
+                          </div>
+                        )}
+
+                        <input type="hidden" value={data} required />
+                      </div>
+
+                      <input
+                        type="time"
+                        value={horario}
+                        onChange={(e) => setHorario(e.target.value)}
+                        className="min-w-0 rounded-xl bg-white/10 px-4 py-3 outline-none"
+                        required
+                      />
+                    </div>
 
                     <p className="text-xs leading-relaxed text-yellow-200">
-                      Observação: considerar a presença de alguém no local com 1h30
-                      de antecedência para organização do som, instrumentos e
-                      passagem de som.
+                      Observação: considerar a presença de alguém no local com
+                      1h30 de antecedência para organização do som, instrumentos
+                      e passagem de som.
                     </p>
 
-                      <div className="grid grid-cols-1 gap-3 md:grid-cols-2">                      <input
+                    <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                      <input
                         type="text"
                         placeholder="Telefone"
                         value={telefone}
-                        onChange={(e) => setTelefone(formatarTelefone(e.target.value))}
+                        onChange={(e) =>
+                          setTelefone(formatarTelefone(e.target.value))
+                        }
                         className="rounded-xl bg-white/10 px-4 py-3 outline-none placeholder:text-white/60"
                         required
                       />
