@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { FiSearch, FiSliders, FiX } from "react-icons/fi";
+import { FiRefreshCw, FiSearch, FiSliders, FiX } from "react-icons/fi";
 
 type Agendamento = {
   id: string;
@@ -741,24 +741,26 @@ export default function AdminPage() {
           <h1 className="text-4xl font-bold">Todos os agendamentos</h1>
         </div>
 
-        <div className="mb-6 flex flex-wrap justify-center gap-3">
-          <button
-            type="button"
-            onClick={() => setMostrarFormularioManual((prev) => !prev)}
-            className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-white/80 transition hover:bg-white/15 hover:text-white"
-          >
-            {mostrarFormularioManual ? "Fechar" : "+ Adicionar manualmente"}
-          </button>
+        <div className="mb-6 flex items-center justify-center gap-3">
+  <button
+    type="button"
+    onClick={() => setMostrarFormularioManual((prev) => !prev)}
+    className="flex h-14 w-[220px] items-center justify-center rounded-full border border-white/15 bg-white/10 px-4 text-sm text-white/80 transition hover:bg-white/15 hover:text-white"
+  >
+    {mostrarFormularioManual ? "Fechar" : "+ Adicionar manualmente"}
+  </button>
 
-          <button
-            type="button"
-            onClick={carregarPedidos}
-            disabled={loading}
-            className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-white/80 transition hover:bg-white/15 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            {loading ? "Atualizando..." : "Atualizar lista"}
-          </button>
-        </div>
+  <button
+    type="button"
+    onClick={carregarPedidos}
+    disabled={loading}
+    className="flex h-14 w-14 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white/80 transition hover:bg-white/15 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+    aria-label="Atualizar lista"
+    title="Atualizar lista"
+  >
+    <FiRefreshCw className={`text-lg ${loading ? "animate-spin" : ""}`} />
+  </button>
+</div>
 
         {mostrarFormularioManual && (
           <div className="mb-8 rounded-3xl border border-white/10 bg-white/10 p-5 backdrop-blur">
@@ -859,8 +861,8 @@ export default function AdminPage() {
           </div>
         )}
 
-        <div className="mb-5 flex items-center justify-center gap-2">
-  <div className="group flex min-w-0 flex-1 items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-2 backdrop-blur transition focus-within:border-white/25 focus-within:bg-white/15 max-w-[220px]">
+<div className="mb-5 flex items-center justify-center gap-3">
+  <div className="group flex h-14 w-[150px] items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 backdrop-blur transition focus-within:border-white/25 focus-within:bg-white/15">
     <FiSearch className="shrink-0 text-sm text-white/60" />
 
     <input
@@ -883,7 +885,7 @@ export default function AdminPage() {
     )}
   </div>
 
-  <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-2 backdrop-blur max-w-[180px]">
+  <div className="flex h-14 w-[150px] items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 backdrop-blur">
     <FiSliders className="shrink-0 text-sm text-white/60" />
 
     <select
@@ -901,45 +903,45 @@ export default function AdminPage() {
   </div>
 </div>
 
-        <div className="mb-8 flex flex-wrap items-center justify-center gap-2">
+        <div className="mb-8 mx-auto grid max-w-[340px] grid-cols-3 gap-2">
   <button
     onClick={() => setFiltroStatus("todos")}
-    className={`flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium transition ${
+    className={`flex h-14 items-center justify-center gap-1 rounded-full px-2 text-sm font-medium transition ${
       filtroStatus === "todos"
         ? "bg-white text-[#061B5C]"
         : "bg-white/10 text-white hover:bg-white/20"
     }`}
   >
-    Todos
-    <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-white px-2 text-xs font-bold text-[#061B5C]">
+    <span>Todos</span>
+    <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-white px-2 text-[11px] font-bold text-[#061B5C]">
       {totalTodos}
     </span>
   </button>
 
   <button
     onClick={() => setFiltroStatus("pendente")}
-    className={`flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium transition ${
+    className={`flex h-14 items-center justify-center gap-1 rounded-full px-2 text-sm font-medium transition ${
       filtroStatus === "pendente"
         ? "bg-yellow-400 text-[#061B5C]"
         : "bg-white/10 text-white hover:bg-white/20"
     }`}
   >
-    Pendentes
-    <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-yellow-400 px-2 text-xs font-bold text-[#061B5C]">
+    <span>Pend.</span>
+    <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-yellow-400 px-2 text-[11px] font-bold text-[#061B5C]">
       {totalPendentes}
     </span>
   </button>
 
   <button
     onClick={() => setFiltroStatus("aceito")}
-    className={`flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium transition ${
+    className={`flex h-14 items-center justify-center gap-1 rounded-full px-2 text-sm font-medium transition ${
       filtroStatus === "aceito"
         ? "bg-green-500 text-white"
         : "bg-white/10 text-white hover:bg-white/20"
     }`}
   >
-    Aceitos
-    <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-green-500 px-2 text-xs font-bold text-white">
+    <span>Aceitos</span>
+    <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-green-500 px-2 text-[11px] font-bold text-white">
       {totalAceitos}
     </span>
   </button>
