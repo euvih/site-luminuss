@@ -695,9 +695,6 @@ export default function AdminPage() {
   const totalAceitos = eventosVisiveis.filter(
     (item) => item.status?.toLowerCase().trim() === "aceito"
   ).length;
-  const totalRecusados = eventosVisiveis.filter(
-    (item) => item.status?.toLowerCase().trim() === "recusado"
-  ).length;
 
   if (!acessoLiberado) {
     return (
@@ -862,105 +859,91 @@ export default function AdminPage() {
           </div>
         )}
 
-        <div className="mb-5 flex flex-wrap items-center justify-center gap-2">
-          <div className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-2 backdrop-blur transition focus-within:border-white/25 focus-within:bg-white/15">
-            <FiSearch className="text-sm text-white/60" />
+        <div className="mb-5 flex items-center justify-center gap-2">
+  <div className="group flex min-w-0 flex-1 items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-2 backdrop-blur transition focus-within:border-white/25 focus-within:bg-white/15 max-w-[220px]">
+    <FiSearch className="shrink-0 text-sm text-white/60" />
 
-            <input
-              type="text"
-              value={busca}
-              onChange={(e) => setBusca(e.target.value)}
-              placeholder="Buscar evento"
-              className="w-32 bg-transparent text-sm text-white outline-none placeholder:text-white/45 sm:w-40"
-            />
+    <input
+      type="text"
+      value={busca}
+      onChange={(e) => setBusca(e.target.value)}
+      placeholder="Buscar"
+      className="min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-white/45"
+    />
 
-            {busca && (
-              <button
-                type="button"
-                onClick={() => setBusca("")}
-                className="text-white/50 transition hover:text-white"
-                aria-label="Limpar busca"
-              >
-                <FiX className="text-sm" />
-              </button>
-            )}
-          </div>
+    {busca && (
+      <button
+        type="button"
+        onClick={() => setBusca("")}
+        className="shrink-0 text-white/50 transition hover:text-white"
+        aria-label="Limpar busca"
+      >
+        <FiX className="text-sm" />
+      </button>
+    )}
+  </div>
 
-          <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-2 backdrop-blur">
-            <FiSliders className="text-sm text-white/60" />
+  <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-2 backdrop-blur max-w-[180px]">
+    <FiSliders className="shrink-0 text-sm text-white/60" />
 
-            <select
-              value={ordenacao}
-              onChange={(e) => setOrdenacao(e.target.value as Ordenacao)}
-              className="bg-transparent text-sm text-white outline-none"
-            >
-              <option value="padrao" className="text-black">
-                Ordem padrão
-              </option>
-              <option value="envio_recente" className="text-black">
-                Data/Envio
-              </option>
-            </select>
-          </div>
-        </div>
+    <select
+      value={ordenacao}
+      onChange={(e) => setOrdenacao(e.target.value as Ordenacao)}
+      className="min-w-0 flex-1 bg-transparent text-sm text-white outline-none"
+    >
+      <option value="padrao" className="text-black">
+        Padrão
+      </option>
+      <option value="envio_recente" className="text-black">
+        Envio
+      </option>
+    </select>
+  </div>
+</div>
 
-        <div className="mb-8 flex flex-wrap justify-center gap-3">
-          <button
-            onClick={() => setFiltroStatus("todos")}
-            className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition ${
-              filtroStatus === "todos"
-                ? "bg-white text-[#061B5C]"
-                : "bg-white/10 text-white hover:bg-white/20"
-            }`}
-          >
-            Todos
-            <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-white px-2 text-xs font-bold text-[#061B5C]">
-              {totalTodos}
-            </span>
-          </button>
+        <div className="mb-8 flex flex-wrap items-center justify-center gap-2">
+  <button
+    onClick={() => setFiltroStatus("todos")}
+    className={`flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium transition ${
+      filtroStatus === "todos"
+        ? "bg-white text-[#061B5C]"
+        : "bg-white/10 text-white hover:bg-white/20"
+    }`}
+  >
+    Todos
+    <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-white px-2 text-xs font-bold text-[#061B5C]">
+      {totalTodos}
+    </span>
+  </button>
 
-          <button
-            onClick={() => setFiltroStatus("pendente")}
-            className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition ${
-              filtroStatus === "pendente"
-                ? "bg-yellow-400 text-[#061B5C]"
-                : "bg-white/10 text-white hover:bg-white/20"
-            }`}
-          >
-            Pendentes
-            <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-yellow-400 px-2 text-xs font-bold text-[#061B5C]">
-              {totalPendentes}
-            </span>
-          </button>
+  <button
+    onClick={() => setFiltroStatus("pendente")}
+    className={`flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium transition ${
+      filtroStatus === "pendente"
+        ? "bg-yellow-400 text-[#061B5C]"
+        : "bg-white/10 text-white hover:bg-white/20"
+    }`}
+  >
+    Pendentes
+    <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-yellow-400 px-2 text-xs font-bold text-[#061B5C]">
+      {totalPendentes}
+    </span>
+  </button>
 
-          <button
-            onClick={() => setFiltroStatus("aceito")}
-            className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition ${
-              filtroStatus === "aceito"
-                ? "bg-green-500 text-white"
-                : "bg-white/10 text-white hover:bg-white/20"
-            }`}
-          >
-            Aceitos
-            <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-green-500 px-2 text-xs font-bold text-white">
-              {totalAceitos}
-            </span>
-          </button>
-
-          <button
-            onClick={() => setFiltroStatus("recusado")}
-            className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition ${
-              filtroStatus === "recusado"
-                ? "bg-red-500 text-white"
-                : "bg-white/10 text-white hover:bg-white/20"
-            }`}
-          >
-            Recusados
-            <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-red-500 px-2 text-xs font-bold text-white">
-              {totalRecusados}
-            </span>
-          </button>
-        </div>
+  <button
+    onClick={() => setFiltroStatus("aceito")}
+    className={`flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium transition ${
+      filtroStatus === "aceito"
+        ? "bg-green-500 text-white"
+        : "bg-white/10 text-white hover:bg-white/20"
+    }`}
+  >
+    Aceitos
+    <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-green-500 px-2 text-xs font-bold text-white">
+      {totalAceitos}
+    </span>
+  </button>
+</div>
 
         {loading ? (
           <p className="text-center text-white/80">Carregando pedidos...</p>
