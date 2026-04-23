@@ -106,10 +106,25 @@ export default function SobreNosLuminuss() {
   }, []);
 
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.muted = mutado;
-    }
-  }, [mutado]);
+  if (audioRef.current) {
+    audioRef.current.muted = true;
+
+    audioRef.current
+      .play()
+      .then(() => {
+        setTocando(true);
+      })
+      .catch(() => {
+        console.log("Autoplay bloqueado pelo navegador");
+      });
+  }
+}, []);
+
+useEffect(() => {
+  if (audioRef.current) {
+    audioRef.current.muted = mutado;
+  }
+}, [mutado]);
 
   const textoResumo = useMemo(
     () =>
@@ -155,8 +170,14 @@ export default function SobreNosLuminuss() {
     >
       <FaArrowLeft className="text-sm md:text-lg" />
     </Link>
-      <audio ref={audioRef} loop preload="none" src="/musica-luminuss.mp3" />
-
+      <audio
+        ref={audioRef}
+        loop
+        autoPlay
+        muted
+        preload="auto"
+        src="/musica-luminuss.mp3"
+      />
       <section className="relative overflow-hidden border-b border-white/10 pl-7 pt-16 md:pt-0">        
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(244,192,33,0.22),transparent_25%),radial-gradient(circle_at_80%_20%,rgba(96,165,250,0.22),transparent_25%),linear-gradient(180deg,#061B5C_0%,#04184d_100%)]" />
         <div className="absolute -left-20 top-16 h-56 w-56 rounded-full bg-yellow-300/10 blur-3xl" />
@@ -213,7 +234,21 @@ export default function SobreNosLuminuss() {
               </button>
 
               <button
-                onClick={() => setMutado((prev) => !prev)}
+                onClick={() => {
+                  setMutado((prev) => {
+                    const novo = !prev;
+
+                    if (audioRef.current) {
+                      audioRef.current.muted = novo;
+
+                      if (!novo) {
+                        audioRef.current.play();
+                      }
+                    }
+
+                    return novo;
+                  });
+                }}                
                 className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 transition hover:bg-white/10"
                 aria-label={mutado ? "Ativar som" : "Silenciar som"}
               >

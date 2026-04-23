@@ -229,7 +229,7 @@ export default function AgendamentoPage() {
         return;
       }
 
-      const numero = "5584991319600";
+      const numero = "5584998512666";
 
       const mensagem = encodeURIComponent(
         `Olá! Gostaria de solicitar um agendamento.\n\n` +
