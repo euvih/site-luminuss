@@ -83,21 +83,8 @@ export default function AgendamentoPage() {
 
   const [mostrarCalendario, setMostrarCalendario] = useState(false);
 
-  // Defina aqui as datas disponíveis
-  const datasDisponiveis = [
-    "2026-05-10",
-    "2026-05-17",
-    "2026-05-24",
-    "2026-06-07",
-    "2026-06-14",
-  ];
-
-  const datasDisponiveisDate = useMemo(() => {
-    return datasDisponiveis.map((data) => {
-      const [ano, mes, dia] = data.split("-").map(Number);
-      return new Date(ano, mes - 1, dia);
-    });
-  }, []);
+  const [datasDisponiveisDate, setDatasDisponiveisDate] = useState<Date[]>([]);
+  const [loadingDatas, setLoadingDatas] = useState(true);
 
   const dataSelecionadaDate = useMemo(() => {
     if (!data) return undefined;
@@ -292,6 +279,46 @@ export default function AgendamentoPage() {
       setLoadingConsulta(false);
     }
   }
+
+  useEffect(() => {
+    async function carregarDisponibilidade() {
+      try {
+        const resposta = await fetch(
+          "https://opensheet.elk.sh/1_EsxHvUXbh8VQnmCLOCoIbvoC1VGtyl3YMr9TiSsgD4/disponibilidade"
+        );
+
+        const dados = await resposta.json();
+
+        if (!Array.isArray(dados)) {
+          setDatasDisponiveisDate([]);
+          setLoadingDatas(false);
+          return;
+        }
+
+        const convertidas = dados
+          .map((item: any) => {
+            const valor = item.data?.trim();
+            if (!valor) return null;
+
+            const [ano, mes, dia] = valor.split("-").map(Number);
+            if (!ano || !mes || !dia) return null;
+
+            const date = new Date(ano, mes - 1, dia);
+            return isNaN(date.getTime()) ? null : date;
+          })
+          .filter(Boolean) as Date[];
+
+        setDatasDisponiveisDate(convertidas);
+        setLoadingDatas(false);
+      } catch (err) {
+        console.error("Erro ao carregar disponibilidade:", err);
+        setDatasDisponiveisDate([]);
+        setLoadingDatas(false);
+      }
+    }
+
+    carregarDisponibilidade();
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("agendamento-nome", nome);
@@ -551,22 +578,24 @@ export default function AgendamentoPage() {
                       <div className="relative">
                         <button
                           type="button"
-                          onClick={() =>
-                            setMostrarCalendario((prev) => !prev)
-                          }
-                          className="flex min-w-0 w-full items-center justify-between rounded-xl bg-white/10 px-4 py-3 text-left outline-none transition hover:bg-white/15"
+                          onClick={() => setMostrarCalendario((prev) => !prev)}
+                          disabled={loadingDatas}
+                          className="flex min-w-0 w-full items-center justify-between rounded-xl bg-white/10 px-4 py-3 text-left outline-none transition hover:bg-white/15 disabled:cursor-not-allowed disabled:opacity-60"
                         >
                           <span className={data ? "text-white" : "text-white/60"}>
                             {data && dataSelecionadaDate
                               ? format(dataSelecionadaDate, "dd/MM/yyyy")
+                              : loadingDatas
+                              ? "Carregando datas..."
                               : "Escolher data"}
                           </span>
 
                           <span className="text-sm text-white/70">📅</span>
                         </button>
 
-                        {mostrarCalendario && (
-                          <div className="absolute left-0 top-[calc(100%+8px)] z-50 rounded-2xl border border-white/10 bg-[#071f69] p-3 shadow-2xl">
+                        {mostrarCalendario && !loadingDatas && (
+                        <div className="absolute left-0 right-0 top-[calc(100%+8px)] z-50 sm:right-auto sm:w-[330px]">
+                          <div className="agendamento-calendario w-full max-w-full overflow-x-auto rounded-2xl border border-white/10 bg-[#071f69] p-3 shadow-2xl">
                             <DayPicker
                               mode="single"
                               locale={ptBR}
@@ -581,9 +610,11 @@ export default function AgendamentoPage() {
                                 selected: "data-selecionada",
                                 disabled: "data-bloqueada",
                               }}
+                              className="w-full"
                             />
                           </div>
-                        )}
+                        </div>
+                      )}
 
                         <input type="hidden" value={data} required />
                       </div>
