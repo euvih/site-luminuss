@@ -174,51 +174,176 @@ box-shadow:
     opacity: 1;
   }
 }
-.rdp {
-  --rdp-accent-color: #f4c021;
-  --rdp-background-color: rgba(255, 255, 255, 0.08);
+.agendamento-calendario {
+  width: min(300px, calc(100vw - 48px));
+}
+
+.agendamento-calendario .rdp {
   margin: 0;
-  color: white;
+  width: 100%;
 }
 
-.rdp-months {
-  display: flex;
+.agendamento-calendario .rdp-months {
+  display: block;
 }
 
-.rdp-caption_label {
-  color: white;
-  font-weight: 600;
+.agendamento-calendario .rdp-month {
+  width: 100%;
 }
 
-.rdp-head_cell {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 12px;
+.agendamento-calendario .rdp-table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.rdp-button {
+.agendamento-calendario .rdp-head_row,
+.agendamento-calendario .rdp-row {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.agendamento-calendario .rdp-head_cell,
+.agendamento-calendario .rdp-cell {
+  width: 100%;
+  text-align: center;
+  padding: 0;
+}
+
+.agendamento-calendario .rdp-day_button,
+.agendamento-calendario .rdp-button {
+  width: 100%;
+  max-width: 34px;
+  height: 34px;
+  margin: 0 auto;
   border-radius: 999px;
+  font-size: 14px;
 }
 
-.data-disponivel button {
-  background: rgba(255, 255, 255, 0.12);
-  color: white;
+.agendamento-calendario .rdp-caption {
+  padding-bottom: 8px;
+}
+
+.agendamento-calendario .rdp-caption_label {
+  font-size: 18px;
   font-weight: 600;
 }
 
-.data-disponivel button:hover {
-  background: rgba(244, 192, 33, 0.22);
+.agendamento-calendario .rdp-nav {
+  gap: 4px;
 }
 
-.data-selecionada button {
+.agendamento-calendario .rdp-head_cell {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+@media (max-width: 640px) {
+  .agendamento-calendario {
+    width: min(280px, calc(100vw - 40px));
+    padding: 10px;
+  }
+
+  .agendamento-calendario .rdp-day_button,
+  .agendamento-calendario .rdp-button {
+    max-width: 30px;
+    height: 30px;
+    font-size: 13px;
+  }
+
+  .agendamento-calendario .rdp-caption_label {
+    font-size: 16px;
+  }
+
+  .agendamento-calendario .rdp-head_cell {
+    font-size: 11px;
+  }
+}
+.disponibilidade-calendario {
+  width: min(320px, calc(100vw - 64px));
+}
+
+.disponibilidade-calendario .rdp {
+  margin: 0;
+  width: 100%;
+  color: white;
+}
+
+.disponibilidade-calendario .rdp-months {
+  display: block;
+}
+
+.disponibilidade-calendario .rdp-month {
+  width: 100%;
+}
+
+.disponibilidade-calendario .rdp-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.disponibilidade-calendario .rdp-head_row,
+.disponibilidade-calendario .rdp-row {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.disponibilidade-calendario .rdp-head_cell,
+.disponibilidade-calendario .rdp-cell {
+  width: 100%;
+  text-align: center;
+  padding: 0;
+}
+
+.disponibilidade-calendario .rdp-day_button,
+.disponibilidade-calendario .rdp-button {
+  width: 100%;
+  max-width: 36px;
+  height: 36px;
+  margin: 0 auto;
+  border-radius: 999px;
+  font-size: 14px;
+}
+
+.disponibilidade-calendario .rdp-caption_label {
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+}
+
+.disponibilidade-calendario .rdp-head_cell {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.disponibilidade-calendario .rdp-day_selected button,
+.disponibilidade-calendario .rdp-day_selected .rdp-day_button {
   background: #f4c021 !important;
   color: #061b5c !important;
   font-weight: 700;
 }
 
-.data-bloqueada {
-  opacity: 0.25;
+.disponibilidade-calendario .rdp-day button:hover,
+.disponibilidade-calendario .rdp-button:hover {
+  background: rgba(255, 255, 255, 0.12);
 }
 
-.data-bloqueada button {
-  cursor: not-allowed;
+@media (max-width: 640px) {
+  .disponibilidade-calendario {
+    width: min(290px, calc(100vw - 48px));
+  }
+
+  .disponibilidade-calendario .rdp-day_button,
+  .disponibilidade-calendario .rdp-button {
+    max-width: 32px;
+    height: 32px;
+    font-size: 13px;
+  }
+
+  .disponibilidade-calendario .rdp-caption_label {
+    font-size: 16px;
+  }
+
+  .disponibilidade-calendario .rdp-head_cell {
+    font-size: 11px;
+  }
 }

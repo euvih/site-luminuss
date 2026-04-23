@@ -20,31 +20,6 @@ export default function DisponibilidadePage() {
   const URL_OPENSHEET =
     "https://opensheet.elk.sh/1_EsxHvUXbh8VQnmCLOCoIbvoC1VGtyl3YMr9TiSsgD4/disponibilidade";
 
-  function mesmaData(a: Date, b: Date) {
-    return (
-      a.getFullYear() === b.getFullYear() &&
-      a.getMonth() === b.getMonth() &&
-      a.getDate() === b.getDate()
-    );
-  }
-
-  function alternarData(date: Date | undefined) {
-    if (!date) return;
-
-    setMensagem("");
-    setErro("");
-
-    setDatasSelecionadas((prev) => {
-      const existe = prev.some((d) => mesmaData(d, date));
-
-      if (existe) {
-        return prev.filter((d) => !mesmaData(d, date));
-      }
-
-      return [...prev, date].sort((a, b) => a.getTime() - b.getTime());
-    });
-  }
-
   async function carregarDisponibilidade() {
     setLoading(true);
     setErro("");
@@ -73,6 +48,8 @@ export default function DisponibilidadePage() {
         })
         .filter(Boolean) as Date[];
 
+      convertidas.sort((a, b) => a.getTime() - b.getTime());
+
       setDatasSelecionadas(convertidas);
       setLoading(false);
     } catch (err) {
@@ -88,9 +65,9 @@ export default function DisponibilidadePage() {
     setMensagem("");
 
     try {
-      const datasFormatadas = datasSelecionadas.map((date) =>
-        format(date, "yyyy-MM-dd")
-      );
+      const datasFormatadas = [...datasSelecionadas]
+        .sort((a, b) => a.getTime() - b.getTime())
+        .map((date) => format(date, "yyyy-MM-dd"));
 
       const resposta = await fetch(URL_SCRIPT, {
         method: "POST",
@@ -122,7 +99,9 @@ export default function DisponibilidadePage() {
   }, []);
 
   const datasFormatadas = useMemo(() => {
-    return datasSelecionadas.map((date) => format(date, "dd/MM/yyyy"));
+    return [...datasSelecionadas]
+      .sort((a, b) => a.getTime() - b.getTime())
+      .map((date) => format(date, "dd/MM/yyyy"));
   }, [datasSelecionadas]);
 
   return (
@@ -158,24 +137,29 @@ export default function DisponibilidadePage() {
         )}
 
         <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-          <div className="rounded-3xl border border-white/10 bg-white/10 p-6 backdrop-blur">
+          <div className="rounded-3xl border border-white/10 bg-white/10 p-4 sm:p-6 backdrop-blur">
             {loading ? (
               <p className="text-center text-white/70">Carregando calendário...</p>
             ) : (
               <div className="flex justify-center">
-                <DayPicker
-                  mode="multiple"
-                  locale={ptBR}
-                  selected={datasSelecionadas}
-                  onSelect={(dates) => {
-                    if (!dates) return;
-                    setDatasSelecionadas(dates);
-                    setMensagem("");
-                    setErro("");
-                  }}
-                  month={new Date()}
-                  className="admin-calendario"
-                />
+                <div className="disponibilidade-calendario rounded-2xl bg-[#071f69] p-3">
+                  <DayPicker
+                    mode="multiple"
+                    locale={ptBR}
+                    selected={datasSelecionadas}
+                    onSelect={(dates) => {
+                      setDatasSelecionadas(
+                        [...(dates || [])].sort(
+                          (a, b) => a.getTime() - b.getTime()
+                        )
+                      );
+                      setMensagem("");
+                      setErro("");
+                    }}
+                    month={new Date()}
+                    className="w-full"
+                  />
+                </div>
               </div>
             )}
           </div>

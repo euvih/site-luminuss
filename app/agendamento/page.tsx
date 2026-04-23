@@ -513,8 +513,7 @@ export default function AgendamentoPage() {
                 </div>
               </div>
 
-              <div className="relative flex h-full flex-col justify-center overflow-hidden px-8 py-10 lg:px-10">
-                <Image
+<div className="relative flex h-full flex-col justify-center overflow-visible px-8 py-10 lg:px-10">                <Image
                   src="/img3.jpeg"
                   alt="Fundo agendamento"
                   fill
@@ -594,27 +593,26 @@ export default function AgendamentoPage() {
                         </button>
 
                         {mostrarCalendario && !loadingDatas && (
-                        <div className="absolute left-0 right-0 top-[calc(100%+8px)] z-50 sm:right-auto sm:w-[330px]">
-                          <div className="agendamento-calendario w-full max-w-full overflow-x-auto rounded-2xl border border-white/10 bg-[#071f69] p-3 shadow-2xl">
-                            <DayPicker
-                              mode="single"
-                              locale={ptBR}
-                              selected={dataSelecionadaDate}
-                              onSelect={handleSelecionarData}
-                              disabled={(date) => !dataEstaDisponivel(date)}
-                              modifiers={{
-                                disponivel: datasDisponiveisDate,
-                              }}
-                              modifiersClassNames={{
-                                disponivel: "data-disponivel",
-                                selected: "data-selecionada",
-                                disabled: "data-bloqueada",
-                              }}
-                              className="w-full"
-                            />
-                          </div>
-                        </div>
-                      )}
+  <div className="absolute left-0 right-0 top-[calc(100%+8px)] z-50 sm:right-auto sm:w-[300px]">
+    <div className="agendamento-calendario rounded-2xl border border-white/10 bg-[#071f69] p-3 shadow-2xl">
+      <DayPicker
+        mode="single"
+        locale={ptBR}
+        selected={dataSelecionadaDate}
+        onSelect={handleSelecionarData}
+        disabled={(date) => !dataEstaDisponivel(date)}
+        modifiers={{
+          disponivel: datasDisponiveisDate,
+        }}
+        modifiersClassNames={{
+          disponivel: "data-disponivel",
+          selected: "data-selecionada",
+          disabled: "data-bloqueada",
+        }}
+      />
+    </div>
+  </div>
+)}
 
                         <input type="hidden" value={data} required />
                       </div>

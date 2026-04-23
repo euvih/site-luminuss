@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { FiRefreshCw, FiSearch, FiSliders, FiX } from "react-icons/fi";
+import Link from "next/link";
 
 type Agendamento = {
   id: string;
@@ -741,14 +742,21 @@ export default function AdminPage() {
           <h1 className="text-4xl font-bold">Todos os agendamentos</h1>
         </div>
 
-        <div className="mb-3 flex items-center justify-center gap-3">
+        <div className="mb-2 flex items-center justify-center gap-3">
   <button
     type="button"
     onClick={() => setMostrarFormularioManual((prev) => !prev)}
-    className="flex h-11 w-[220px] items-center justify-center rounded-full border border-white/15 bg-white/10 px-4 text-sm text-white/80 transition hover:bg-white/15 hover:text-white"
+    className="flex h-9 items-center justify-center rounded-full border border-white/15 bg-white/10 px-4 text-sm text-white/80 transition hover:bg-white/15 hover:text-white"
   >
     {mostrarFormularioManual ? "Fechar" : "+ Adicionar manualmente"}
   </button>
+
+  <Link
+  href="/admin/disponibilidade"
+  className="flex h-11 items-center justify-center rounded-full border border-white/15 bg-white/10 px-3 text-xs text-white/80 transition hover:bg-white/15 hover:text-white sm:px-4 sm:text-sm"
+>
+  📅
+</Link>
 
   <button
     type="button"
@@ -862,7 +870,7 @@ export default function AdminPage() {
         )}
 
 <div className="mb-3 flex items-center justify-center gap-3">
-  <div className="group flex h-11 w-[150px] items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 backdrop-blur transition focus-within:border-white/25 focus-within:bg-white/15">
+  <div className="group flex h-9 w-[150px] items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 backdrop-blur transition focus-within:border-white/25 focus-within:bg-white/15">
     <FiSearch className="shrink-0 text-sm text-white/60" />
 
     <input
@@ -885,7 +893,7 @@ export default function AdminPage() {
     )}
   </div>
 
-  <div className="flex h-11 w-[150px] items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 backdrop-blur">
+  <div className="flex h-9 w-[150px] items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 backdrop-blur">
     <FiSliders className="shrink-0 text-sm text-white/60" />
 
     <select
@@ -906,7 +914,7 @@ export default function AdminPage() {
         <div className="mb-9 mx-auto grid max-w-[340px] grid-cols-3 gap-2">
   <button
     onClick={() => setFiltroStatus("todos")}
-    className={`flex h-11 items-center justify-center gap-1 rounded-full px-2 text-sm font-medium transition ${
+    className={`flex h-9 items-center justify-center gap-1 rounded-full px-2 text-sm font-medium transition ${
       filtroStatus === "todos"
         ? "bg-white text-[#061B5C]"
         : "bg-white/10 text-white hover:bg-white/20"
@@ -920,7 +928,7 @@ export default function AdminPage() {
 
   <button
     onClick={() => setFiltroStatus("pendente")}
-    className={`flex h-11 items-center justify-center gap-1 rounded-full px-2 text-sm font-medium transition ${
+    className={`flex h-9 items-center justify-center gap-1 rounded-full px-2 text-sm font-medium transition ${
       filtroStatus === "pendente"
         ? "bg-yellow-400 text-[#061B5C]"
         : "bg-white/10 text-white hover:bg-white/20"
@@ -934,7 +942,7 @@ export default function AdminPage() {
 
   <button
     onClick={() => setFiltroStatus("aceito")}
-    className={`flex h-11 items-center justify-center gap-1 rounded-full px-2 text-sm font-medium transition ${
+    className={`flex h-9 items-center justify-center gap-1 rounded-full px-2 text-sm font-medium transition ${
       filtroStatus === "aceito"
         ? "bg-green-500 text-white"
         : "bg-white/10 text-white hover:bg-white/20"
