@@ -753,9 +753,9 @@ export default function AdminPage() {
 
   <Link
   href="/admin/disponibilidade"
-  className="flex h-11 items-center justify-center rounded-full border border-white/15 bg-white/10 px-3 text-xs text-white/80 transition hover:bg-white/15 hover:text-white sm:px-4 sm:text-sm"
+  className="flex h-9 items-center justify-center rounded-full border border-white/15 bg-white/10 px-3 text-xs text-white/80 transition hover:bg-white/15 hover:text-white sm:px-4 sm:text-sm"
 >
-  📅
+  📅 Agenda
 </Link>
 
   <button
@@ -869,8 +869,7 @@ export default function AdminPage() {
           </div>
         )}
 
-<div className="mb-3 flex items-center justify-center gap-3">
-  <div className="group flex h-9 w-[150px] items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 backdrop-blur transition focus-within:border-white/25 focus-within:bg-white/15">
+<div className="mb-3 flex items-center justify-center gap-3 lg:justify-between lg:max-w-[560px] lg:mx-auto">  <div className="group flex h-9 w-[150px] items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 backdrop-blur transition focus-within:border-white/25 focus-within:bg-white/15">
     <FiSearch className="shrink-0 text-sm text-white/60" />
 
     <input
