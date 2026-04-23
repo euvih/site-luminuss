@@ -331,8 +331,7 @@ export default function AgendamentoPage() {
   }, [nome, local, data, horario, telefone, tipoEvento, detalhes]);
 
   return (
-    <main className="flex min-h-screen justify-center bg-[#061B5C] px-6 py-8 text-white">
-      <Link
+        <main className="flex min-h-screen flex-col justify-between bg-[#061B5C] px-6 py-8 text-white">      <Link
         href="/"
         className="fixed left-4 top-24 z-50 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-lg backdrop-blur-md transition hover:scale-110 hover:bg-[#F4C021]/80 hover:text-[#061B5C] md:left-6 md:top-28 md:h-12 md:w-12"
       >
@@ -696,6 +695,16 @@ export default function AgendamentoPage() {
             </div>
           </section>
         </main>
+      </div>
+       <div className="flex justify-center pb-4 pt-6">
+        <Link
+          href="/admin"
+          className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-xs font-semibold text-white/20 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:border-white/20 hover:bg-white/10 hover:text-white/60"
+          aria-label="Admin"
+          title="Admin"
+        >
+          A
+        </Link>
       </div>
     </main>
   );

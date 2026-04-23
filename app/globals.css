@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* =========================
+   BASE
+========================= */
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -19,40 +22,23 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
-html {
-  scroll-behavior: smooth;
-}
-@keyframes heartbeat {
-  0% {
-    transform: scale(1);
-  }
-  14% {
-    transform: scale(1.18);
-  }
-  28% {
-    transform: scale(1);
-  }
-  42% {
-    transform: scale(1.18);
-  }
-  70% {
-    transform: scale(1);
-  }
-}
 
-.heart-beat {
-  display: inline-block;
-  transform-origin: center;
-  animation: heartbeat 1.4s ease-in-out infinite;
-}
 select option {
   color: rgb(9, 11, 90);
 }
+
+/* =========================
+   BOTÕES / UTILITÁRIOS
+========================= */
 .botao {
   background: #0b1f5c;
   color: white;
@@ -68,55 +54,35 @@ select option {
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
+
+.heart-beat {
+  display: inline-block;
+  transform-origin: center;
+  animation: heartbeat 1.4s ease-in-out infinite;
+}
+
+/* =========================
+   ANIMAÇÕES
+========================= */
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  14% { transform: scale(1.18); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.18); }
+  70% { transform: scale(1); }
+}
+
 @keyframes brilhoMobile {
-  0% {
-    transform: translateX(-120%);
-  }
-  100% {
-    transform: translateX(120%);
-  }
-}
-.estrela {
-  position: absolute;
-  display: block;
-  border-radius: 9999px;
-  background: white;
-  opacity: 0.85;
-  box-shadow:
-    0 0 6px rgba(255, 255, 255, 0.7),
-    0 0 12px rgba(201, 163, 208, 0.35);
-  animation: estrelaFloat 6s ease-in-out infinite,
-             estrelaPisca 3.2s ease-in-out infinite;
-}
-
-.estrela:nth-child(2n) {
-  animation-duration: 7.5s, 2.8s;
-}
-
-.estrela:nth-child(3n) {
-  animation-duration: 5.5s, 3.8s;
-}
-
-.estrela:nth-child(4n) {
-  opacity: 0.6;
+  0% { transform: translateX(-120%); }
+  100% { transform: translateX(120%); }
 }
 
 @keyframes estrelaFloat {
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
-  25% {
-    transform: translate3d(1px, -2px, 0);
-  }
-  50% {
-    transform: translate3d(-1px, 1px, 0);
-  }
-  75% {
-    transform: translate3d(2px, 1px, 0);
-  }
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
+  0% { transform: translate3d(0, 0, 0); }
+  25% { transform: translate3d(1px, -2px, 0); }
+  50% { transform: translate3d(-1px, 1px, 0); }
+  75% { transform: translate3d(2px, 1px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
 }
 
 @keyframes estrelaPisca {
@@ -129,16 +95,47 @@ select option {
     filter: brightness(1.25);
   }
 }
+
+@keyframes piscarEstrela {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.8);
+    opacity: 1;
+  }
+}
+
+/* =========================
+   EFEITOS VISUAIS
+========================= */
 .estrela {
   position: absolute;
   display: block;
   border-radius: 9999px;
   background: rgba(255, 255, 255, 1);
-box-shadow:
-  0 0 8px rgba(255, 255, 255, 1),
-  0 0 18px rgba(180, 140, 255, 0.7),
-  0 0 30px rgba(180, 140, 255, 0.4);
-  animation: piscarEstrela ease-in-out infinite;
+  opacity: 0.85;
+  box-shadow:
+    0 0 8px rgba(255, 255, 255, 1),
+    0 0 18px rgba(180, 140, 255, 0.7),
+    0 0 30px rgba(180, 140, 255, 0.4);
+  animation:
+    estrelaFloat 6s ease-in-out infinite,
+    estrelaPisca 3.2s ease-in-out infinite,
+    piscarEstrela ease-in-out infinite;
+}
+
+.estrela:nth-child(2n) {
+  animation-duration: 7.5s, 2.8s, 2.8s;
+}
+
+.estrela:nth-child(3n) {
+  animation-duration: 5.5s, 3.8s, 3.8s;
+}
+
+.estrela:nth-child(4n) {
+  opacity: 0.6;
 }
 
 .poeira-cosmica {
@@ -164,16 +161,102 @@ box-shadow:
   opacity: 0.9;
 }
 
-@keyframes piscarEstrela {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.6;
-  }
-  50% {
-    transform: scale(1.8);
-    opacity: 1;
-  }
+/* =========================
+   DAY PICKER - BASE
+========================= */
+.rdp {
+  --rdp-accent-color: #f4c021;
+  --rdp-background-color: transparent;
+  margin: 0;
+  color: white;
 }
+
+.rdp-months {
+  display: block;
+}
+
+.rdp-month {
+  width: 100%;
+}
+
+.rdp-caption_label {
+  color: white;
+  font-weight: 700;
+}
+
+.rdp-head_cell {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: lowercase;
+}
+
+.rdp-day,
+.rdp-cell {
+  text-align: center;
+}
+
+.rdp-day_button,
+.rdp-button {
+  width: 38px;
+  height: 38px;
+  margin: 0 auto;
+  border-radius: 9999px;
+  background: transparent;
+  color: white;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.rdp-day_today .rdp-day_button,
+.rdp-day_today .rdp-button {
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* dias indisponíveis */
+.data-bloqueada,
+.rdp-day_disabled {
+  opacity: 0.28;
+}
+
+.data-bloqueada .rdp-day_button,
+.rdp-day_disabled .rdp-day_button,
+.data-bloqueada .rdp-button,
+.rdp-day_disabled .rdp-button {
+  color: rgba(255, 255, 255, 0.35) !important;
+  background: transparent !important;
+  cursor: not-allowed;
+}
+
+/* dias disponíveis */
+.data-disponivel .rdp-day_button,
+.data-disponivel .rdp-button {
+  background: rgba(255, 255, 255, 0.08);
+  color: white !important;
+  border-radius: 9999px;
+  cursor: pointer;
+}
+
+.data-disponivel .rdp-day_button:hover,
+.data-disponivel .rdp-button:hover {
+  background: rgba(244, 192, 33, 0.22);
+  color: #f4c021 !important;
+}
+
+/* selecionado padrão */
+.data-selecionada .rdp-day_button,
+.data-selecionada .rdp-button,
+.rdp-day_selected .rdp-day_button,
+.rdp-day_selected .rdp-button {
+  background: #f4c021 !important;
+  color: #061b5c !important;
+  font-weight: 700;
+  box-shadow: 0 0 0 2px rgba(244, 192, 33, 0.2);
+}
+
+/* =========================
+   CALENDÁRIO - AGENDAMENTO
+========================= */
 .agendamento-calendario {
   width: min(300px, calc(100vw - 48px));
 }
@@ -258,6 +341,10 @@ box-shadow:
     font-size: 11px;
   }
 }
+
+/* =========================
+   CALENDÁRIO - DISPONIBILIDADE
+========================= */
 .disponibilidade-calendario {
   width: min(320px, calc(100vw - 64px));
 }
@@ -315,16 +402,51 @@ box-shadow:
   color: rgba(255, 255, 255, 0.72);
 }
 
-.disponibilidade-calendario .rdp-day_selected button,
-.disponibilidade-calendario .rdp-day_selected .rdp-day_button {
-  background: #f4c021 !important;
-  color: #061b5c !important;
-  font-weight: 700;
-}
-
 .disponibilidade-calendario .rdp-day button:hover,
 .disponibilidade-calendario .rdp-button:hover {
   background: rgba(255, 255, 255, 0.12);
+}
+
+/* datas já salvas */
+.disponibilidade-calendario .dia-salvo .rdp-day_button,
+.disponibilidade-calendario .dia-salvo .rdp-button,
+.disponibilidade-calendario .dia-salvo button {
+  background: rgba(34, 197, 42, 0.22) !important;
+  color: #dcfce7 !important;
+  border: 1px solid rgba(7, 255, 20, 0.45) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 0 1px rgba(4, 228, 86, 0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  font-weight: 700;
+  border-radius: 9999px;
+}
+
+/* data salva + selecionada (remover) */
+.disponibilidade-calendario .dia-salvo.rdp-day_selected .rdp-day_button,
+.disponibilidade-calendario .rdp-day_selected.dia-salvo .rdp-day_button,
+.disponibilidade-calendario .dia-salvo.rdp-selected .rdp-day_button,
+.disponibilidade-calendario .rdp-selected.dia-salvo .rdp-day_button,
+.disponibilidade-calendario .dia-salvo.rdp-day_selected button,
+.disponibilidade-calendario .rdp-day_selected.dia-salvo button {
+  background: rgba(34, 197, 94, 0.6) !important;
+  color: #ecfdf5 !important;
+  border: 2px solid rgba(34, 197, 94, 1) !important;
+  box-shadow:
+    0 0 0 2px rgba(34, 197, 94, 0.35),
+    0 10px 25px rgba(34, 197, 94, 0.2);
+  backdrop-filter: blur(8px);
+  font-weight: 800;
+}
+
+/* datas novas selecionadas e ainda não salvas */
+.disponibilidade-calendario .rdp-day_selected .rdp-day_button,
+.disponibilidade-calendario .rdp-day_selected .rdp-button {
+  background: #f4c021 !important;
+  color: #061b5c !important;
+  font-weight: 700;
+  box-shadow: 0 0 0 2px rgba(244, 192, 33, 0.2);
 }
 
 @media (max-width: 640px) {
@@ -346,94 +468,4 @@ box-shadow:
   .disponibilidade-calendario .rdp-head_cell {
     font-size: 11px;
   }
-}
-.rdp {
-  --rdp-accent-color: #f4c021;
-  --rdp-background-color: transparent;
-  margin: 0;
-  color: white;
-}
-
-.rdp-months {
-  display: block;
-}
-
-.rdp-month {
-  width: 100%;
-}
-
-.rdp-caption_label {
-  color: white;
-  font-weight: 700;
-}
-
-.rdp-head_cell {
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: lowercase;
-}
-
-.rdp-day,
-.rdp-cell {
-  text-align: center;
-}
-
-.rdp-day_button,
-.rdp-button {
-  width: 38px;
-  height: 38px;
-  margin: 0 auto;
-  border-radius: 9999px;
-  background: transparent;
-  color: white;
-  border: none;
-  transition: all 0.2s ease;
-}
-
-/* dias indisponíveis */
-.data-bloqueada,
-.rdp-day_disabled {
-  opacity: 0.28;
-}
-
-.data-bloqueada .rdp-day_button,
-.rdp-day_disabled .rdp-day_button,
-.data-bloqueada .rdp-button,
-.rdp-day_disabled .rdp-button {
-  color: rgba(255, 255, 255, 0.35) !important;
-  background: transparent !important;
-  cursor: not-allowed;
-}
-
-/* dias disponíveis */
-.data-disponivel .rdp-day_button,
-.data-disponivel .rdp-button {
-  background: rgba(255, 255, 255, 0.08);
-  color: white !important;
-  border-radius: 9999px;
-  cursor: pointer;
-}
-
-.data-disponivel .rdp-day_button:hover,
-.data-disponivel .rdp-button:hover {
-  background: rgba(244, 192, 33, 0.22);
-  color: #f4c021 !important;
-}
-
-/* dia selecionado */
-.data-selecionada .rdp-day_button,
-.data-selecionada .rdp-button,
-.rdp-day_selected .rdp-day_button,
-.rdp-day_selected .rdp-button {
-  background: #f4c021 !important;
-  color: #061b5c !important;
-  font-weight: 700;
-  box-shadow: 0 0 0 2px rgba(244, 192, 33, 0.2);
-}
-
-/* hoje */
-.rdp-day_today .rdp-day_button,
-.rdp-day_today .rdp-button {
-  border: 1px solid rgba(255, 255, 255, 0.25);
 }

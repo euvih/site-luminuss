@@ -331,9 +331,7 @@ export default function AdminPage() {
   const [mostrarFormularioManual, setMostrarFormularioManual] = useState(false);
   const [salvandoManual, setSalvandoManual] = useState(false);
   const [formManual, setFormManual] = useState({
-    igreja: "",
-    responsavel: "",
-    whatsapp: "",
+
     local: "",
     data: "",
     hora: "",
@@ -425,7 +423,6 @@ export default function AdminPage() {
     e.preventDefault();
 
     if (
-      !formManual.igreja ||
       !formManual.local ||
       !formManual.data ||
       !formManual.hora
@@ -442,9 +439,6 @@ export default function AdminPage() {
         body: JSON.stringify({
           acao: "criarManual",
           codigo: gerarCodigoManual(),
-          igreja: formManual.igreja,
-          responsavel: formManual.responsavel || formManual.igreja,
-          whatsapp: formManual.whatsapp,
           local: formManual.local,
           data: formManual.data,
           hora: formManual.hora,
@@ -461,9 +455,7 @@ export default function AdminPage() {
       }
 
       setFormManual({
-        igreja: "",
-        responsavel: "",
-        whatsapp: "",
+        
         local: "",
         data: "",
         hora: "",
@@ -836,7 +828,7 @@ export default function AdminPage() {
             : "bg-white/10 text-white hover:bg-white/20"
         }`}
       >
-        <span>Pend.</span>
+        <span>Pendente</span>
         <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-yellow-400 px-2 text-[11px] font-bold text-[#061B5C]">
           {totalPendentes}
         </span>
@@ -948,7 +940,7 @@ export default function AdminPage() {
             : "bg-white/10 text-white hover:bg-white/20"
         }`}
       >
-        Pend.
+        Pendente
         <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-yellow-400 px-2 text-xs font-bold text-[#061B5C]">
           {totalPendentes}
         </span>
@@ -970,6 +962,75 @@ export default function AdminPage() {
     </div>
   </div>
 </div>
+
+{mostrarFormularioManual && (
+  <div className="mb-8 rounded-3xl border border-white/10 bg-white/10 p-5 backdrop-blur">
+    <form onSubmit={adicionarEventoManual} className="grid gap-3">
+      <div className="grid gap-3 md:grid-cols-2">
+        <input
+          placeholder="Local"
+          value={formManual.local}
+          onChange={(e) =>
+            setFormManual({ ...formManual, local: e.target.value })
+          }
+          className="rounded-xl bg-white/10 px-4 py-3"
+        />
+      </div>
+
+      <div className="grid gap-3 md:grid-cols-2">
+        <input
+          type="date"
+          value={formManual.data}
+          onChange={(e) =>
+            setFormManual({ ...formManual, data: e.target.value })
+          }
+          className="rounded-xl bg-white/10 px-4 py-3"
+        />
+
+        <input
+          type="time"
+          value={formManual.hora}
+          onChange={(e) =>
+            setFormManual({ ...formManual, hora: e.target.value })
+          }
+          className="rounded-xl bg-white/10 px-4 py-3"
+        />
+      </div>
+
+      <textarea
+        rows={3}
+        placeholder="Observações"
+        value={formManual.observacoes}
+        onChange={(e) =>
+          setFormManual({
+            ...formManual,
+            observacoes: e.target.value,
+          })
+          
+        }
+        className="rounded-xl bg-white/10 px-4 py-3"
+      />
+      <select
+  value={formManual.status}
+  onChange={(e) =>
+    setFormManual({ ...formManual, status: e.target.value })
+  }
+  className="rounded-xl bg-white/10 px-4 py-3 text-black"
+>
+  <option value="aceito">Aceito</option>
+  <option value="pendente">Pendente</option>
+</select>
+
+      <button
+        type="submit"
+        disabled={salvandoManual}
+        className="mt-2 rounded-xl bg-[#F4C021] px-5 py-3 font-semibold text-[#061B5C]"
+      >
+        {salvandoManual ? "Salvando..." : "Salvar evento"}
+      </button>
+    </form>
+  </div>
+)}
 
         {loading ? (
           <p className="text-center text-white/80">Carregando pedidos...</p>
