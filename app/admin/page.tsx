@@ -357,16 +357,21 @@ export default function AdminPage() {
     "https://opensheet.elk.sh/1_EsxHvUXbh8VQnmCLOCoIbvoC1VGtyl3YMr9TiSsgD4/agendamentos";
 
   useEffect(() => {
-    const filtroSalvo = localStorage.getItem("adminFiltroStatus");
-    const buscaSalva = localStorage.getItem("adminBusca");
-    const ordenacaoSalva = localStorage.getItem("adminOrdenacao");
+  const acessoSalvo = localStorage.getItem("adminAcessoLiberado");
+  const filtroSalvo = localStorage.getItem("adminFiltroStatus");
+  const buscaSalva = localStorage.getItem("adminBusca");
+  const ordenacaoSalva = localStorage.getItem("adminOrdenacao");
 
-    if (filtroSalvo) setFiltroStatus(filtroSalvo);
-    if (buscaSalva) setBusca(buscaSalva);
-    if (ordenacaoSalva === "padrao" || ordenacaoSalva === "envio_recente") {
-      setOrdenacao(ordenacaoSalva);
-    }
-  }, []);
+  if (acessoSalvo === "true") {
+    setAcessoLiberado(true);
+  }
+
+  if (filtroSalvo) setFiltroStatus(filtroSalvo);
+  if (buscaSalva) setBusca(buscaSalva);
+  if (ordenacaoSalva === "padrao" || ordenacaoSalva === "envio_recente") {
+    setOrdenacao(ordenacaoSalva);
+  }
+}, []);
 
   useEffect(() => {
     localStorage.setItem("adminFiltroStatus", filtroStatus);
@@ -386,15 +391,16 @@ export default function AdminPage() {
   }
 
   function entrarNoPainel(e: React.FormEvent) {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (codigoAdmin.trim() === CODIGO_CORRETO) {
-      setAcessoLiberado(true);
-      setErro("");
-    } else {
-      setErro("Código incorreto.");
-    }
+  if (codigoAdmin.trim() === CODIGO_CORRETO) {
+    setAcessoLiberado(true);
+    localStorage.setItem("adminAcessoLiberado", "true");
+    setErro("");
+  } else {
+    setErro("Código incorreto.");
   }
+}
 
   async function carregarPedidos() {
     setLoading(true);
