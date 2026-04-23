@@ -10,7 +10,8 @@ import "react-day-picker/dist/style.css";
 
 export default function DisponibilidadePage() {
   const [datasSalvas, setDatasSalvas] = useState<Date[]>([]);
-  const [datasSelecionadas, setDatasSelecionadas] = useState<Date[]>([]);  const [loading, setLoading] = useState(true);
+  const [datasSelecionadas, setDatasSelecionadas] = useState<Date[]>([]);
+  const [loading, setLoading] = useState(true);
   const [salvando, setSalvando] = useState(false);
   const [mensagem, setMensagem] = useState("");
   const [erro, setErro] = useState("");
@@ -50,9 +51,9 @@ export default function DisponibilidadePage() {
 
       convertidas.sort((a, b) => a.getTime() - b.getTime());
 
-    setDatasSalvas(convertidas);
-    setDatasSelecionadas(convertidas);      
-    setLoading(false);
+      setDatasSalvas(convertidas);
+      setDatasSelecionadas(convertidas);
+      setLoading(false);
     } catch (err) {
       console.error(err);
       setErro("Erro ao carregar disponibilidade.");
@@ -85,8 +86,10 @@ export default function DisponibilidadePage() {
         setSalvando(false);
         return;
       }
-      
-      setDatasSalvas([...datasSelecionadas].sort((a, b) => a.getTime() - b.getTime()));
+
+      setDatasSalvas(
+        [...datasSelecionadas].sort((a, b) => a.getTime() - b.getTime())
+      );
       setMensagem("Datas disponíveis salvas com sucesso.");
       setSalvando(false);
     } catch (err) {
@@ -105,16 +108,18 @@ export default function DisponibilidadePage() {
       .sort((a, b) => a.getTime() - b.getTime())
       .map((date) => format(date, "dd/MM/yyyy"));
   }, [datasSelecionadas]);
-const temAlteracao =
-  datasSelecionadas.length !== datasSalvas.length ||
-  datasSelecionadas.some((dataSel) =>
-    !datasSalvas.some(
-      (dataSalva) =>
-        dataSalva.getFullYear() === dataSel.getFullYear() &&
-        dataSalva.getMonth() === dataSel.getMonth() &&
-        dataSalva.getDate() === dataSel.getDate()
-    )
-  );
+
+  const temAlteracao =
+    datasSelecionadas.length !== datasSalvas.length ||
+    datasSelecionadas.some((dataSel) =>
+      !datasSalvas.some(
+        (dataSalva) =>
+          dataSalva.getFullYear() === dataSel.getFullYear() &&
+          dataSalva.getMonth() === dataSel.getMonth() &&
+          dataSalva.getDate() === dataSel.getDate()
+      )
+    );
+
   return (
     <main className="min-h-screen bg-[#061B5C] px-6 py-12 text-white">
       <Link
@@ -147,7 +152,8 @@ const temAlteracao =
           </div>
         )}
 
-        <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
+        {/* MOBILE */}
+        <div className="grid gap-6 lg:hidden">
           <div className="rounded-3xl border border-white/10 bg-white/10 p-4 sm:p-6 backdrop-blur">
             {loading ? (
               <p className="text-center text-white/70">Carregando calendário...</p>
@@ -155,85 +161,175 @@ const temAlteracao =
               <div className="flex justify-center">
                 <div className="disponibilidade-calendario rounded-2xl bg-[#071f69] p-3">
                   <DayPicker
-  mode="multiple"
-  locale={ptBR}
-  selected={datasSelecionadas}
-  onSelect={(dates) => {
-    setDatasSelecionadas(
-      [...(dates || [])].sort(
-        (a, b) => a.getTime() - b.getTime()
-      )
-    );
-    setMensagem("");
-    setErro("");
-  }}
-  defaultMonth={new Date()}
-  fromMonth={new Date()}
-  modifiers={{
-    salvo: datasSalvas,
-    selecionadoNaoSalvo: datasSelecionadas.filter(
-      (dataSel) =>
-        !datasSalvas.some(
-          (dataSalva) =>
-            dataSalva.getFullYear() === dataSel.getFullYear() &&
-            dataSalva.getMonth() === dataSel.getMonth() &&
-            dataSalva.getDate() === dataSel.getDate()
-        )
-    ),
-  }}
-  modifiersClassNames={{
-    salvo: "dia-salvo",
-    selecionadoNaoSalvo: "dia-nao-salvo",
-  }}
-  className="w-full"
-/>
+                    mode="multiple"
+                    locale={ptBR}
+                    selected={datasSelecionadas}
+                    onSelect={(dates) => {
+                      setDatasSelecionadas(
+                        [...(dates || [])].sort(
+                          (a, b) => a.getTime() - b.getTime()
+                        )
+                      );
+                      setMensagem("");
+                      setErro("");
+                    }}
+                    defaultMonth={new Date()}
+                    fromMonth={new Date()}
+                    modifiers={{
+                      salvo: datasSalvas,
+                      selecionadoNaoSalvo: datasSelecionadas.filter(
+                        (dataSel) =>
+                          !datasSalvas.some(
+                            (dataSalva) =>
+                              dataSalva.getFullYear() === dataSel.getFullYear() &&
+                              dataSalva.getMonth() === dataSel.getMonth() &&
+                              dataSalva.getDate() === dataSel.getDate()
+                          )
+                      ),
+                    }}
+                    modifiersClassNames={{
+                      salvo: "dia-salvo",
+                      selecionadoNaoSalvo: "dia-nao-salvo",
+                    }}
+                    className="w-full"
+                  />
                 </div>
               </div>
             )}
           </div>
 
-          <div className="rounded-3xl border border-white/10 bg-white/10 p-6 backdrop-blur h-[540px] flex flex-col">
-  <h2 className="text-xl font-semibold text-[#F4C021]">
-    Datas marcadas
-  </h2>
+          <button
+            type="button"
+            onClick={salvarDisponibilidade}
+            disabled={!temAlteracao || salvando || loading}
+            className={`
+              w-full rounded-xl px-5 py-3 font-semibold transition-all duration-300
+              ${
+                temAlteracao
+                  ? "bg-[#F4C021] text-[#061B5C] hover:opacity-90"
+                  : "cursor-not-allowed border border-white/10 bg-transparent text-white/40"
+              }
+            `}
+          >
+            {salvando ? "Salvando..." : "Salvar disponibilidade"}
+          </button>
 
-  <p className="mt-2 text-sm text-white/70">
-    Estas serão as únicas datas clicáveis no formulário de agendamento.
-  </p>
+          <div className="rounded-3xl border border-white/10 bg-white/10 p-6 backdrop-blur">
+            <h2 className="text-xl font-semibold text-[#F4C021]">
+              Datas marcadas
+            </h2>
 
-  <div className="mt-5 flex-1 overflow-y-auto pr-1 grid grid-cols-2 gap-2 content-start">
-    {datasFormatadas.length === 0 ? (
-      <p className="col-span-2 text-sm text-white/60">
-        Nenhuma data selecionada ainda.
-      </p>
-    ) : (
-      datasFormatadas.map((data, index) => (
-        <div
-          key={`${data}-${index}`}
-          className="rounded-xl bg-black/20 px-4 py-3 text-sm"
-        >
-          {data}
+            <p className="mt-2 text-sm text-white/70">
+              Estas serão as únicas datas clicáveis no formulário de agendamento.
+            </p>
+
+            <div className="mt-5 grid max-h-[350px] grid-cols-2 gap-2 overflow-y-auto pr-1">
+              {datasFormatadas.length === 0 ? (
+                <p className="col-span-2 text-sm text-white/60">
+                  Nenhuma data selecionada ainda.
+                </p>
+              ) : (
+                datasFormatadas.map((data, index) => (
+                  <div
+                    key={`${data}-${index}`}
+                    className="rounded-xl bg-black/20 px-4 py-3 text-sm"
+                  >
+                    {data}
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
         </div>
-      ))
-    )}
-  </div>
 
-  <button
-    type="button"
-    onClick={salvarDisponibilidade}
-    disabled={!temAlteracao || salvando || loading}
-    className={`
-      mt-5 w-full rounded-xl px-5 py-3 font-semibold transition-all duration-300
-      ${
-        temAlteracao
-          ? "bg-[#F4C021] text-[#061B5C] hover:opacity-90"
-          : "bg-transparent text-white/40 border border-white/10 cursor-not-allowed"
-      }
-    `}
-  >
-    {salvando ? "Salvando..." : "Salvar disponibilidade"}
-  </button>
-</div>
+        {/* DESKTOP */}
+        <div className="hidden gap-8 lg:grid lg:grid-cols-[1.2fr_0.8fr]">
+          <div className="rounded-3xl border border-white/10 bg-white/10 p-4 sm:p-6 backdrop-blur">
+            {loading ? (
+              <p className="text-center text-white/70">Carregando calendário...</p>
+            ) : (
+              <div className="flex justify-center">
+                <div className="disponibilidade-calendario rounded-2xl bg-[#071f69] p-3">
+                  <DayPicker
+                    mode="multiple"
+                    locale={ptBR}
+                    selected={datasSelecionadas}
+                    onSelect={(dates) => {
+                      setDatasSelecionadas(
+                        [...(dates || [])].sort(
+                          (a, b) => a.getTime() - b.getTime()
+                        )
+                      );
+                      setMensagem("");
+                      setErro("");
+                    }}
+                    defaultMonth={new Date()}
+                    fromMonth={new Date()}
+                    modifiers={{
+                      salvo: datasSalvas,
+                      selecionadoNaoSalvo: datasSelecionadas.filter(
+                        (dataSel) =>
+                          !datasSalvas.some(
+                            (dataSalva) =>
+                              dataSalva.getFullYear() === dataSel.getFullYear() &&
+                              dataSalva.getMonth() === dataSel.getMonth() &&
+                              dataSalva.getDate() === dataSel.getDate()
+                          )
+                      ),
+                    }}
+                    modifiersClassNames={{
+                      salvo: "dia-salvo",
+                      selecionadoNaoSalvo: "dia-nao-salvo",
+                    }}
+                    className="w-full"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="rounded-3xl border border-white/10 bg-white/10 p-6 backdrop-blur">
+            <h2 className="text-xl font-semibold text-[#F4C021]">
+              Datas marcadas
+            </h2>
+
+            <p className="mt-2 text-sm text-white/70">
+              Estas serão as únicas datas clicáveis no formulário de agendamento.
+            </p>
+
+            <div className="mt-5 grid max-h-[350px] grid-cols-2 gap-2 overflow-y-auto pr-1">
+              {datasFormatadas.length === 0 ? (
+                <p className="col-span-2 text-sm text-white/60">
+                  Nenhuma data selecionada ainda.
+                </p>
+              ) : (
+                datasFormatadas.map((data, index) => (
+                  <div
+                    key={`${data}-${index}`}
+                    className="rounded-xl bg-black/20 px-4 py-3 text-sm"
+                  >
+                    {data}
+                  </div>
+                ))
+              )}
+            </div>
+
+            <button
+              type="button"
+              onClick={salvarDisponibilidade}
+              disabled={!temAlteracao || salvando || loading}
+              className={`
+                mt-6 w-full rounded-xl px-5 py-3 font-semibold transition-all duration-300
+                ${
+                  temAlteracao
+                    ? "bg-[#F4C021] text-[#061B5C] hover:opacity-90"
+                    : "cursor-not-allowed border border-white/10 bg-transparent text-white/40"
+                }
+              `}
+            >
+              {salvando ? "Salvando..." : "Salvar disponibilidade"}
+            </button>
+          </div>
         </div>
       </div>
     </main>

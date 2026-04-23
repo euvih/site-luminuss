@@ -796,10 +796,10 @@ export default function AdminPage() {
           className="min-w-0 flex-1 bg-transparent text-sm text-white outline-none"
         >
           <option value="padrao" className="text-black">
-            Padrão
+            Ordem/Padrão
           </option>
           <option value="envio_recente" className="text-black">
-            Envio
+            Ordem/Envio
           </option>
         </select>
       </div>
@@ -1044,6 +1044,9 @@ export default function AdminPage() {
               <h2 className="text-2xl font-bold text-white/90">
                 Ordenado por envio
               </h2>
+              <p className="mt-1 text-sm text-white/60">
+                Exibindo os pedidos mais recentemente enviados primeiro
+              </p>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

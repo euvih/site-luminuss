@@ -34,6 +34,7 @@ function StatusBadge({ status }: { status: string }) {
 }
 
 export default function AgendamentoPage() {
+  const [copiado, setCopiado] = useState(false);
   const [nome, setNome] = useState(() => {
     if (typeof window === "undefined") return "";
     return localStorage.getItem("agendamento-nome") || "";
@@ -111,6 +112,20 @@ export default function AgendamentoPage() {
     setData(format(date, "yyyy-MM-dd"));
     setMostrarCalendario(false);
   }
+  async function copiarCodigo() {
+  if (!codigoGerado) return;
+
+  try {
+    await navigator.clipboard.writeText(codigoGerado);
+    setCopiado(true);
+
+    setTimeout(() => {
+      setCopiado(false);
+    }, 1800);
+  } catch (erro) {
+    console.error("Erro ao copiar código:", erro);
+  }
+}
 
   function gerarCodigoAcompanhamento() {
     const numero = Math.floor(100000 + Math.random() * 900000);
@@ -533,19 +548,30 @@ export default function AgendamentoPage() {
                   </div>
 
                   {mostrarCodigo && (
-                    <div className="mb-6 rounded-2xl border border-green-400/30 bg-green-500/10 p-4 text-green-100">
-                      <p className="text-sm">
-                        Agendamento enviado com sucesso.
-                      </p>
-                      <p className="mt-2 text-lg font-bold">
-                        Código de acompanhamento: {codigoGerado}
-                      </p>
-                      <p className="mt-2 text-sm text-green-100/80">
-                        Guarde esse código para acompanhar o status do seu
-                        pedido no site.
-                      </p>
-                    </div>
-                  )}
+                      <div className="mb-6 rounded-2xl border border-green-400/30 bg-green-500/10 p-4 text-green-100">
+                        <p className="text-sm">
+                          Agendamento enviado com sucesso.
+                        </p>
+
+                          <div className="mt-2 flex flex-wrap items-center justify-center gap-2 text-center">      <p className="text-lg font-bold">
+                            Código de acompanhamento: {codigoGerado}
+                          </p>
+
+                          <button
+                            type="button"
+                            onClick={copiarCodigo}
+                            className="rounded-full border border-green-300/20 bg-white/10 px-2 py-1 text-xs font-medium text-green-50/90 transition hover:bg-white/20"
+                          >
+                            {copiado ? "✓" : "copiar"}
+                          </button>
+                        </div>
+
+                        <p className="mt-2 text-sm text-green-100/80">
+                          Guarde esse código para acompanhar o status do seu
+                          pedido no site.
+                        </p>
+                      </div>
+                    )}
 
                   {erroEnvio && (
                     <div className="mb-4 rounded-2xl border border-red-400/30 bg-red-500/10 p-4 text-red-200">
