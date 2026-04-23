@@ -742,216 +742,121 @@ export default function AdminPage() {
           <h1 className="text-4xl font-bold">Todos os agendamentos</h1>
         </div>
 
-        <div className="mb-2 flex items-center justify-center gap-3">
-  <button
-    type="button"
-    onClick={() => setMostrarFormularioManual((prev) => !prev)}
-    className="flex h-9 items-center justify-center rounded-full border border-white/15 bg-white/10 px-4 text-sm text-white/80 transition hover:bg-white/15 hover:text-white"
-  >
-    {mostrarFormularioManual ? "Fechar" : "+ Adicionar manualmente"}
-  </button>
+        {/* AÇÕES */}
+    <div className="mb-4 rounded-3xl border border-white/10 bg-white/5 px-4 py-4 backdrop-blur lg:mx-auto lg:max-w-[1100px] lg:px-6">
+    <div className="mb-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-center lg:gap-8">    {/* ESQUERDA - AÇÕES */}
+    <div className="flex items-center justify-center gap-2">      <button
+            type="button"
+            onClick={() => setMostrarFormularioManual((prev) => !prev)}
+            className="flex h-9 items-center justify-center rounded-full border border-white/15 bg-white/10 px-4 text-sm text-white/80 transition hover:bg-white/15 hover:text-white"
+          >
+        {mostrarFormularioManual ? "Fechar" : "+ Adicionar evento"}
+      </button>
 
-  <Link
-  href="/admin/disponibilidade"
-  className="flex h-9 items-center justify-center rounded-full border border-white/15 bg-white/10 px-3 text-xs text-white/80 transition hover:bg-white/15 hover:text-white sm:px-4 sm:text-sm"
->
-  📅 Agenda
-</Link>
+      <Link
+        href="/admin/disponibilidade"
+        className="flex h-9 items-center justify-center rounded-full border border-white/15 bg-white/10 px-3 text-sm text-white/80 transition hover:bg-white/15 hover:text-white"
+      >
+        📅 Agenda
+      </Link>
 
-  <button
-    type="button"
-    onClick={carregarPedidos}
-    disabled={loading}
-    className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white/80 transition hover:bg-white/15 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
-    aria-label="Atualizar lista"
-    title="Atualizar lista"
-  >
-    <FiRefreshCw className={`text-lg ${loading ? "animate-spin" : ""}`} />
-  </button>
-</div>
-
-        {mostrarFormularioManual && (
-          <div className="mb-8 rounded-3xl border border-white/10 bg-white/10 p-5 backdrop-blur">
-            <form onSubmit={adicionarEventoManual} className="grid gap-3">
-              <div className="grid gap-3 md:grid-cols-2">
-                <input
-                  placeholder="Igreja"
-                  value={formManual.igreja}
-                  onChange={(e) =>
-                    setFormManual({ ...formManual, igreja: e.target.value })
-                  }
-                  className="rounded-xl bg-white/10 px-4 py-3"
-                />
-
-                <input
-                  placeholder="Responsável"
-                  value={formManual.responsavel}
-                  onChange={(e) =>
-                    setFormManual({ ...formManual, responsavel: e.target.value })
-                  }
-                  className="rounded-xl bg-white/10 px-4 py-3"
-                />
-              </div>
-
-              <div className="grid gap-3 md:grid-cols-2">
-                <input
-                  placeholder="WhatsApp"
-                  value={formManual.whatsapp}
-                  onChange={(e) =>
-                    setFormManual({ ...formManual, whatsapp: e.target.value })
-                  }
-                  className="rounded-xl bg-white/10 px-4 py-3"
-                />
-
-                <input
-                  placeholder="Local"
-                  value={formManual.local}
-                  onChange={(e) =>
-                    setFormManual({ ...formManual, local: e.target.value })
-                  }
-                  className="rounded-xl bg-white/10 px-4 py-3"
-                />
-              </div>
-
-              <div className="grid gap-3 md:grid-cols-3">
-                <input
-                  type="date"
-                  value={formManual.data}
-                  onChange={(e) =>
-                    setFormManual({ ...formManual, data: e.target.value })
-                  }
-                  className="rounded-xl bg-white/10 px-4 py-3"
-                />
-
-                <input
-                  type="time"
-                  value={formManual.hora}
-                  onChange={(e) =>
-                    setFormManual({ ...formManual, hora: e.target.value })
-                  }
-                  className="rounded-xl bg-white/10 px-4 py-3"
-                />
-
-                <select
-                  value={formManual.status}
-                  onChange={(e) =>
-                    setFormManual({ ...formManual, status: e.target.value })
-                  }
-                  className="rounded-xl bg-white/10 px-4 py-3 text-black"
-                >
-                  <option value="aceito">Aceito</option>
-                  <option value="pendente">Pendente</option>
-                  <option value="recusado">Recusado</option>
-                </select>
-              </div>
-
-              <textarea
-                rows={3}
-                placeholder="Observações"
-                value={formManual.observacoes}
-                onChange={(e) =>
-                  setFormManual({
-                    ...formManual,
-                    observacoes: e.target.value,
-                  })
-                }
-                className="rounded-xl bg-white/10 px-4 py-3"
-              />
-
-              <button
-                type="submit"
-                disabled={salvandoManual}
-                className="mt-2 rounded-xl bg-[#F4C021] px-5 py-3 font-semibold text-[#061B5C]"
-              >
-                {salvandoManual ? "Salvando..." : "Salvar evento"}
-              </button>
-            </form>
-          </div>
-        )}
-
-<div className="mb-3 flex items-center justify-center gap-3 lg:justify-between lg:max-w-[560px] lg:mx-auto">  <div className="group flex h-9 w-[150px] items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 backdrop-blur transition focus-within:border-white/25 focus-within:bg-white/15">
-    <FiSearch className="shrink-0 text-sm text-white/60" />
-
-    <input
-      type="text"
-      value={busca}
-      onChange={(e) => setBusca(e.target.value)}
-      placeholder="Buscar"
-      className="min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-white/45"
-    />
-
-    {busca && (
       <button
         type="button"
-        onClick={() => setBusca("")}
-        className="shrink-0 text-white/50 transition hover:text-white"
-        aria-label="Limpar busca"
+        onClick={carregarPedidos}
+        disabled={loading}
+        className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/10 text-white/80 transition hover:bg-white/15 hover:text-white disabled:opacity-50"
       >
-        <FiX className="text-sm" />
+        <FiRefreshCw className={`text-base ${loading ? "animate-spin" : ""}`} />
       </button>
-    )}
+    </div>
+
+    {/* DIREITA - BUSCA + ORDENAÇÃO */}
+    <div className="flex items-center justify-center gap-2 lg:justify-end lg:px-6">
+      <div className="group flex h-9 w-[150px] items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 backdrop-blur transition focus-within:border-white/25 focus-within:bg-white/15 lg:w-[260px]">
+        <FiSearch className="text-sm text-white/60" />
+
+        <input
+          type="text"
+          value={busca}
+          onChange={(e) => setBusca(e.target.value)}
+          placeholder="Buscar"
+          className="flex-1 bg-transparent text-sm text-white outline-none placeholder:text-white/45"
+        />
+
+        {busca && (
+          <button
+            type="button"
+            onClick={() => setBusca("")}
+            className="text-white/50 hover:text-white"
+          >
+            <FiX className="text-sm" />
+          </button>
+        )}
+      </div>
+
+      <div className="flex h-9 w-[140px] items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 backdrop-blur lg:w-[200px]">
+        <FiSliders className="text-sm text-white/60" />
+
+        <select
+          value={ordenacao}
+          onChange={(e) => setOrdenacao(e.target.value as Ordenacao)}
+          className="bg-transparent text-sm text-white outline-none"
+        >
+          <option value="padrao" className="text-black">
+            Padrão
+          </option>
+          <option value="envio_recente" className="text-black">
+            Envio
+          </option>
+        </select>
+      </div>
+    </div>
   </div>
 
-  <div className="flex h-9 w-[150px] items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 backdrop-blur">
-    <FiSliders className="shrink-0 text-sm text-white/60" />
-
-    <select
-      value={ordenacao}
-      onChange={(e) => setOrdenacao(e.target.value as Ordenacao)}
-      className="min-w-0 flex-1 bg-transparent text-sm text-white outline-none"
+  {/* FILTROS */}
+  <div className="flex justify-center gap-3">
+    <button
+      onClick={() => setFiltroStatus("todos")}
+      className={`flex h-9 items-center gap-1 rounded-full px-3 text-sm font-medium transition ${
+        filtroStatus === "todos"
+          ? "bg-white text-[#061B5C]"
+          : "bg-white/10 text-white hover:bg-white/20"
+      }`}
     >
-      <option value="padrao" className="text-black">
-        Padrão
-      </option>
-      <option value="envio_recente" className="text-black">
-        Envio
-      </option>
-    </select>
+      Todos
+      <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-white px-2 text-xs font-bold text-[#061B5C]">
+        {totalTodos}
+      </span>
+    </button>
+
+    <button
+      onClick={() => setFiltroStatus("pendente")}
+      className={`flex h-9 items-center gap-1 rounded-full px-3 text-sm font-medium transition ${
+        filtroStatus === "pendente"
+          ? "bg-yellow-400 text-[#061B5C]"
+          : "bg-white/10 text-white hover:bg-white/20"
+      }`}
+    >
+      Pend.
+      <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-yellow-400 px-2 text-xs font-bold text-[#061B5C]">
+        {totalPendentes}
+      </span>
+    </button>
+
+    <button
+      onClick={() => setFiltroStatus("aceito")}
+      className={`flex h-9 items-center gap-1 rounded-full px-3 text-sm font-medium transition ${
+        filtroStatus === "aceito"
+          ? "bg-green-500 text-white"
+          : "bg-white/10 text-white hover:bg-white/20"
+      }`}
+    >
+      Aceitos
+      <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-green-500 px-2 text-xs font-bold text-white">
+        {totalAceitos}
+      </span>
+    </button>
   </div>
-</div>
-
-        <div className="mb-9 mx-auto grid max-w-[340px] grid-cols-3 gap-2">
-  <button
-    onClick={() => setFiltroStatus("todos")}
-    className={`flex h-9 items-center justify-center gap-1 rounded-full px-2 text-sm font-medium transition ${
-      filtroStatus === "todos"
-        ? "bg-white text-[#061B5C]"
-        : "bg-white/10 text-white hover:bg-white/20"
-    }`}
-  >
-    <span>Todos</span>
-    <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-white px-2 text-[11px] font-bold text-[#061B5C]">
-      {totalTodos}
-    </span>
-  </button>
-
-  <button
-    onClick={() => setFiltroStatus("pendente")}
-    className={`flex h-9 items-center justify-center gap-1 rounded-full px-2 text-sm font-medium transition ${
-      filtroStatus === "pendente"
-        ? "bg-yellow-400 text-[#061B5C]"
-        : "bg-white/10 text-white hover:bg-white/20"
-    }`}
-  >
-    <span>Pend.</span>
-    <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-yellow-400 px-2 text-[11px] font-bold text-[#061B5C]">
-      {totalPendentes}
-    </span>
-  </button>
-
-  <button
-    onClick={() => setFiltroStatus("aceito")}
-    className={`flex h-9 items-center justify-center gap-1 rounded-full px-2 text-sm font-medium transition ${
-      filtroStatus === "aceito"
-        ? "bg-green-500 text-white"
-        : "bg-white/10 text-white hover:bg-white/20"
-    }`}
-  >
-    <span>Aceitos</span>
-    <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-green-500 px-2 text-[11px] font-bold text-white">
-      {totalAceitos}
-    </span>
-  </button>
 </div>
 
         {loading ? (
