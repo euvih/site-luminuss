@@ -23,13 +23,57 @@ import {
 } from "lucide-react";
 
 const fotos = [
-  "/img1.jpeg",
-  "/ftantiga1.jpeg",
-  "/ftantiga2.jpeg",
-  "/ftantiga3.jpeg",
-  "/céu.jpg",
-  "/galaxyaroxa.avif",
-  "/ceu2.jpg",
+  "/ruhama.jpeg",
+  "/jucilene.jpeg",
+  "/julia.jpeg",
+  "/reginaldo.jpeg",
+  "/girls.jpeg",
+  "/rejane.jpeg",
+  "/guilherme.jpeg",
+];
+const postsInstagram = [
+  {
+    usuario: "mluminuss",
+    subtitulo: "Ministério musical",
+    texto:
+      "Louvor, comunhão e missão em cada detalhe. Um pedacinho da nossa caminhada registrado em imagem.",
+  },
+  {
+    usuario: "mluminuss",
+    subtitulo: "Memórias especiais",
+    texto:
+      "Cada foto guarda um capítulo da nossa história, com momentos de união, crescimento e gratidão a Deus.",
+  },
+  {
+    usuario: "mluminuss",
+    subtitulo: "Nossa caminhada",
+    texto:
+      "Entre ensaios, apresentações e amizades, seguimos construindo um ministério com propósito e dedicação.",
+  },
+  {
+    usuario: "mluminuss",
+    subtitulo: "Serviço com amor",
+    texto:
+      "Tudo o que fazemos envolve preparo, carinho e desejo sincero de transmitir esperança através da música.",
+  },
+  {
+    usuario: "mluminuss",
+    subtitulo: "Adoração e beleza",
+    texto:
+      "Mais do que estética, cada detalhe aponta para uma experiência de adoração sensível e significativa.",
+  },
+  {
+    usuario: "mluminuss",
+    subtitulo: "Luzes e sons",
+    texto:
+      "Instrumentos, vozes, apoio técnico e organização se unem para tornar cada apresentação especial.",
+  },
+  {
+    usuario: "mluminuss",
+    subtitulo: "Nossa essência",
+    texto:
+      "Somos um grupo formado por pessoas diferentes, mas com o mesmo desejo de servir e louvar com excelência.",
+  },
 ];
 
 const destaques = [
@@ -220,7 +264,7 @@ useEffect(() => {
             >
               <button
                 onClick={() => setMostrarTextoCompleto((prev) => !prev)}
-                className="rounded-full bg-[#876cff] px-6 py-3 font-semibold text-[#061B5C] transition hover:scale-[1.02]"
+                className="rounded-full bg-[#6cacff] px-6 py-3 font-semibold text-[#061B5C] transition hover:scale-[1.02]"
               >
                 {mostrarTextoCompleto ? "Ver menos" : "Nos conheça melhor"}
               </button>
@@ -331,15 +375,15 @@ useEffect(() => {
                 />
               </div>
               <div>
-                      <p className="text-xs font-semibold">mluminuss</p>
+                      <p className="text-xs font-semibold">{postsInstagram[fotoAtiva].usuario}</p>
                       <p className="text-[10px] text-[#061B5C]/65">
-                        Ministério musical
+                        {postsInstagram[fotoAtiva].subtitulo}
                       </p>
                     </div>
                   </div>
 
                   <p className="mt-2 text-xs leading-5 text-[#061B5C]/85">
-                    Louvor, comunhão e missão em cada detalhe. Um pedacinho da nossa caminhada registrado em imagem.
+                    {postsInstagram[fotoAtiva].texto}
                   </p>
 
                   <div className="mt-3 flex items-center justify-between text-[10px] text-[#061B5C]/60">
