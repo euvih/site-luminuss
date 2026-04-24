@@ -220,7 +220,7 @@ export default function SobreNosLuminuss() {
       {floresAzuis.map((flor, i) => (
     <motion.span
   key={i}
-  className="absolute -top-16 text-pink-300"
+  className="absolute -top-16 text-pink-200/90"
   style={{
     left: flor.left,
     fontSize: `${flor.size}px`,
