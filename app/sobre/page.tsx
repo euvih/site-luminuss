@@ -102,12 +102,20 @@ const timeline = [
       "Seguimos aperfeiçoando nossa organização, repertório e identidade, sem perder a simplicidade e o foco no propósito.",
   },
 ];
-const floresAzuis = Array.from({ length: 14 }, (_, i) => ({
-  left: `${(i * 7) % 100}%`,
-  size: 14 + (i % 5) * 2,
-  delay: i * 1.6,
-  duration: 32,
-}));
+const floresAzuis = [
+  { left: "6%", size: 18, delay: 0, duration: 38 },
+  { left: "24%", size: 14, delay: 2.5, duration: 42 },
+  { left: "72%", size: 20, delay: 1.2, duration: 40 },
+  { left: "48%", size: 16, delay: 4, duration: 44 },
+  { left: "88%", size: 13, delay: 3, duration: 39 },
+  { left: "35%", size: 19, delay: 6, duration: 45 },
+  { left: "12%", size: 15, delay: 7.5, duration: 41 },
+  { left: "61%", size: 17, delay: 5.2, duration: 43 },
+  { left: "80%", size: 14, delay: 8.5, duration: 46 },
+  { left: "18%", size: 20, delay: 10, duration: 40 },
+  { left: "55%", size: 13, delay: 11.5, duration: 44 },
+  { left: "94%", size: 16, delay: 13, duration: 42 },
+];
 
 export default function SobreNosLuminuss() {
   const [fotoAtiva, setFotoAtiva] = useState(0);
@@ -228,7 +236,7 @@ export default function SobreNosLuminuss() {
       initial={{ y: "-5vh", opacity: 0 }}
       animate={{
         y: "105vh",
-        x: [0, 8, -5, 4, 0],
+        x: [0, 12, -8, 6, -4, 0],
         opacity: [0, 0.85, 0.75, 0],
         rotate: [0, 60, 140, 220],
       }}
