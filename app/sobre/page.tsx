@@ -1,5 +1,6 @@
 "use client";
 
+
 import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa";
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -101,6 +102,12 @@ const timeline = [
       "Seguimos aperfeiçoando nossa organização, repertório e identidade, sem perder a simplicidade e o foco no propósito.",
   },
 ];
+const floresAzuis = Array.from({ length: 20 }, (_, i) => ({
+  left: `${Math.random() * 100}%`,
+  size: 5 + Math.random() * 14,
+  delay: Math.random() * 10,
+  duration: 15 + Math.random() * 10,
+}));
 
 export default function SobreNosLuminuss() {
   const [fotoAtiva, setFotoAtiva] = useState(0);
@@ -196,24 +203,58 @@ export default function SobreNosLuminuss() {
       : ""
   }`}
 >
-<div
-  className={`absolute inset-0 transition-all duration-700 ${
-    mostrarTextoCompleto
-      ? "bg-[linear-gradient(180deg,#409dc4_0%,#041b6e_50%,#010a2a_100%)]"
-      : "bg-[radial-gradient(circle_at_top_left,rgba(244,192,33,0.22),transparent_25%),radial-gradient(circle_at_80%_20%,rgba(96,165,250,0.22),transparent_25%),linear-gradient(180deg,#061B5C_0%,#04184d_100%)]"
-  }`}
-/>
-        <div className="absolute -left-20 top-16 h-56 w-56 rounded-full bg-yellow-300/10 blur-3xl" />
-        <div className="absolute right-0 top-24 h-64 w-64 rounded-full bg-blue-400/10 blur-3xl" />
-        
-        {mostrarTextoCompleto && (
-  <div className="pointer-events-none absolute inset-0 z-0">
-    <div className="absolute left-1/4 top-20 h-40 w-40 rounded-full bg-[#F4C021]/20 blur-3xl animate-pulse" />
-    <div className="absolute right-10 bottom-20 h-52 w-52 rounded-full bg-blue-400/20 blur-3xl animate-pulse" />
-  </div>
-)}
+  {/* FUNDO */}
+  <div
+    className={`absolute inset-0 transition-all duration-700 ${
+      mostrarTextoCompleto
+        ? "bg-[linear-gradient(180deg,#409dc4_0%,#041b6e_50%,#010a2a_100%)]"
+        : "bg-[radial-gradient(circle_at_top_left,rgba(244,192,33,0.22),transparent_25%),radial-gradient(circle_at_80%_20%,rgba(96,165,250,0.22),transparent_25%),linear-gradient(180deg,#061B5C_0%,#04184d_100%)]"
+    }`}
+  />
 
-        <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-6 py-16 md:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">
+  {/* GLOW ORIGINAL */}
+  <div className="absolute -left-20 top-16 h-56 w-56 rounded-full bg-yellow-300/10 blur-3xl" />
+  <div className="absolute right-0 top-24 h-64 w-64 rounded-full bg-blue-400/10 blur-3xl" />
+
+    <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">  {floresAzuis.map((flor, i) => (
+    <motion.span
+  key={i}
+  className="absolute -top-16 text-pink-300"
+  style={{
+    left: flor.left,
+    fontSize: `${flor.size}px`,
+  }}
+  initial={false}
+  animate={{
+    y: ["-12vh", "110vh"],
+    x: [0, 6, -4, 3, 0],
+    opacity: [0, 0.7, 0.7, 0],
+    rotate: [0, 60, 140, 220],
+  }}
+  transition={{
+    duration: flor.duration,
+    delay: flor.delay,
+    repeat: Infinity,
+    ease: "linear",
+    times: [0, 0.08, 0.85, 1],
+  }}
+>
+  🌸
+</motion.span>
+  ))}
+</div>
+
+  {/* GLOW QUANDO ABRE TEXTO */}
+  {mostrarTextoCompleto && (
+    <div className="pointer-events-none absolute inset-0 z-0">
+      <div className="absolute left-1/4 top-20 h-40 w-40 rounded-full bg-[#F4C021]/20 blur-3xl animate-pulse" />
+      <div className="absolute right-10 bottom-20 h-52 w-52 rounded-full bg-blue-400/20 blur-3xl animate-pulse" />
+    </div>
+  )}
+
+  {/* CONTEÚDO */}
+  <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-6 py-16 md:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">
+    {/* TODO seu conteúdo continua igual aqui */}
           <div>
             <motion.p
               initial={{ opacity: 0, y: 16 }}
@@ -230,7 +271,7 @@ export default function SobreNosLuminuss() {
               transition={{ delay: 0.08 }}
               className="max-w-3xl text-4xl font-bold leading-tight text-white md:text-6xl"
             >
-              Mais que um ministério: <span className="text-[#7589ff]">Uma família em propósito.</span>
+              Mais que um ministério: <span className="text-[#75b5ff]">Uma família em propósito.</span>
             </motion.h1>
 
             <motion.p
