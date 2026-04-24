@@ -530,7 +530,7 @@ const aceitosDoMes = data
 
       <h2 className="text-4xl font-bold leading-tight md:text-5xl">
         Lúminuss
-        <span className="block bg-gradient-to-r from-[#ab51ff] via-[#f7c7ff] to-[#d9d6e5] bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(155,75,138,0.5)]">
+        <span className="block bg-gradient-to-r from-[#8597fc] via-[#f7c7ff] to-[#d9d6e5] bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(155,75,138,0.5)]">
           36 ANOS
         </span>
       </h2>
@@ -538,7 +538,7 @@ const aceitosDoMes = data
       <p className="mt-6 max-w-xl text-lg leading-8 text-white/80">
         O recital anual do Ministério Lúminuss, realizado em comemoração ao
         aniversário do grupo. Em 2026, a temática será{" "}
-        <span className="font-semibold text-[#dc45f7]">Sonhos</span>
+        <span className="font-semibold text-[#8945f7]">Sonhos</span>
       </p>
     </div>
 
