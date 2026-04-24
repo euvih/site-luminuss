@@ -105,8 +105,8 @@ const timeline = [
 const floresAzuis = Array.from({ length: 20 }, (_, i) => ({
   left: `${Math.random() * 100}%`,
   size: 5 + Math.random() * 14,
-  delay: Math.random() * 10,
-  duration: 15 + Math.random() * 10,
+  duration: 20,
+delay: i * 0.5,
 }));
 
 export default function SobreNosLuminuss() {
@@ -271,7 +271,7 @@ export default function SobreNosLuminuss() {
               transition={{ delay: 0.08 }}
               className="max-w-3xl text-4xl font-bold leading-tight text-white md:text-6xl"
             >
-              Mais que um ministério: <span className="text-[#75b5ff]">Uma família em propósito.</span>
+              Mais que um : <span className="text-[#75b5ff]">Uma família em propósito.</span>
             </motion.h1>
 
             <motion.p
