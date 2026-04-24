@@ -486,7 +486,7 @@ const aceitosDoMes = data
 
       <section
   id="recital"
-  className="relative overflow-hidden bg-[#070736] px-6 py-24 text-white"
+  className="relative overflow-hidden bg-[#010116] px-6 py-24 text-white"
 >
   <div className="absolute inset-0">
     <div className="absolute -top-20 left-10 h-72 w-72 rounded-full bg-[#9b4b8a]/20 blur-3xl" />
@@ -522,15 +522,15 @@ const aceitosDoMes = data
   <span className="estrela left-[92%] top-[78%] h-[2px] w-[2px]" />
 </div>
 
-  <div className="relative mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-2">
+  <div className="relative mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-2">
     <div>
-      <p className="mb-3 text-sm uppercase tracking-[0.35em] text-[#c9a3d0]">
+      <p className="mb-3 text-sm uppercase tracking-[0.35em] text-[#dcb0e4]">
         Recital 2026
       </p>
 
       <h2 className="text-4xl font-bold leading-tight md:text-5xl">
         Lúminuss
-        <span className="block bg-gradient-to-r from-[#9b4b8a] via-[#b88cc0] to-[#d9d6e5] bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(155,75,138,0.5)]">
+        <span className="block bg-gradient-to-r from-[#ab51ff] via-[#f7c7ff] to-[#d9d6e5] bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(155,75,138,0.5)]">
           36 ANOS
         </span>
       </h2>
@@ -538,18 +538,8 @@ const aceitosDoMes = data
       <p className="mt-6 max-w-xl text-lg leading-8 text-white/80">
         O recital anual do Ministério Lúminuss, realizado em comemoração ao
         aniversário do grupo. Em 2026, a temática será{" "}
-        <span className="font-semibold text-[#c9a3d0]">Sonhos</span>
+        <span className="font-semibold text-[#dc45f7]">Sonhos</span>
       </p>
-
-      <div className="mt-8 flex flex-wrap gap-4">
-        <Link
-          href="/recital"
-          className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-[#4b2c6f] via-[#9b4b8a] to-[#2a0f3f] px-7 py-3 font-semibold text-white shadow-[0_0_30px_rgba(155,75,138,0.35)] transition duration-300 hover:scale-105"
-        >
-          <span className="absolute inset-0 translate-x-[-120%] bg-gradient-to-r from-transparent via-white/25 to-transparent transition duration-700 group-hover:translate-x-[120%]" />
-          <span className="relative z-10">Saiba mais sobre o recital ✨</span>
-        </Link>
-      </div>
     </div>
 
     <div className="relative">
@@ -560,6 +550,14 @@ const aceitosDoMes = data
           className="h-[420px] w-full rounded-[1.4rem] object-cover"
         />
         <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-t from-[#070736]/70 via-transparent to-transparent" />
+      </div>
+      <div className="mt-8 flex flex-wrap justify-center gap-4">        <Link
+          href="/recital"
+          className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-[#4b2c6f] via-[#7113dd] to-[#2a0f3f] px-7 py-3 font-semibold text-white shadow-[0_0_30px_rgba(155,75,138,0.35)] transition duration-300 hover:scale-105"
+        >
+          <span className="absolute inset-0 translate-x-[-120%] bg-gradient-to-r from-transparent via-white/25 to-transparent transition duration-700 group-hover:translate-x-[120%]" />
+          <span className="relative z-10">Saiba mais sobre o recital ✨</span>
+        </Link>
       </div>
     </div>
   </div>
