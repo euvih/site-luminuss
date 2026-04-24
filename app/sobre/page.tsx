@@ -103,18 +103,18 @@ const timeline = [
   },
 ];
 const floresAzuis = [
-  { left: "6%", size: 18, delay: 0, duration: 38 },
-  { left: "24%", size: 14, delay: 2.5, duration: 42 },
-  { left: "72%", size: 20, delay: 1.2, duration: 40 },
-  { left: "48%", size: 16, delay: 4, duration: 44 },
-  { left: "88%", size: 13, delay: 3, duration: 39 },
-  { left: "35%", size: 19, delay: 6, duration: 45 },
-  { left: "12%", size: 15, delay: 7.5, duration: 41 },
-  { left: "61%", size: 17, delay: 5.2, duration: 43 },
-  { left: "80%", size: 14, delay: 8.5, duration: 46 },
-  { left: "18%", size: 20, delay: 10, duration: 40 },
-  { left: "55%", size: 13, delay: 11.5, duration: 44 },
-  { left: "94%", size: 16, delay: 13, duration: 42 },
+  { left: "6%", size: 10, delay: 0, duration: 38 },
+  { left: "24%", size: 8, delay: 2.5, duration: 42 },
+  { left: "72%", size: 11, delay: 1.2, duration: 40 },
+  { left: "48%", size: 9, delay: 4, duration: 44 },
+  { left: "88%", size: 8, delay: 3, duration: 39 },
+  { left: "35%", size: 10, delay: 6, duration: 45 },
+  { left: "12%", size: 8, delay: 7.5, duration: 41 },
+  { left: "61%", size: 9, delay: 5.2, duration: 43 },
+  { left: "80%", size: 8, delay: 8.5, duration: 46 },
+  { left: "18%", size: 11, delay: 10, duration: 40 },
+  { left: "55%", size: 8, delay: 11.5, duration: 44 },
+  { left: "94%", size: 9, delay: 13, duration: 42 },
 ];
 
 export default function SobreNosLuminuss() {
@@ -224,8 +224,8 @@ export default function SobreNosLuminuss() {
   <div className="absolute -left-20 top-16 h-56 w-56 rounded-full bg-yellow-300/10 blur-3xl" />
   <div className="absolute right-0 top-24 h-64 w-64 rounded-full bg-blue-400/10 blur-3xl" />
 
-    <div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
-  {floresAzuis.map((flor, i) => (
+<div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
+    {floresAzuis.map((flor, i) => (
     <motion.span
       key={i}
       className="absolute -top-10 text-pink-100/90 drop-shadow-[0_0_8px_rgba(255,182,193,0.55)]"
