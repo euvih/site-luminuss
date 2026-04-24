@@ -262,7 +262,7 @@ export default function SobreNosLuminuss() {
   )}
 
   {/* CONTEÚDO */}
-  <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-6 py-16 md:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">
+<div className="relative z-10 mx-auto grid max-w-7xl items-center gap-10 px-6 py-16 md:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">  
     {/* TODO seu conteúdo continua igual aqui */}
           <div>
             <motion.p
