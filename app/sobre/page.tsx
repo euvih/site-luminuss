@@ -15,8 +15,6 @@ import {
   Sparkles,
   ChevronRight,
   ChevronLeft,
-  Volume2,
-  VolumeX,
   Quote,
   Disc3,
   Star,
@@ -76,29 +74,6 @@ const postsInstagram = [
   },
 ];
 
-const destaques = [
-  {
-    icon: Users,
-    title: "Uma família em missão",
-    text: "O Lúminuss é mais do que um grupo musical. Somos pessoas unidas pelo desejo de adorar, servir e levar esperança por meio da música.",
-  },
-  {
-    icon: Mic2,
-    title: "Louvor com propósito",
-    text: "Cada apresentação é pensada como um ministério. Nosso objetivo não é apenas cantar, mas tocar corações e apontar para Cristo.",
-  },
-  {
-    icon: HeartHandshake,
-    title: "Serviço e dedicação",
-    text: "Ensaios, organização, apoio técnico, sonoplastia, mídia e instrumental: tudo é feito com carinho para oferecer excelência e reverência.",
-  },
-  {
-    icon: Camera,
-    title: "Histórias que ficam",
-    text: "Ao longo do caminho, construímos memórias, aprendizados, amizades e experiências que fazem parte da identidade do ministério.",
-  },
-];
-
 const curiosidades = [
   "Temos integrantes de diferentes áreas atuando juntos em um mesmo propósito.",
   "Cada apresentação envolve preparação musical, técnica e espiritual.",
@@ -131,7 +106,6 @@ export default function SobreNosLuminuss() {
   const [fotoAtiva, setFotoAtiva] = useState(0);
   const [mostrarTextoCompleto, setMostrarTextoCompleto] = useState(false);
   const [tocando, setTocando] = useState(false);
-  const [mutado, setMutado] = useState(false);
   const [curiosidadeAtiva, setCuriosidadeAtiva] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -164,11 +138,6 @@ export default function SobreNosLuminuss() {
   }
 }, []);
 
-useEffect(() => {
-  if (audioRef.current) {
-    audioRef.current.muted = mutado;
-  }
-}, [mutado]);
 
   const textoResumo = useMemo(
     () =>
@@ -222,10 +191,29 @@ useEffect(() => {
         preload="auto"
         src="/musica-luminuss.mp3"
       />
-      <section className="relative overflow-hidden border-b border-white/10 pl-7 pt-16 md:pt-0">        
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(244,192,33,0.22),transparent_25%),radial-gradient(circle_at_80%_20%,rgba(96,165,250,0.22),transparent_25%),linear-gradient(180deg,#061B5C_0%,#04184d_100%)]" />
+<section
+  className={`relative overflow-hidden border-b border-white/10 pl-7 pt-16 md:pt-0 transition-all duration-700 ${
+    mostrarTextoCompleto
+      ? "bg-gradient-to-b from-[#065c49] via-[#0b2a7a] to-[#04184d]"
+      : ""
+  }`}
+>
+<div
+  className={`absolute inset-0 transition-all duration-700 ${
+    mostrarTextoCompleto
+      ? "bg-[linear-gradient(180deg,#409dc4_0%,#041b6e_50%,#010a2a_100%)]"
+      : "bg-[radial-gradient(circle_at_top_left,rgba(244,192,33,0.22),transparent_25%),radial-gradient(circle_at_80%_20%,rgba(96,165,250,0.22),transparent_25%),linear-gradient(180deg,#061B5C_0%,#04184d_100%)]"
+  }`}
+/>
         <div className="absolute -left-20 top-16 h-56 w-56 rounded-full bg-yellow-300/10 blur-3xl" />
         <div className="absolute right-0 top-24 h-64 w-64 rounded-full bg-blue-400/10 blur-3xl" />
+        
+        {mostrarTextoCompleto && (
+  <div className="pointer-events-none absolute inset-0 z-0">
+    <div className="absolute left-1/4 top-20 h-40 w-40 rounded-full bg-[#F4C021]/20 blur-3xl animate-pulse" />
+    <div className="absolute right-10 bottom-20 h-52 w-52 rounded-full bg-blue-400/20 blur-3xl animate-pulse" />
+  </div>
+)}
 
         <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-6 py-16 md:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">
           <div>
@@ -277,41 +265,55 @@ useEffect(() => {
                 {tocando ? "Pausar música" : "Ouvir música"}
               </button>
 
-              <button
-                onClick={() => {
-                  setMutado((prev) => {
-                    const novo = !prev;
-
-                    if (audioRef.current) {
-                      audioRef.current.muted = novo;
-
-                      if (!novo) {
-                        audioRef.current.play();
-                      }
-                    }
-
-                    return novo;
-                  });
-                }}                
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/5 transition hover:bg-white/10"
-                aria-label={mutado ? "Ativar som" : "Silenciar som"}
-              >
-                {mutado ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
-              </button>
             </motion.div>
 
             <AnimatePresence>
-              {mostrarTextoCompleto && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="mt-8 overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6"
-                >
-                  <p className="leading-8 text-white/85">{textoCompleto}</p>
-                </motion.div>
-              )}
-            </AnimatePresence>
+  {mostrarTextoCompleto && (
+    <motion.div
+      initial={{ opacity: 0, height: 0, y: 12 }}
+      animate={{ opacity: 1, height: "auto", y: 0 }}
+      exit={{ opacity: 0, height: 0, y: 12 }}
+      transition={{ duration: 0.45, ease: "easeOut" }}
+      className="relative mt-6 overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-5 shadow-[0_20px_70px_rgba(0,0,0,0.28)] backdrop-blur-md"
+    >
+      <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-[#F4C021]/20 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-10 -left-10 h-32 w-32 rounded-full bg-[#7589ff]/25 blur-3xl" />
+
+      <div className="relative z-10">
+        <div className="mb-4 flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#F4C021]/15 text-[#F4C021]">
+            <Music2 className="h-5 w-5" />
+          </div>
+
+          <div>
+            <h3 className="mt-1 text-lg font-bold text-white">
+              O ano era 1990...
+            </h3>
+          </div>
+        </div>
+
+        <div className="space-y-4 text-sm leading-7 text-white/85">
+          <p>
+            O Lúminuss nasceu do desejo de servir a Deus com excelência,
+            sensibilidade e propósito.
+          </p>
+
+          <p>
+            Com o tempo, entendemos que nosso papel vai além das vozes,
+            dos instrumentos e da técnica. Cada apresentação é uma
+            oportunidade de acolher, inspirar e transmitir esperança.
+          </p>
+
+          <p>
+            Somos pessoas diferentes, com dons diferentes, mas unidas pelo
+            mesmo desejo: transformar cada canção em uma experiência de
+            adoração.
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  )}
+</AnimatePresence>
           </div>
 
           <motion.div
@@ -438,30 +440,6 @@ useEffect(() => {
               </button>
             </div>
           </motion.div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-6 py-16 md:px-10">
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          {destaques.map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.06 }}
-                className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-lg backdrop-blur-sm"
-              >
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F4C021]/15 text-[#F4C021]">
-                  <Icon className="h-6 w-6" />
-                </div>
-                <h3 className="text-xl font-semibold text-white">{item.title}</h3>
-                <p className="mt-3 leading-7 text-white/80">{item.text}</p>
-              </motion.div>
-            );
-          })}
         </div>
       </section>
 
