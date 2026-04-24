@@ -103,18 +103,18 @@ const timeline = [
   },
 ];
 const floresAzuis = [
-  { left: "6%", size: 10, delay: 0, duration: 38 },
-  { left: "24%", size: 8, delay: 2.5, duration: 42 },
-  { left: "72%", size: 11, delay: 1.2, duration: 40 },
-  { left: "48%", size: 9, delay: 4, duration: 44 },
-  { left: "88%", size: 8, delay: 3, duration: 39 },
-  { left: "35%", size: 10, delay: 6, duration: 45 },
-  { left: "12%", size: 8, delay: 7.5, duration: 41 },
-  { left: "61%", size: 9, delay: 5.2, duration: 43 },
-  { left: "80%", size: 8, delay: 8.5, duration: 46 },
-  { left: "18%", size: 11, delay: 10, duration: 40 },
-  { left: "55%", size: 8, delay: 11.5, duration: 44 },
-  { left: "94%", size: 9, delay: 13, duration: 42 },
+  { left: "6%", size: 10, delay: 0, duration: 38, depth: "front" },
+  { left: "24%", size: 8, delay: 2.5, duration: 42, depth: "back" },
+  { left: "72%", size: 11, delay: 1.2, duration: 40, depth: "front" },
+  { left: "48%", size: 9, delay: 4, duration: 44, depth: "mid" },
+  { left: "88%", size: 8, delay: 3, duration: 39, depth: "back" },
+  { left: "35%", size: 10, delay: 6, duration: 45, depth: "front" },
+  { left: "12%", size: 8, delay: 7.5, duration: 41, depth: "mid" },
+  { left: "61%", size: 9, delay: 5.2, duration: 43, depth: "back" },
+  { left: "80%", size: 8, delay: 8.5, duration: 46, depth: "mid" },
+  { left: "18%", size: 11, delay: 10, duration: 40, depth: "front" },
+  { left: "55%", size: 8, delay: 11.5, duration: 44, depth: "back" },
+  { left: "94%", size: 9, delay: 13, duration: 42, depth: "mid" },
 ];
 
 export default function SobreNosLuminuss() {
@@ -227,29 +227,37 @@ export default function SobreNosLuminuss() {
 <div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
     {floresAzuis.map((flor, i) => (
     <motion.span
-      key={i}
-      className="absolute -top-10 text-pink-100/90 drop-shadow-[0_0_8px_rgba(255,182,193,0.55)]"
-      style={{
-        left: flor.left,
-        fontSize: `${flor.size}px`,
-      }}
-      initial={{ y: "-5vh", opacity: 0 }}
-      animate={{
-        y: "105vh",
-        x: [0, 12, -8, 6, -4, 0],
-        opacity: [0, 0.85, 0.75, 0],
-        rotate: [0, 60, 140, 220],
-      }}
-      transition={{
-        duration: flor.duration,
-        delay: flor.delay,
-        repeat: Infinity,
-        ease: "linear",
-        times: [0, 0.08, 0.85, 1],
-      }}
-    >
-      🌸
-    </motion.span>
+  key={i}
+  className={`absolute -top-10 ${
+    flor.depth === "front"
+      ? "text-pink-200/80 drop-shadow-[0_0_8px_rgba(255,182,193,0.5)]"
+      : flor.depth === "mid"
+      ? "text-pink-200/60 blur-[1px]"
+      : "text-pink-200/40 blur-[2px]"
+  }`}
+  style={{
+    left: flor.left,
+    fontSize: `${flor.size}px`,
+  }}
+  initial={{ y: "-5vh", opacity: 0 }}
+  animate={{
+    y: "105vh",
+    x: flor.depth === "front"
+      ? [0, 10, -6, 5, 0]
+      : [0, 6, -3, 2, 0],
+    opacity: [0, 0.8, 0.7, 0],
+    rotate: [0, 60, 140, 220],
+  }}
+  transition={{
+    duration: flor.duration,
+    delay: flor.delay,
+    repeat: Infinity,
+    ease: "linear",
+    times: [0, 0.08, 0.85, 1],
+  }}
+>
+  🌸
+</motion.span>
   ))}
 </div>
 
