@@ -219,8 +219,7 @@ export default function SobreNosLuminuss() {
     <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">  {floresAzuis.map((flor, i) => (
     <motion.span
   key={i}
-  className="absolute -top-16 text-pink-300"
-  style={{
+className="absolute -top-16 text-pink-200/80 drop-shadow-[0_0_6px_rgba(255,182,193,0.35)]"  style={{
     left: flor.left,
     fontSize: `${flor.size}px`,
   }}
@@ -246,7 +245,7 @@ export default function SobreNosLuminuss() {
 
   {/* GLOW QUANDO ABRE TEXTO */}
   {mostrarTextoCompleto && (
-    <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-10 px-6 py-16 md:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">      <div className="absolute left-1/4 top-20 h-40 w-40 rounded-full bg-[#F4C021]/20 blur-3xl animate-pulse" />
+    <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-10 px-6 py-16 md:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">    <div className="absolute left-1/4 top-20 h-40 w-40 rounded-full bg-[#F4C021]/20 blur-3xl animate-pulse" />
       <div className="absolute right-10 bottom-20 h-52 w-52 rounded-full bg-blue-400/20 blur-3xl animate-pulse" />
     </div>
   )}
