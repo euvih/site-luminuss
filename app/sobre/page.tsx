@@ -102,11 +102,11 @@ const timeline = [
       "Seguimos aperfeiçoando nossa organização, repertório e identidade, sem perder a simplicidade e o foco no propósito.",
   },
 ];
-const floresAzuis = Array.from({ length: 20 }, (_, i) => ({
-  left: `${Math.random() * 100}%`,
-  size: 5 + Math.random() * 14,
-  delay: Math.random() * 10,
-  duration: 15 + Math.random() * 10,
+const floresAzuis = Array.from({ length: 14 }, (_, i) => ({
+  left: `${(i * 7) % 100}%`,
+  size: 14 + (i % 5) * 2,
+  delay: i * 1.6,
+  duration: 32,
 }));
 
 export default function SobreNosLuminuss() {
@@ -216,38 +216,39 @@ export default function SobreNosLuminuss() {
   <div className="absolute -left-20 top-16 h-56 w-56 rounded-full bg-yellow-300/10 blur-3xl" />
   <div className="absolute right-0 top-24 h-64 w-64 rounded-full bg-blue-400/10 blur-3xl" />
 
-    <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">  
-      {floresAzuis.map((flor, i) => (
+    <div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
+  {floresAzuis.map((flor, i) => (
     <motion.span
-  key={i}
-  className="absolute -top-16 text-pink-300"
-  style={{
-    left: flor.left,
-    fontSize: `${flor.size}px`,
-  }}
-  initial={false}
-  animate={{
-    y: ["-5vh", "100vh"],
-    x: [0, 6, -4, 3, 0],
-    opacity: [0, 0.7, 0.7, 0],
-    rotate: [0, 60, 140, 220],
-  }}
-  transition={{
-    duration: flor.duration,
-    delay: flor.delay,
-    repeat: Infinity,
-    ease: "linear",
-    times: [0, 0.08, 0.85, 1],
-  }}
->
-  🌸
-</motion.span>
+      key={i}
+      className="absolute -top-10 text-pink-100/90 drop-shadow-[0_0_8px_rgba(255,182,193,0.55)]"
+      style={{
+        left: flor.left,
+        fontSize: `${flor.size}px`,
+      }}
+      initial={{ y: "-5vh", opacity: 0 }}
+      animate={{
+        y: "105vh",
+        x: [0, 8, -5, 4, 0],
+        opacity: [0, 0.85, 0.75, 0],
+        rotate: [0, 60, 140, 220],
+      }}
+      transition={{
+        duration: flor.duration,
+        delay: flor.delay,
+        repeat: Infinity,
+        ease: "linear",
+        times: [0, 0.08, 0.85, 1],
+      }}
+    >
+      🌸
+    </motion.span>
   ))}
 </div>
 
   {/* GLOW QUANDO ABRE TEXTO */}
   {mostrarTextoCompleto && (
-<div className="relative z-10 mx-auto grid max-w-7xl items-center gap-10 px-6 py-16 md:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">    <div className="absolute left-1/4 top-20 h-40 w-40 rounded-full bg-[#F4C021]/20 blur-3xl animate-pulse" />
+<div className="relative z-10 mx-auto grid max-w-7xl items-center gap-10 px-6 py-16 md:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">
+  <div className="absolute left-1/4 top-20 h-40 w-40 rounded-full bg-[#F4C021]/20 blur-3xl animate-pulse" />
       <div className="absolute right-10 bottom-20 h-52 w-52 rounded-full bg-blue-400/20 blur-3xl animate-pulse" />
     </div>
   )}
