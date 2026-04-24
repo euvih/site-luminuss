@@ -103,22 +103,18 @@ const timeline = [
   },
 ];
 const floresAzuis = [
-  { left: "6%", size: 13, delay: 0, duration: 38 },
-  { left: "24%", size: 8, delay: 2.5, duration: 42 },
-  { left: "72%", size: 11, delay: 1.2, duration: 40 },
-  { left: "48%", size: 9, delay: 4, duration: 44 },
-  { left: "88%", size: 8, delay: 3, duration: 39 },
-  { left: "35%", size: 10, delay: 6, duration: 45 },
-  { left: "12%", size: 15, delay: 7.5, duration: 41 },
-  { left: "61%", size: 9, delay: 5.2, duration: 43 },
-  { left: "80%", size: 8, delay: 8.5, duration: 46 },
-  { left: "18%", size: 13, delay: 10, duration: 40 },
-  { left: "55%", size: 8, delay: 11.5, duration: 44 },
-  { left: "94%", size: 9, delay: 13, duration: 42 },
-  { left: "20%", size: 13, delay: 10, duration: 40 },
-  { left: "85%", size: 15, delay: 11.5, duration: 44 },
-  { left: "90%", size: 9, delay: 13, duration: 42 },
-  
+  { left: "6%", size: 10, delay: 0, duration: 38, depth: "front" },
+  { left: "24%", size: 8, delay: 2.5, duration: 42, depth: "back" },
+  { left: "72%", size: 18, delay: 1.2, duration: 40, depth: "glow" },
+  { left: "48%", size: 9, delay: 4, duration: 44, depth: "mid" },
+  { left: "88%", size: 8, delay: 3, duration: 39, depth: "back" },
+  { left: "35%", size: 16, delay: 6, duration: 45, depth: "glow" },
+  { left: "12%", size: 8, delay: 7.5, duration: 41, depth: "mid" },
+  { left: "61%", size: 9, delay: 5.2, duration: 43, depth: "back" },
+  { left: "80%", size: 8, delay: 8.5, duration: 46, depth: "mid" },
+  { left: "18%", size: 17, delay: 10, duration: 40, depth: "glow" },
+  { left: "55%", size: 8, delay: 11.5, duration: 44, depth: "back" },
+  { left: "94%", size: 9, delay: 13, duration: 42, depth: "mid" },
 ];
 
 export default function SobreNosLuminuss() {
@@ -232,8 +228,16 @@ export default function SobreNosLuminuss() {
     {floresAzuis.map((flor, i) => (
     <motion.span
       key={i}
-      className="absolute -top-10 text-pink-100/90 drop-shadow-[0_0_8px_rgba(255,182,193,0.55)]"
-      style={{
+className={`absolute -top-10 ${
+  flor.depth === "glow"
+    ? "text-pink-200/90"
+    : flor.depth === "front"
+    ? "text-pink-200/80"
+    : flor.depth === "mid"
+    ? "text-pink-200/60"
+    : "text-pink-200/40"
+}`}    
+        style={{
         left: flor.left,
         fontSize: `${flor.size}px`,
       }}
