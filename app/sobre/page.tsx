@@ -220,16 +220,16 @@ export default function SobreNosLuminuss() {
       {floresAzuis.map((flor, i) => (
     <motion.span
   key={i}
-  className="absolute -top-16 text-pink-200/90"
+  className="absolute -top-16 text-pink-300"
   style={{
     left: flor.left,
     fontSize: `${flor.size}px`,
   }}
   initial={false}
   animate={{
-    y: ["-12vh", "110vh"],
+    y: ["-5vh", "100vh"],
     x: [0, 6, -4, 3, 0],
-    opacity: [0.3, 0.7, 0.7, 0],
+    opacity: [0, 0.7, 0.7, 0],
     rotate: [0, 60, 140, 220],
   }}
   transition={{
