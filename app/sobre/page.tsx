@@ -103,18 +103,18 @@ const timeline = [
   },
 ];
 const floresAzuis = [
-  { left: "6%", size: 10, delay: 0, duration: 38, depth: "front" },
-  { left: "24%", size: 8, delay: 2.5, duration: 42, depth: "back" },
-  { left: "72%", size: 18, delay: 1.2, duration: 40, depth: "glow" },
-  { left: "48%", size: 9, delay: 4, duration: 44, depth: "mid" },
-  { left: "88%", size: 8, delay: 3, duration: 39, depth: "back" },
-  { left: "35%", size: 16, delay: 6, duration: 45, depth: "glow" },
-  { left: "12%", size: 8, delay: 7.5, duration: 41, depth: "mid" },
-  { left: "61%", size: 9, delay: 5.2, duration: 43, depth: "back" },
-  { left: "80%", size: 8, delay: 8.5, duration: 46, depth: "mid" },
-  { left: "18%", size: 17, delay: 10, duration: 40, depth: "glow" },
-  { left: "55%", size: 8, delay: 11.5, duration: 44, depth: "back" },
-  { left: "94%", size: 9, delay: 13, duration: 42, depth: "mid" },
+  { left: "6%", size: 10, delay: 0, duration: 42, depth: "front" },
+  { left: "72%", size: 17, delay: 3.5, duration: 42, depth: "front" },
+  { left: "24%", size: 8, delay: 7, duration: 42, depth: "back" },
+  { left: "48%", size: 9, delay: 10.5, duration: 42, depth: "mid" },
+  { left: "88%", size: 8, delay: 14, duration: 42, depth: "back" },
+  { left: "35%", size: 16, delay: 17.5, duration: 42, depth: "front" },
+  { left: "12%", size: 8, delay: 21, duration: 42, depth: "mid" },
+  { left: "61%", size: 9, delay: 24.5, duration: 42, depth: "back" },
+  { left: "80%", size: 8, delay: 28, duration: 42, depth: "mid" },
+  { left: "18%", size: 15, delay: 31.5, duration: 42, depth: "front" },
+  { left: "55%", size: 8, delay: 35, duration: 42, depth: "back" },
+  { left: "94%", size: 9, delay: 38.5, duration: 42, depth: "mid" },
 ];
 
 export default function SobreNosLuminuss() {
