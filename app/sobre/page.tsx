@@ -125,7 +125,6 @@ export default function SobreNosLuminuss() {
 
   useEffect(() => {
   if (audioRef.current) {
-    audioRef.current.muted = true;
 
     audioRef.current
       .play()
@@ -187,7 +186,6 @@ export default function SobreNosLuminuss() {
         ref={audioRef}
         loop
         autoPlay
-        muted
         preload="auto"
         src="/musica-luminuss.mp3"
       />

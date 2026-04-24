@@ -476,7 +476,7 @@ const aceitosDoMes = data
               />
 
               <span className="relative z-10">
-                Clique e conheça mais o Lúminuss ✨
+                CONHECER ✨
               </span>
             </Link>
           </div>
@@ -530,7 +530,7 @@ const aceitosDoMes = data
 
       <h2 className="text-4xl font-bold leading-tight md:text-5xl">
         Lúminuss
-        <span className="block bg-gradient-to-r from-[#8597fc] via-[#f7c7ff] to-[#d9d6e5] bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(155,75,138,0.5)]">
+        <span className="block bg-gradient-to-r from-[#d7b8ff] via-[#f7c7ff] to-[#d9d6e5] bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(155,75,138,0.5)]">
           36 ANOS
         </span>
       </h2>
@@ -538,7 +538,7 @@ const aceitosDoMes = data
       <p className="mt-6 max-w-xl text-lg leading-8 text-white/80">
         O recital anual do Ministério Lúminuss, realizado em comemoração ao
         aniversário do grupo. Em 2026, a temática será{" "}
-        <span className="font-semibold text-[#8945f7]">Sonhos</span>
+        <span className="font-semibold text-[#af7dff]">Sonhos</span>
       </p>
     </div>
 
@@ -553,7 +553,7 @@ const aceitosDoMes = data
       </div>
       <div className="mt-8 flex flex-wrap justify-center gap-4">        <Link
           href="/recital"
-          className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-[#4b2c6f] via-[#7113dd] to-[#2a0f3f] px-7 py-3 font-semibold text-white shadow-[0_0_30px_rgba(155,75,138,0.35)] transition duration-300 hover:scale-105"
+          className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-[#4b2c6f] via-[#580caf] to-[#2a0f3f] px-7 py-3 font-semibold text-white shadow-[0_0_30px_rgba(155,75,138,0.35)] transition duration-300 hover:scale-105"
         >
           <span className="absolute inset-0 translate-x-[-120%] bg-gradient-to-r from-transparent via-white/25 to-transparent transition duration-700 group-hover:translate-x-[120%]" />
           <span className="relative z-10">Saiba mais sobre o recital ✨</span>
@@ -668,7 +668,7 @@ const aceitosDoMes = data
         <p className="text-sm text-white/80">© 2026 Lúminuss</p>
 
         <p className="mt-1 text-sm text-white/30">
-          Desenvolvido com <span className="heart-beat text-red-500">❤</span>{" "}
+          Desenvolvido com <span className="heart-beat text-red-500">❤️</span>{" "}
           por Vitória Kelly
         </p>
       </footer>
