@@ -235,7 +235,7 @@ export default function SobreNosLuminuss() {
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-4 flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/15 px-4 py-2 text-sm text-[#e4ae0e] backdrop-blur"
+              className="mb-4 flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/15 px-4 py-2 text-sm text-[#7a5f0c] backdrop-blur"
             >
               <Sparkles className="h-4 w-4" />
               Sobre nós
