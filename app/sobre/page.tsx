@@ -1,24 +1,19 @@
 "use client";
 
-
 import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Music2,
   Play,
   Pause,
-  Users,
   Mic2,
-  HeartHandshake,
-  Camera,
   Sparkles,
   ChevronRight,
   ChevronLeft,
   Quote,
   Disc3,
-  Star,
 } from "lucide-react";
 
 const fotos = [
@@ -30,6 +25,7 @@ const fotos = [
   "/rejane.jpeg",
   "/guilherme.jpeg",
 ];
+
 const postsInstagram = [
   {
     usuario: "mluminuss",
@@ -102,24 +98,24 @@ const timeline = [
       "Seguimos aperfeiçoando nossa organização, repertório e identidade, sem perder a simplicidade e o foco no propósito.",
   },
 ];
+
 const floresAzuis = [
   { left: "6%", size: 10, delay: 0, duration: 42, depth: "front" },
-  { left: "72%", size: 17, delay: 3.5, duration: 42, depth: "front" },
+  { left: "72%", size: 15, delay: 3.5, duration: 42, depth: "front" },
   { left: "24%", size: 8, delay: 7, duration: 42, depth: "back" },
   { left: "48%", size: 9, delay: 10.5, duration: 42, depth: "mid" },
   { left: "88%", size: 8, delay: 14, duration: 42, depth: "back" },
-  { left: "35%", size: 16, delay: 17.5, duration: 42, depth: "front" },
+  { left: "35%", size: 14, delay: 17.5, duration: 42, depth: "front" },
   { left: "12%", size: 8, delay: 21, duration: 42, depth: "mid" },
   { left: "61%", size: 9, delay: 24.5, duration: 42, depth: "back" },
   { left: "80%", size: 8, delay: 28, duration: 42, depth: "mid" },
-  { left: "18%", size: 15, delay: 31.5, duration: 42, depth: "front" },
+  { left: "18%", size: 13, delay: 31.5, duration: 42, depth: "front" },
   { left: "55%", size: 8, delay: 35, duration: 42, depth: "back" },
   { left: "94%", size: 9, delay: 38.5, duration: 42, depth: "mid" },
 ];
 
 export default function SobreNosLuminuss() {
   const [fotoAtiva, setFotoAtiva] = useState(0);
-  const [mostrarTextoCompleto, setMostrarTextoCompleto] = useState(false);
   const [tocando, setTocando] = useState(false);
   const [curiosidadeAtiva, setCuriosidadeAtiva] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -128,6 +124,7 @@ export default function SobreNosLuminuss() {
     const timer = setInterval(() => {
       setFotoAtiva((prev) => (prev + 1) % fotos.length);
     }, 4200);
+
     return () => clearInterval(timer);
   }, []);
 
@@ -135,35 +132,22 @@ export default function SobreNosLuminuss() {
     const curiosidadesTimer = setInterval(() => {
       setCuriosidadeAtiva((prev) => (prev + 1) % curiosidades.length);
     }, 3500);
+
     return () => clearInterval(curiosidadesTimer);
   }, []);
 
   useEffect(() => {
-  if (audioRef.current) {
-
-    audioRef.current
-      .play()
-      .then(() => {
-        setTocando(true);
-      })
-      .catch(() => {
-        console.log("Autoplay bloqueado pelo navegador");
-      });
-  }
-}, []);
-
-
-  const textoResumo = useMemo(
-    () =>
-      "O Ministério Lúminuss é um grupo musical da Igreja Adventista do Sétimo Dia Central de Igapó, localizado em Natal - RN. Atuamos em cultos, congressos, eventos especiais e programações em igrejas, levando adoração, mensagem e esperança por meio da música.",
-    []
-  );
-
-  const textoCompleto = useMemo(
-    () =>
-      "O Lúminuss nasceu do desejo de servir a Deus com excelência e sensibilidade. Ao longo da caminhada, fomos entendendo que nosso papel vai além das vozes, dos instrumentos e da técnica: cada apresentação é uma oportunidade de acolher, inspirar e transmitir a mensagem de Cristo. Nosso grupo reúne pessoas com dons diferentes, unidas por um mesmo propósito. Há quem esteja no vocal, no instrumental, na direção, na mídia, na sonoplastia e no apoio, e cada função contribui para que o ministério aconteça de forma harmoniosa. Valorizamos organização, reverência, dedicação e, acima de tudo, a essência espiritual do louvor. O que fazemos é construído com ensaios, preparação, cuidado com os detalhes e muito amor pela missão. Queremos que cada igreja, cada evento e cada pessoa alcançada pela nossa música viva uma experiência de adoração sincera, beleza, esperança e presença de Deus.",
-    []
-  );
+    if (audioRef.current) {
+      audioRef.current
+        .play()
+        .then(() => {
+          setTocando(true);
+        })
+        .catch(() => {
+          console.log("Autoplay bloqueado pelo navegador");
+        });
+    }
+  }, []);
 
   async function alternarMusica() {
     if (!audioRef.current) return;
@@ -190,13 +174,14 @@ export default function SobreNosLuminuss() {
   }
 
   return (
-    <main className="min-h-screen bg-[#04184d] text-white">
-        <Link
-      href="/"
-      className="fixed left-4 top-24 z-50 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-md text-white shadow-lg transition hover:scale-110 hover:bg-[#F4C021]/80 hover:text-[#061B5C] md:left-6 md:top-28 md:h-12 md:w-12"
-    >
-      <FaArrowLeft className="text-sm md:text-lg" />
-    </Link>
+    <main className="min-h-screen bg-[#7fc7df] text-white">
+      <Link
+        href="/"
+        className="fixed left-4 top-24 z-50 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-lg backdrop-blur-md transition hover:scale-110 hover:bg-[#F4C021]/80 hover:text-[#061B5C] md:left-6 md:top-28 md:h-12 md:w-12"
+      >
+        <FaArrowLeft className="text-sm md:text-lg" />
+      </Link>
+
       <audio
         ref={audioRef}
         loop
@@ -204,78 +189,57 @@ export default function SobreNosLuminuss() {
         preload="auto"
         src="/musica-luminuss.mp3"
       />
-<section
-  className={`relative overflow-hidden border-b border-white/10 pl-7 pt-16 md:pt-0 transition-all duration-700 ${
-    mostrarTextoCompleto
-      ? "bg-gradient-to-b from-[#065c49] via-[#0b2a7a] to-[#04184d]"
-      : ""
-  }`}
->
-  {/* FUNDO */}
-  <div
-    className={`absolute inset-0 transition-all duration-700 ${
-      mostrarTextoCompleto
-        ? "bg-[linear-gradient(180deg,#409dc4_0%,#041b6e_50%,#010a2a_100%)]"
-        : "bg-[radial-gradient(circle_at_top_left,rgba(244,192,33,0.22),transparent_25%),radial-gradient(circle_at_80%_20%,rgba(96,165,250,0.22),transparent_25%),linear-gradient(180deg,#061B5C_0%,#04184d_100%)]"
-    }`}
-  />
 
-  {/* GLOW ORIGINAL */}
-  <div className="absolute -left-20 top-16 h-56 w-56 rounded-full bg-yellow-300/10 blur-3xl" />
-  <div className="absolute right-0 top-24 h-64 w-64 rounded-full bg-blue-400/10 blur-3xl" />
+      <section className="relative overflow-hidden border-b border-white/10 pl-7 pt-16 md:pt-0">
+        <div className="absolute inset-0 z-0 bg-[linear-gradient(180deg,#7fc7df_0%,#4f8fc9_45%,#2c5caa_100%)]" />
 
-<div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
-    {floresAzuis.map((flor, i) => (
-    <motion.span
-      key={i}
-className={`absolute -top-10 ${
-  flor.depth === "glow"
-    ? "text-pink-200/90"
-    : flor.depth === "front"
-    ? "text-pink-200/80"
-    : flor.depth === "mid"
-    ? "text-pink-200/60"
-    : "text-pink-200/40"
-}`}    
-        style={{
-        left: flor.left,
-        fontSize: `${flor.size}px`,
-      }}
-      initial={{ y: "-5vh", opacity: 0 }}
-      animate={{
-        y: "105vh",
-        x: [0, 12, -8, 6, -4, 0],
-        opacity: [0, 0.85, 0.75, 0],
-        rotate: [0, 60, 140, 220],
-      }}
-      transition={{
-        duration: flor.duration,
-        delay: flor.delay,
-        repeat: Infinity,
-        ease: "linear",
-        times: [0, 0.08, 0.85, 1],
-      }}
-    >
-      🌸
-    </motion.span>
-  ))}
-</div>
+        <div className="absolute -left-20 top-16 h-56 w-56 rounded-full bg-white/20 blur-3xl" />
+        <div className="absolute right-0 top-24 h-64 w-64 rounded-full bg-blue-200/25 blur-3xl" />
 
-  {mostrarTextoCompleto && (
-  <div className="pointer-events-none absolute inset-0 z-[1]">
-    <div className="absolute left-1/4 top-20 h-40 w-40 rounded-full bg-[#F4C021]/20 blur-3xl animate-pulse" />
-    <div className="absolute right-10 bottom-20 h-52 w-52 rounded-full bg-blue-400/20 blur-3xl animate-pulse" />
-  </div>
-)}
+        <div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
+          {floresAzuis.map((flor, i) => (
+            <motion.span
+              key={i}
+              className={`absolute -top-10 ${
+                flor.depth === "front"
+                  ? "text-pink-200/70"
+                  : flor.depth === "mid"
+                  ? "text-pink-200/50"
+                  : "text-pink-200/35"
+              }`}
+              style={{
+                left: flor.left,
+                fontSize: `${flor.size}px`,
+              }}
+              initial={{ y: "-5vh", opacity: 0 }}
+              animate={{
+                y: "105vh",
+                x:
+                  flor.depth === "front"
+                    ? [0, 10, -6, 5, 0]
+                    : [0, 6, -3, 2, 0],
+                opacity: [0, 0.7, 0.65, 0],
+                rotate: [0, 60, 140, 220],
+              }}
+              transition={{
+                duration: flor.duration,
+                delay: flor.delay,
+                repeat: Infinity,
+                ease: "linear",
+                times: [0, 0.08, 0.85, 1],
+              }}
+            >
+              🌸
+            </motion.span>
+          ))}
+        </div>
 
-  {/* CONTEÚDO */}
-<div className="relative z-10 mx-auto grid max-w-7xl items-center gap-10 px-6 py-16 md:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">  
-    {/* TODO seu conteúdo continua igual aqui */}
+        <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-10 px-6 py-16 md:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">
           <div>
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-4 flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-[#F4C021]"
+              className="mb-4 flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/15 px-4 py-2 text-sm text-[#F4C021] backdrop-blur"
             >
               <Sparkles className="h-4 w-4" />
               Sobre nós
@@ -287,16 +251,20 @@ className={`absolute -top-10 ${
               transition={{ delay: 0.08 }}
               className="max-w-3xl text-4xl font-bold leading-tight text-white md:text-6xl"
             >
-              Mais que um ministério: <span className="text-[#75b5ff]">Uma família em propósito.</span>
+              Mais que um ministério:{" "}
+              <span className="text-[#d7e8ff]">Uma família em propósito.</span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.16 }}
-              className="mt-6 max-w-2xl text-lg leading-8 text-white/85"
+              className="mt-6 max-w-2xl text-lg leading-8 text-white/90"
             >
-              {textoResumo}
+              O Ministério Lúminuss é um grupo musical da Igreja Adventista do
+              Sétimo Dia Central de Igapó, localizado em Natal - RN. Atuamos em
+              cultos, congressos, eventos especiais e programações em igrejas,
+              levando adoração, mensagem e esperança por meio da música.
             </motion.p>
 
             <motion.div
@@ -306,69 +274,17 @@ className={`absolute -top-10 ${
               className="mt-8 flex flex-wrap items-center gap-4"
             >
               <button
-                onClick={() => setMostrarTextoCompleto((prev) => !prev)}
-                className="rounded-full bg-[#6cacff] px-6 py-3 font-semibold text-[#061B5C] transition hover:scale-[1.02]"
-              >
-                {mostrarTextoCompleto ? "Ver menos" : "Nos conheça melhor"}
-              </button>
-
-              <button
                 onClick={alternarMusica}
-                className="flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-3 font-medium text-white transition hover:bg-white/10"
+                className="flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-5 py-3 font-medium text-white backdrop-blur transition hover:bg-white/20"
               >
-                {tocando ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+                {tocando ? (
+                  <Pause className="h-4 w-4" />
+                ) : (
+                  <Play className="h-4 w-4" />
+                )}
                 {tocando ? "Pausar música" : "Ouvir música"}
               </button>
-
             </motion.div>
-
-            <AnimatePresence>
-  {mostrarTextoCompleto && (
-    <motion.div
-      initial={{ opacity: 0, height: 0, y: 12 }}
-      animate={{ opacity: 1, height: "auto", y: 0 }}
-      exit={{ opacity: 0, height: 0, y: 12 }}
-      transition={{ duration: 0.45, ease: "easeOut" }}
-      className="relative mt-6 overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-5 shadow-[0_20px_70px_rgba(0,0,0,0.28)] backdrop-blur-md"
-    >
-      <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-[#F4C021]/20 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-10 -left-10 h-32 w-32 rounded-full bg-[#7589ff]/25 blur-3xl" />
-
-      <div className="relative z-10">
-        <div className="mb-4 flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#F4C021]/15 text-[#F4C021]">
-            <Music2 className="h-5 w-5" />
-          </div>
-
-          <div>
-            <h3 className="mt-1 text-lg font-bold text-white">
-              O ano era 1990...
-            </h3>
-          </div>
-        </div>
-
-        <div className="space-y-4 text-sm leading-7 text-white/85">
-          <p>
-            O Lúminuss nasceu do desejo de servir a Deus com excelência,
-            sensibilidade e propósito.
-          </p>
-
-          <p>
-            Com o tempo, entendemos que nosso papel vai além das vozes,
-            dos instrumentos e da técnica. Cada apresentação é uma
-            oportunidade de acolher, inspirar e transmitir esperança.
-          </p>
-
-          <p>
-            Somos pessoas diferentes, com dons diferentes, mas unidas pelo
-            mesmo desejo: transformar cada canção em uma experiência de
-            adoração.
-          </p>
-        </div>
-      </div>
-    </motion.div>
-  )}
-</AnimatePresence>
           </div>
 
           <motion.div
@@ -377,99 +293,102 @@ className={`absolute -top-10 ${
             transition={{ delay: 0.2 }}
             className="relative mx-auto w-full max-w-[430px]"
           >
-            <div className="absolute left-1/2 top-6 h-72 w-72 -translate-x-1/2 rounded-full bg-yellow-300/10 blur-3xl" />
-                {/* celular */}
+            <div className="absolute left-1/2 top-6 h-72 w-72 -translate-x-1/2 rounded-full bg-white/20 blur-3xl" />
+
             <div className="relative mx-auto w-[230px] rounded-[2.4rem] border-4 border-[#b433c0] bg-[#111] p-2 shadow-[0_25px_80px_rgba(0,0,0,0.45)]">
-  <div className="relative overflow-hidden rounded-[2rem] bg-[#ececec]">
-    <div className="absolute left-1/2 top-3 z-30 h-5 w-20 -translate-x-1/2 rounded-full bg-black" />
+              <div className="relative overflow-hidden rounded-[2rem] bg-[#ececec]">
+                <div className="absolute left-1/2 top-3 z-30 h-5 w-20 -translate-x-1/2 rounded-full bg-black" />
 
-    <div className="relative h-[460px] w-full overflow-hidden">
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={fotos[fotoAtiva]}
-          initial={{ opacity: 0.18, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0.18, x: -30 }}
-          transition={{ duration: 0.45 }}
-          className="absolute inset-0"
-        >
-          <div className="absolute inset-0">
-            <img
-              src={fotos[fotoAtiva]}
-              alt="Foto do Instagram do Lúminuss"
-              className="h-full w-full object-cover"
-            />
-          </div>
+                <div className="relative h-[460px] w-full overflow-hidden">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={fotos[fotoAtiva]}
+                      initial={{ opacity: 0.18, x: 30 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0.18, x: -30 }}
+                      transition={{ duration: 0.45 }}
+                      className="absolute inset-0"
+                    >
+                      <div className="absolute inset-0">
+                        <img
+                          src={fotos[fotoAtiva]}
+                          alt="Foto do Instagram do Lúminuss"
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
 
-          <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30" />
+                      <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30" />
 
-          <div className="absolute inset-x-0 top-0 z-10 bg-white/92 px-3 pb-2 pt-8 backdrop-blur-sm">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-[9px] font-medium uppercase tracking-[0.18em] text-[#061B5C]/60">
-                  Instagram
-                </p>
-                <p className="mt-1 text-xs font-semibold text-[#061B5C]">
-                  @mluminuss
-                </p>
-              </div>
+                      <div className="absolute inset-x-0 top-0 z-10 bg-white/92 px-3 pb-2 pt-8 backdrop-blur-sm">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="text-[9px] font-medium uppercase tracking-[0.18em] text-[#061B5C]/60">
+                              Instagram
+                            </p>
+                            <p className="mt-1 text-xs font-semibold text-[#061B5C]">
+                              @mluminuss
+                            </p>
+                          </div>
 
-              <div className="flex items-center gap-1.5">
-                <div className="h-2 w-2 rounded-full bg-[#F4C021]" />
-                <div className="h-2 w-2 rounded-full bg-[#061B5C]/25" />
-                <div className="h-2 w-2 rounded-full bg-[#061B5C]/25" />
-              </div>
-            </div>
-          </div>
+                          <div className="flex items-center gap-1.5">
+                            <div className="h-2 w-2 rounded-full bg-[#F4C021]" />
+                            <div className="h-2 w-2 rounded-full bg-[#061B5C]/25" />
+                            <div className="h-2 w-2 rounded-full bg-[#061B5C]/25" />
+                          </div>
+                        </div>
+                      </div>
 
-          <div className="absolute inset-x-3 bottom-16 z-20 rounded-[1.3rem] border border-white/40 bg-white/88 p-3 text-[#061B5C] shadow-lg backdrop-blur-md">
-            <div className="flex items-center gap-2.5">
-              <div className="h-9 w-9 overflow-hidden rounded-full ring-2 ring-[#F4C021]/40">
-                <img
-                  src="/logo.jpeg"
-                  alt="Perfil do Lúminuss"
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <div>
-                      <p className="text-xs font-semibold">{postsInstagram[fotoAtiva].usuario}</p>
-                      <p className="text-[10px] text-[#061B5C]/65">
-                        {postsInstagram[fotoAtiva].subtitulo}
-                      </p>
-                    </div>
-                  </div>
+                      <div className="absolute inset-x-3 bottom-16 z-20 rounded-[1.3rem] border border-white/40 bg-white/88 p-3 text-[#061B5C] shadow-lg backdrop-blur-md">
+                        <div className="flex items-center gap-2.5">
+                          <div className="h-9 w-9 overflow-hidden rounded-full ring-2 ring-[#F4C021]/40">
+                            <img
+                              src="/logo.jpeg"
+                              alt="Perfil do Lúminuss"
+                              className="h-full w-full object-cover"
+                            />
+                          </div>
 
-                  <p className="mt-2 text-xs leading-5 text-[#061B5C]/85">
-                    {postsInstagram[fotoAtiva].texto}
-                  </p>
+                          <div>
+                            <p className="text-xs font-semibold">
+                              {postsInstagram[fotoAtiva].usuario}
+                            </p>
+                            <p className="text-[10px] text-[#061B5C]/65">
+                              {postsInstagram[fotoAtiva].subtitulo}
+                            </p>
+                          </div>
+                        </div>
 
-                  <div className="mt-3 flex items-center justify-between text-[10px] text-[#061B5C]/60">
-                    <span>❤️ Curtidas e comentários</span>
-                    <span>#{fotoAtiva + 1}</span>
-                  </div>
+                        <p className="mt-2 text-xs leading-5 text-[#061B5C]/85">
+                          {postsInstagram[fotoAtiva].texto}
+                        </p>
+
+                        <div className="mt-3 flex items-center justify-between text-[10px] text-[#061B5C]/60">
+                          <span>❤️ Curtidas e comentários</span>
+                          <span>#{fotoAtiva + 1}</span>
+                        </div>
+                      </div>
+
+                      <div className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-between bg-white/92 px-4 py-3 backdrop-blur-sm">
+                        <button className="text-xs font-semibold text-[#061B5C] opacity-80">
+                          Início
+                        </button>
+                        <button className="rounded-full bg-[#061B5C] px-4 py-1.5 text-xs font-semibold text-[#F4C021] shadow-sm">
+                          Ver
+                        </button>
+                        <button className="text-xs font-semibold text-[#061B5C] opacity-80">
+                          Perfil
+                        </button>
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
                 </div>
-
-                    <div className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-between bg-white/92 px-4 py-3 backdrop-blur-sm">
-                      <button className="text-xs font-semibold text-[#061B5C] opacity-80">
-                        Início
-                      </button>
-                      <button className="rounded-full bg-[#061B5C] px-4 py-1.5 text-xs font-semibold text-[#F4C021] shadow-sm">
-                        Ver
-                      </button>
-                      <button className="text-xs font-semibold text-[#061B5C] opacity-80">
-                        Perfil
-                      </button>
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
               </div>
             </div>
-          </div>
 
             <div className="mt-5 flex items-center justify-center gap-3">
               <button
                 onClick={fotoAnterior}
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 transition hover:bg-white/10"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-white/10 transition hover:bg-white/20"
               >
                 <ChevronLeft className="h-5 w-5" />
               </button>
@@ -480,7 +399,9 @@ className={`absolute -top-10 ${
                     key={index}
                     onClick={() => setFotoAtiva(index)}
                     className={`h-2.5 rounded-full transition-all ${
-                      fotoAtiva === index ? "w-8 bg-[#F4C021]" : "w-2.5 bg-white/30"
+                      fotoAtiva === index
+                        ? "w-8 bg-[#F4C021]"
+                        : "w-2.5 bg-white/40"
                     }`}
                     aria-label={`Ir para foto ${index + 1}`}
                   />
@@ -489,31 +410,75 @@ className={`absolute -top-10 ${
 
               <button
                 onClick={proximaFoto}
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 transition hover:bg-white/10"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-white/10 transition hover:bg-white/20"
               >
                 <ChevronRight className="h-5 w-5" />
               </button>
             </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="mt-8 overflow-hidden rounded-[2rem] border border-white/20 bg-white/15 p-5 shadow-[0_20px_70px_rgba(0,0,0,0.18)] backdrop-blur-md"
+            >
+              <div className="mb-4 flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/20 text-white">
+                  <Music2 className="h-5 w-5" />
+                </div>
+
+                <h3 className="text-lg font-bold text-white">
+                  O ano era 1990...
+                </h3>
+              </div>
+
+              <div className="space-y-4 text-sm leading-7 text-white/90">
+                <p>
+                  O Lúminuss nasceu do desejo de servir a Deus com excelência,
+                  sensibilidade e propósito.
+                </p>
+
+                <p>
+                  Com o tempo, entendemos que nosso papel vai além das vozes,
+                  dos instrumentos e da técnica. Cada apresentação é uma
+                  oportunidade de acolher, inspirar e transmitir esperança.
+                </p>
+
+                <p>
+                  Somos pessoas diferentes, com dons diferentes, mas unidas pelo
+                  mesmo desejo: transformar cada canção em uma experiência de
+                  adoração.
+                </p>
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>
 
-      <section className="border-y border-white/10 bg-white/5">
+      <section className="border-y border-white/20 bg-[linear-gradient(180deg,#d8f3ff_0%,#7fc7df_100%)] text-[#061B5C]">
         <div className="mx-auto grid max-w-7xl gap-8 px-6 py-16 md:px-10 lg:grid-cols-[0.95fr_1.05fr]">
-          <div className="rounded-[2rem] border border-white/10 bg-[#061B5C]/60 p-8">
-            <div className="mb-5 flex items-center gap-3 text-[#F4C021]">
+          <div className="rounded-[2rem] border border-white/40 bg-white/35 p-8 shadow-lg backdrop-blur">
+            <div className="mb-5 flex items-center gap-3 text-[#061B5C]">
               <Quote className="h-6 w-6" />
-              <span className="text-sm uppercase tracking-[0.3em]">Essência</span>
+              <span className="text-sm uppercase tracking-[0.3em]">
+                Essência
+              </span>
             </div>
-            <h2 className="text-3xl font-bold text-white md:text-4xl">
+
+            <h2 className="text-3xl font-bold text-[#061B5C] md:text-4xl">
               O que faz o Lúminuss ser especial?
             </h2>
-            <p className="mt-5 leading-8 text-white/85">
-              Não é apenas a soma das vozes, dos instrumentos ou da organização. É a forma como tudo isso se une com intenção, reverência e carinho. Cada ensaio, cada detalhe técnico e cada canção carregam o compromisso de servir com verdade.
+
+            <p className="mt-5 leading-8 text-[#061B5C]/80">
+              Não é apenas a soma das vozes, dos instrumentos ou da organização.
+              É a forma como tudo isso se une com intenção, reverência e
+              carinho. Cada ensaio, cada detalhe técnico e cada canção carregam
+              o compromisso de servir com verdade.
             </p>
 
-            <div className="mt-8 rounded-3xl border border-white/10 bg-white/5 p-5">
-              <div className="flex items-center gap-3 text-[#F4C021]">
+            <div className="mt-8 rounded-3xl border border-white/40 bg-white/30 p-5">
+              <div className="flex items-center gap-3 text-[#061B5C]">
                 <Disc3 className="h-5 w-5" />
                 <p className="font-semibold">Curiosidade em destaque</p>
               </div>
@@ -524,7 +489,7 @@ className={`absolute -top-10 ${
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="mt-4 leading-7 text-white/85"
+                  className="mt-4 leading-7 text-[#061B5C]/80"
                 >
                   {curiosidades[curiosidadeAtiva]}
                 </motion.p>
@@ -540,13 +505,19 @@ className={`absolute -top-10 ${
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.08 }}
-                className="rounded-3xl border border-white/10 bg-white/5 p-6"
+                className="rounded-3xl border border-white/40 bg-white/35 p-6 shadow-lg backdrop-blur"
               >
-                <div className="mb-3 inline-flex rounded-full bg-[#F4C021]/15 px-3 py-1 text-sm font-medium text-[#F4C021]">
+                <div className="mb-3 inline-flex rounded-full bg-[#061B5C]/10 px-3 py-1 text-sm font-medium text-[#061B5C]">
                   {item.ano}
                 </div>
-                <h3 className="text-2xl font-semibold text-white">{item.titulo}</h3>
-                <p className="mt-3 leading-7 text-white/80">{item.texto}</p>
+
+                <h3 className="text-2xl font-semibold text-[#061B5C]">
+                  {item.titulo}
+                </h3>
+
+                <p className="mt-3 leading-7 text-[#061B5C]/80">
+                  {item.texto}
+                </p>
               </motion.div>
             ))}
           </div>
