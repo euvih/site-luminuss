@@ -99,20 +99,16 @@ const timeline = [
   },
 ];
 
-const floresAzuis = [
-  { left: "6%", size: 10, delay: 0, duration: 42, depth: "front" },
-  { left: "72%", size: 15, delay: 3.5, duration: 42, depth: "front" },
-  { left: "24%", size: 8, delay: 7, duration: 42, depth: "back" },
-  { left: "48%", size: 9, delay: 10.5, duration: 42, depth: "mid" },
-  { left: "88%", size: 8, delay: 14, duration: 42, depth: "back" },
-  { left: "35%", size: 14, delay: 17.5, duration: 42, depth: "front" },
-  { left: "12%", size: 8, delay: 21, duration: 42, depth: "mid" },
-  { left: "61%", size: 9, delay: 24.5, duration: 42, depth: "back" },
-  { left: "80%", size: 8, delay: 28, duration: 42, depth: "mid" },
-  { left: "18%", size: 13, delay: 31.5, duration: 42, depth: "front" },
-  { left: "55%", size: 8, delay: 35, duration: 42, depth: "back" },
-  { left: "94%", size: 9, delay: 38.5, duration: 42, depth: "mid" },
-];
+const TOTAL = 28;
+const DURATION = 80;
+
+const floresAzuis = Array.from({ length: TOTAL }, (_, i) => ({
+  left: `${Math.random() * 100}%`,
+  size: 11 + Math.random() * 6,
+  delay: (DURATION / TOTAL) * i,
+  duration: DURATION,
+  depth: i % 3 === 0 ? "front" : i % 3 === 1 ? "mid" : "back",
+}));
 
 export default function SobreNosLuminuss() {
   const [fotoAtiva, setFotoAtiva] = useState(0);
@@ -213,7 +209,7 @@ export default function SobreNosLuminuss() {
               }}
               initial={{ y: "-5vh", opacity: 0 }}
               animate={{
-                y: "105vh",
+                y: "250vh",
                 x:
                   flor.depth === "front"
                     ? [0, 10, -6, 5, 0]
@@ -239,7 +235,7 @@ export default function SobreNosLuminuss() {
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-4 flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/15 px-4 py-2 text-sm text-[#F4C021] backdrop-blur"
+              className="mb-4 flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/15 px-4 py-2 text-sm text-[#e4ae0e] backdrop-blur"
             >
               <Sparkles className="h-4 w-4" />
               Sobre nós
@@ -421,12 +417,9 @@ export default function SobreNosLuminuss() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="mt-8 overflow-hidden rounded-[2rem] border border-white/20 bg-white/15 p-5 shadow-[0_20px_70px_rgba(0,0,0,0.18)] backdrop-blur-md"
+              className="mt-10 overflow-hidden order border-white/20 bg-white/15 p-10 shadow-[0_20px_70px_rgba(0,0,0,0.18)] backdrop-blur-md"
             >
               <div className="mb-4 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/20 text-white">
-                  <Music2 className="h-5 w-5" />
-                </div>
 
                 <h3 className="text-lg font-bold text-white">
                   O ano era 1990...
