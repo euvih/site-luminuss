@@ -9,7 +9,7 @@ export default function RecitalPage() {
     return Array.from({ length: 1000 }, (_, i) => {
       const size = Math.random() < 0.15
         ? Math.random() * 3 + 2   // estrelas grandes (destaque)
-        : Math.random() * 1.5 + 0.5;
+        : Math.random() * 2 + 1;
 
       return {
         id: i,
@@ -192,7 +192,7 @@ export default function RecitalPage() {
           position: absolute;
           display: block;
           border-radius: 9999px;
-          background: rgba(255, 255, 255, 0.88);
+background: rgba(255, 255, 255, 1);
           box-shadow:
             0 0 6px rgba(255, 255, 255, 0.75),
             0 0 14px rgba(210, 190, 255, 0.45);
@@ -265,11 +265,11 @@ export default function RecitalPage() {
           0%,
           100% {
             transform: scale(1);
-            opacity: 0.35;
+            opacity: 0.6;
           }
           50% {
             transform: scale(1.45);
-            opacity: 1;
+            opacity: 1.2;
           }
         }
 

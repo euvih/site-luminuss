@@ -23,7 +23,7 @@ const fotos = [
   "/reginaldo.jpeg",
   "/girls.jpeg",
   "/rejane.jpeg",
-  "/guilherme.jpeg",
+  "/Guilherme.jpeg",
 ];
 
 const postsInstagram = [
