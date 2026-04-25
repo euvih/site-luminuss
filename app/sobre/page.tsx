@@ -257,7 +257,7 @@ export default function SobreNosLuminuss() {
               transition={{ delay: 0.16 }}
               className="mt-6 max-w-2xl text-lg leading-8 text-white/90"
             >
-              O Ministério Lúminuss é um grupo musical da Igreja Adventista do
+              O <b>Ministério Lúminuss</b> é um grupo musical da Igreja Adventista do
               Sétimo Dia Central de Igapó, localizado em Natal - RN. Atuamos em
               cultos, congressos, eventos especiais e programações em igrejas,
               levando adoração, mensagem e esperança por meio da música.
@@ -417,12 +417,12 @@ export default function SobreNosLuminuss() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="mt-10 overflow-hidden order border-white/20 bg-white/15 p-10 shadow-[0_20px_70px_rgba(0,0,0,0.18)] backdrop-blur-md"
+              className="mr-6 mt-10 overflow-hidden order border-white/20 bg-white/15 p-8 shadow-[0_20px_70px_rgba(0,0,0,0.18)] backdrop-blur-md"
             >
               <div className="mb-4 flex items-center gap-3">
 
                 <h3 className="text-lg font-bold text-white">
-                  O ano era 1990...
+                  Em 1990...
                 </h3>
               </div>
 
