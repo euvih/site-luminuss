@@ -98,14 +98,13 @@ const timeline = [
       "Seguimos aperfeiçoando nossa organização, repertório e identidade, sem perder a simplicidade e o foco no propósito.",
   },
 ];
-
 const TOTAL = 28;
 const DURATION = 80;
 
 const floresAzuis = Array.from({ length: TOTAL }, (_, i) => ({
   left: `${Math.random() * 100}%`,
   size: 11 + Math.random() * 6,
-  delay: (DURATION / TOTAL) * i,
+delay: -((DURATION / TOTAL) * i),
   duration: DURATION,
   depth: i % 3 === 0 ? "front" : i % 3 === 1 ? "mid" : "back",
 }));
@@ -303,7 +302,14 @@ export default function SobreNosLuminuss() {
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0.18, x: -30 }}
                       transition={{ duration: 0.45 }}
-                      className="absolute inset-0"
+                      drag="x"
+                      dragConstraints={{ left: 0, right: 0 }}
+                      dragElastic={0.18}
+                      onDragEnd={(_, info) => {
+                        if (info.offset.x < -60) proximaFoto();
+                        if (info.offset.x > 60) fotoAnterior();
+                      }}
+                      className="absolute inset-0 cursor-grab active:cursor-grabbing"
                     >
                       <div className="absolute inset-0">
                         <img
@@ -382,12 +388,7 @@ export default function SobreNosLuminuss() {
             </div>
 
             <div className="mt-5 flex items-center justify-center gap-3">
-              <button
-                onClick={fotoAnterior}
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-white/10 transition hover:bg-white/20"
-              >
-                <ChevronLeft className="h-5 w-5" />
-              </button>
+
 
               <div className="flex items-center gap-2">
                 {fotos.map((_, index) => (
@@ -403,13 +404,6 @@ export default function SobreNosLuminuss() {
                   />
                 ))}
               </div>
-
-              <button
-                onClick={proximaFoto}
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-white/10 transition hover:bg-white/20"
-              >
-                <ChevronRight className="h-5 w-5" />
-              </button>
             </div>
 
             <motion.div
