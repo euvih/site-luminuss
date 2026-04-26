@@ -98,7 +98,7 @@ const timeline = [
       "Seguimos aperfeiçoando nossa organização, repertório e identidade, sem perder a simplicidade e o foco no propósito.",
   },
 ];
-const TOTAL = 28;
+const TOTAL = 35;
 const DURATION = 80;
 
 const floresAzuis = Array.from({ length: TOTAL }, (_, i) => ({
@@ -185,7 +185,7 @@ export default function SobreNosLuminuss() {
         src="/musica-luminuss.mp3"
       />
 
-      <section className="relative overflow-hidden border-b border-white/10 pl-7 pt-16 md:pt-0">
+      <section className="relative overflow-hidden border-b border-white/10 pl-7 pt-3 md:pt-0">
         <div className="absolute inset-0 z-0 bg-[linear-gradient(180deg,#7fc7df_0%,#4f8fc9_45%,#2c5caa_100%)]" />
 
         <div className="absolute -left-20 top-16 h-56 w-56 rounded-full bg-white/20 blur-3xl" />
@@ -197,7 +197,7 @@ export default function SobreNosLuminuss() {
               key={i}
               className={`absolute -top-10 ${
                 flor.depth === "front"
-                  ? "text-pink-200/70"
+                  ? "text-pink-200/90"
                   : flor.depth === "mid"
                   ? "text-pink-200/50"
                   : "text-pink-200/35"
@@ -234,7 +234,7 @@ export default function SobreNosLuminuss() {
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-4 flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/15 px-4 py-2 text-sm text-[#7a5f0c] backdrop-blur"
+              className="mb-4 flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/15 px-4 py-2 text-sm text-[#503910] backdrop-blur"
             >
               <Sparkles className="h-4 w-4" />
               Sobre nós
