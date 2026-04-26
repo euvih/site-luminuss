@@ -280,8 +280,8 @@ const opacity = useTransform(scrollYProgress, [0, 0.05, 1], [0, 1, 1]);
         </div>
 
         <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-10 px-6 py-16 md:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">
-          <div>
-            <motion.p
+          <div className="lg:-translate-y-50">
+              <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               className="mb-4 flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/15 px-4 py-2 text-sm text-[#3a6ca7] backdrop-blur"
@@ -466,7 +466,7 @@ const opacity = useTransform(scrollYProgress, [0, 0.05, 1], [0, 1, 1]);
               <div className="mb-4 flex items-center gap-3">
 
                 <h3 className="text-lg font-bold text-white">
-                  Em 1990...
+                  Ano era 1990...
                 </h3>
               </div>
 
