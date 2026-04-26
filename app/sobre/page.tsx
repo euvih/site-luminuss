@@ -214,7 +214,7 @@ export default function SobreNosLuminuss() {
     ? [0, 14, -10, 8, -6, 4, 0]
     : [0, 8, -5, 4, -3, 2, 0],
                 opacity: [0, 0.7, 0.65, 0],
-                rotate: [0, 20, -15, 25, -10, 15, 0],
+                rotate: [0, 60, -40, 120, -80, 180],
               }}
               transition={{
                 duration: flor.duration,
