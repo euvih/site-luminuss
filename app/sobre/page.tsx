@@ -210,18 +210,18 @@ export default function SobreNosLuminuss() {
               animate={{
                 y: "250vh",
                 x:
-                  flor.depth === "front"
-                    ? [0, 10, -6, 5, 0]
-                    : [0, 6, -3, 2, 0],
+  flor.depth === "front"
+    ? [0, 14, -10, 8, -6, 4, 0]
+    : [0, 8, -5, 4, -3, 2, 0],
                 opacity: [0, 0.7, 0.65, 0],
-                rotate: [0, 60, 140, 220],
+                rotate: [0, 20, -15, 25, -10, 15, 0],
               }}
               transition={{
                 duration: flor.duration,
                 delay: flor.delay,
                 repeat: Infinity,
-                ease: "linear",
-                times: [0, 0.08, 0.85, 1],
+                ease: "easeInOut",
+                times: [0, 0.15, 0.35, 0.6, 0.8, 1],
               }}
             >
               🌸
