@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa";
 import React, { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import {
   Music2,
   Play,
@@ -143,6 +143,10 @@ export default function SobreNosLuminuss() {
         });
     }
   }, []);
+const { scrollYProgress } = useScroll();
+
+const pathLength = useTransform(scrollYProgress, [0, 1], [0, 1]);
+const opacity = useTransform(scrollYProgress, [0, 0.05, 1], [0, 1, 1]);
 
   async function alternarMusica() {
     if (!audioRef.current) return;
@@ -170,6 +174,7 @@ export default function SobreNosLuminuss() {
 
   return (
     <main className="min-h-screen bg-[#7fc7df] text-white">
+      
       <Link
         href="/"
         className="fixed left-4 top-24 z-50 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-lg backdrop-blur-md transition hover:scale-110 hover:bg-[#F4C021]/80 hover:text-[#061B5C] md:left-6 md:top-28 md:h-12 md:w-12"
@@ -184,6 +189,51 @@ export default function SobreNosLuminuss() {
         preload="auto"
         src="/musica-luminuss.mp3"
       />
+      <div className="pointer-events-none fixed inset-0 z-[1] overflow-hidden">
+  <div className="pointer-events-none absolute left-0 top-0 z-0 h-full w-full overflow-hidden">
+  <svg
+    viewBox="0 0 400 2200"
+    className="absolute left-0 top-0 h-full w-full opacity-45"
+    preserveAspectRatio="none"
+  >
+    <motion.path
+      d="M90 0 C130 180, 55 330, 115 520 C165 690, 70 850, 130 1040 C185 1220, 90 1400, 150 1600 C190 1730, 140 1900, 185 2200"
+      fill="none"
+      stroke="rgba(255,255,255,0.35)"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 6, ease: "easeInOut" }}
+    />
+
+    <motion.path
+      d="M115 520 C70 500, 45 455, 50 410"
+      fill="none"
+      stroke="rgba(255,255,255,0.25)"
+      strokeWidth="2"
+      strokeLinecap="round"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 6, delay: 1, ease: "easeInOut" }}
+    />
+
+    <motion.path
+      d="M150 1600 C200 1570, 225 1515, 230 1460"
+      fill="none"
+      stroke="rgba(255,255,255,0.25)"
+      strokeWidth="2"
+      strokeLinecap="round"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 6, delay: 1.4, ease: "easeInOut" }}
+    />
+
+    <circle cx="50" cy="410" r="7" fill="rgba(255,190,220,0.45)" />
+    <circle cx="230" cy="1460" r="8" fill="rgba(255,190,220,0.45)" />
+  </svg>
+</div>
+</div>
 
       <section className="relative overflow-hidden border-b border-white/10 pl-7 pt-3 md:pt-0">
         <div className="absolute inset-0 z-0 bg-[linear-gradient(180deg,#7fc7df_0%,#4f8fc9_45%,#2c5caa_100%)]" />
@@ -234,7 +284,7 @@ export default function SobreNosLuminuss() {
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-4 flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/15 px-4 py-2 text-sm text-[#2f5b8d] backdrop-blur"
+              className="mb-4 flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/15 px-4 py-2 text-sm text-[#3a6ca7] backdrop-blur"
             >
               <Sparkles className="h-4 w-4" />
               Sobre nós
