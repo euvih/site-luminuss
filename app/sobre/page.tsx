@@ -247,7 +247,7 @@ export default function SobreNosLuminuss() {
               className="max-w-3xl text-4xl font-bold leading-tight text-white md:text-6xl"
             >
               Mais que um ministério:{" "}
-              <span className="text-[#d7e8ff]">Uma família em propósito.</span>
+              <span className="text-[#cbe1ff]">Uma família em propósito.</span>
             </motion.h1>
 
             <motion.p
