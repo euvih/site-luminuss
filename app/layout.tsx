@@ -3,10 +3,10 @@ import Header from "./Header";
 
 export const metadata = {
   metadataBase: new URL("https://site-luminuss.vercel.app"),
-  
+
   title: "Ministério Lúminuss",
   description:
-  "Um ministério musical que leva adoração, mensagem e esperança através da música em cultos, congressos e eventos especiais.",
+    "Um ministério musical que leva adoração, mensagem e esperança através da música em cultos, congressos e eventos especiais.",
 
   openGraph: {
     title: "Ministério Lúminuss - Adoração que transforma",
@@ -15,7 +15,7 @@ export const metadata = {
     siteName: "Lúminuss",
     images: [
       {
-        url: "https://site-luminuss.vercel.app/capa-wpp.jpg",
+        url: "/capa-wpp.jpg", // 👈 melhor usar relativo com metadataBase
         width: 1200,
         height: 630,
       },
@@ -23,12 +23,13 @@ export const metadata = {
     locale: "pt_BR",
     type: "website",
   },
+
   twitter: {
-  card: "summary_large_image",
-  title: "Ministério Lúminuss",
-  description: "Adoração que transforma.",
-  images: ["https://site-luminuss.vercel.app/capa-wpp.jpg"],
-},
+    card: "summary_large_image",
+    title: "Ministério Lúminuss",
+    description: "Adoração que transforma.",
+    images: ["/capa-wpp.jpg"],
+  },
 };
 
 export default function RootLayout({
