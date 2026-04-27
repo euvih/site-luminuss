@@ -638,6 +638,9 @@ export default function AgendamentoPage() {
     </div>
   </div>
 )}
+<p className="text-xs leading-relaxed text-yellow-200">
+                      Obs.: A data selecionada pode ser reajustada conforme a disponibilidade do grupo, devido a possíveis imprevistos.
+                    </p>
 
                         <input type="hidden" value={data} required />
                       </div>
@@ -652,7 +655,7 @@ export default function AgendamentoPage() {
                     </div>
 
                     <p className="text-xs leading-relaxed text-yellow-200">
-                      Observação: considerar a presença de alguém no local com
+                      Obs.: Considerar a presença de alguém no local com
                       1h30 de antecedência para organização do som, instrumentos
                       e passagem de som.
                     </p>
