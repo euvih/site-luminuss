@@ -13,7 +13,7 @@ export const metadata = {
     siteName: "Lúminuss",
     images: [
       {
-        url: "https://site-luminuss.vercel.app/logo.jpeg",
+        url: "https://site-luminuss.vercel.app/capa-wpp.png",
         width: 1200,
         height: 630,
       },
@@ -21,6 +21,12 @@ export const metadata = {
     locale: "pt_BR",
     type: "website",
   },
+  twitter: {
+  card: "summary_large_image",
+  title: "Ministério Lúminuss",
+  description: "Adoração que transforma.",
+  images: ["https://site-luminuss.vercel.app/capa-wpp.png"],
+},
 };
 
 export default function RootLayout({
