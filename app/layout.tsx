@@ -2,6 +2,8 @@ import "./globals.css";
 import Header from "./Header";
 
 export const metadata = {
+  metadataBase: new URL("https://site-luminuss.vercel.app"),
+  
   title: "Ministério Lúminuss",
   description:
   "Um ministério musical que leva adoração, mensagem e esperança através da música em cultos, congressos e eventos especiais.",
