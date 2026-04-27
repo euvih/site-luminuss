@@ -235,9 +235,8 @@ const opacity = useTransform(scrollYProgress, [0, 0.05, 1], [0, 1, 1]);
 </div>
 </div>
 
-      <section className="relative overflow-hidden border-b border-white/10 pl-7 pt-3 md:pt-0">
+      <section className="relative overflow-hidden pl-7 pt-3 md:pt-0">
         <div className="absolute inset-0 z-0 bg-[linear-gradient(180deg,#7fc7df_0%,#4f8fc9_45%,#2c5caa_100%)]" />
-
         <div className="absolute -left-20 top-16 h-56 w-56 rounded-full bg-white/20 blur-3xl" />
         <div className="absolute right-0 top-24 h-64 w-64 rounded-full bg-blue-200/25 blur-3xl" />
 
@@ -260,10 +259,10 @@ const opacity = useTransform(scrollYProgress, [0, 0.05, 1], [0, 1, 1]);
               animate={{
                 y: "250vh",
                 x:
-  flor.depth === "front"
-    ? [0, 14, -10, 8, -6, 4, 0]
-    : [0, 8, -5, 4, -3, 2, 0],
-                opacity: [0, 0.7, 0.65, 0],
+                    flor.depth === "front"
+                      ? [0, 14, -10, 8, -6, 4, 0]
+                      : [0, 8, -5, 4, -3, 2, 0],
+                opacity: [0, 0.7, 0.65, 0.65],
                 rotate: [0, 60, -40, 120, -80, 180],
               }}
               transition={{
@@ -271,7 +270,7 @@ const opacity = useTransform(scrollYProgress, [0, 0.05, 1], [0, 1, 1]);
                 delay: flor.delay,
                 repeat: Infinity,
                 ease: "easeInOut",
-                times: [0, 0.15, 0.35, 0.6, 0.8, 1],
+                times: [0, 0.15, 0.45, 1],
               }}
             >
               🌸
@@ -493,10 +492,10 @@ const opacity = useTransform(scrollYProgress, [0, 0.05, 1], [0, 1, 1]);
         </div>
       </section>
 
-      <section className="border-y border-white/20 bg-[linear-gradient(180deg,#d8f3ff_0%,#7fc7df_100%)] text-[#061B5C]">
+      <section className="bg-[linear-gradient(180deg,#2c5caa_0%,#7fc7df_40%,#d8f3ff_100%)] text-[#061B5C]">
         <div className="mx-auto grid max-w-7xl gap-8 px-6 py-16 md:px-10 lg:grid-cols-[0.95fr_1.05fr]">
           <div className="rounded-[2rem] border border-white/40 bg-white/35 p-8 shadow-lg backdrop-blur">
-            <div className="mb-5 flex items-center gap-3 text-[#061B5C]">
+            <div className="mb-5 flex items-center gap-3 text-[#041546]">
               <Quote className="h-6 w-6" />
               <span className="text-sm uppercase tracking-[0.3em]">
                 Essência
@@ -507,7 +506,7 @@ const opacity = useTransform(scrollYProgress, [0, 0.05, 1], [0, 1, 1]);
               O que faz o Lúminuss ser especial?
             </h2>
 
-            <p className="mt-5 leading-8 text-[#061B5C]/80">
+            <p className="mt-5 leading-8 text-[#061B5C]/100">
               Não é apenas a soma das vozes, dos instrumentos ou da organização.
               É a forma como tudo isso se une com intenção, reverência e
               carinho. Cada ensaio, cada detalhe técnico e cada canção carregam
