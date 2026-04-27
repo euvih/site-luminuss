@@ -4,16 +4,16 @@ import Header from "./Header";
 export const metadata = {
   title: "Ministério Lúminuss",
   description:
-    "Um ministério musical que leva adoração, mensagem e esperança por meio da música.",
+  "Um ministério musical que leva adoração, mensagem e esperança através da música em cultos, congressos e eventos especiais.",
 
   openGraph: {
-    title: "Ministério Lúminuss",
+    title: "Ministério Lúminuss - Adoração que transforma",
     description: "Conheça o Lúminuss e nossa missão através da música.",
     url: "https://site-luminuss.vercel.app/",
     siteName: "Lúminuss",
     images: [
       {
-        url: "https://site-luminuss.vercel.app/capa-wpp.png",
+        url: "https://site-luminuss.vercel.app/capa-wpp.jpg",
         width: 1200,
         height: 630,
       },
@@ -25,7 +25,7 @@ export const metadata = {
   card: "summary_large_image",
   title: "Ministério Lúminuss",
   description: "Adoração que transforma.",
-  images: ["https://site-luminuss.vercel.app/capa-wpp.png"],
+  images: ["https://site-luminuss.vercel.app/capa-wpp.jpg"],
 },
 };
 
