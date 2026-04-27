@@ -456,38 +456,74 @@ const opacity = useTransform(scrollYProgress, [0, 0.05, 1], [0, 1, 1]);
             </div>
 
             <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="mr-6 mt-10 overflow-hidden order border-white/20 bg-white/15 p-8 shadow-[0_20px_70px_rgba(0,0,0,0.18)] backdrop-blur-md"
-            >
-              <div className="mb-4 flex items-center gap-3">
+  initial={{ opacity: 0, y: 18 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.6 }}
+  className="relative mt-10 overflow-hidden p-2"
+>
+  <div className="space-y-6 text-white">
+    <div>
+      <p className="mb-3 text-xs font-semibold uppercase tracking-[0.28em] text-white/60">
+        Nossa história
+      </p>
 
-                <h3 className="text-lg font-bold text-white">
-                  Ano era 1990...
-                </h3>
-              </div>
+      <h3 className="text-2xl font-bold leading-tight">
+        Ano era 1990...
+      </h3>
+    </div>
 
-              <div className="space-y-4 text-sm leading-7 text-white/90">
-                <p>
-                  O Lúminuss nasceu do desejo de servir a Deus com excelência,
-                  sensibilidade e propósito.
-                </p>
+    <p className="text-sm leading-7 text-white/90">
+      O Lúminuss nasceu do desejo de servir a Deus com excelência,
+      sensibilidade e propósito.
+    </p>
 
-                <p>
-                  Com o tempo, entendemos que nosso papel vai além das vozes,
-                  dos instrumentos e da técnica. Cada apresentação é uma
-                  oportunidade de acolher, inspirar e transmitir esperança.
-                </p>
+    <div className="ml-auto w-[72%] overflow-hidden rounded-3xl shadow-[0_18px_50px_rgba(0,0,0,0.18)]">
+      <img
+        src="/ftantiga1.jpeg"
+        alt="Memória do Lúminuss"
+        className="h-36 w-full object-cover"
+      />
+    </div>
 
-                <p>
-                  Somos pessoas diferentes, com dons diferentes, mas unidas pelo
-                  mesmo desejo: transformar cada canção em uma experiência de
-                  adoração.
-                </p>
-              </div>
-            </motion.div>
+    <p className="text-sm leading-7 text-white/90">
+      Com o tempo, entendemos que nosso papel vai além das vozes,
+      dos instrumentos e da técnica. Cada apresentação se tornou uma
+      oportunidade de acolher, inspirar e transmitir esperança.
+    </p>
+
+    <div className="grid grid-cols-[0.9fr_1.1fr] gap-3">
+      <div className="overflow-hidden rounded-3xl shadow-[0_18px_50px_rgba(0,0,0,0.16)]">
+        <img
+          src="/ftantiga2.jpeg"
+          alt="História do Lúminuss"
+          className="h-40 w-full object-cover"
+        />
+      </div>
+
+      <div className="mt-8 overflow-hidden rounded-3xl shadow-[0_18px_50px_rgba(0,0,0,0.16)]">
+        <img
+          src="/ftantiga3.jpeg"
+          alt="Caminhada do Ministério Lúminuss"
+          className="h-32 w-full object-cover"
+        />
+      </div>
+    </div>
+
+    <p className="text-sm leading-7 text-white/90">
+      Pessoas diferentes, dons diferentes e um mesmo chamado:
+      transformar cada canção em uma experiência de adoração.
+    </p>
+
+    <div className="mr-auto w-[82%] overflow-hidden rounded-[2rem] shadow-[0_18px_55px_rgba(0,0,0,0.18)]">
+      <img
+        src="/logo.jpeg"
+        alt="Ministério Lúminuss"
+        className="h-36 w-full object-cover"
+      />
+    </div>
+  </div>
+</motion.div>
           </motion.div>
         </div>
       </section>
