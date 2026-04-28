@@ -228,6 +228,7 @@ const opacity = useTransform(scrollYProgress, [0, 0.05, 1], [0, 1, 1]);
       animate={{ pathLength: 1 }}
       transition={{ duration: 6, delay: 1.4, ease: "easeInOut" }}
     />
+    
 
     <circle cx="50" cy="410" r="7" fill="rgba(255,190,220,0.45)" />
     <circle cx="230" cy="1460" r="8" fill="rgba(255,190,220,0.45)" />
@@ -239,7 +240,7 @@ const opacity = useTransform(scrollYProgress, [0, 0.05, 1], [0, 1, 1]);
         <div className="absolute inset-0 z-0 bg-[linear-gradient(180deg,#7fc7df_0%,#4f8fc9_45%,#2c5caa_100%)]" />
         <div className="absolute -left-20 top-16 h-56 w-56 rounded-full bg-white/20 blur-3xl" />
         <div className="absolute right-0 top-24 h-64 w-64 rounded-full bg-blue-200/25 blur-3xl" />
-
+        
         <div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
           {floresAzuis.map((flor, i) => (
             <motion.span

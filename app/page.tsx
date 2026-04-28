@@ -333,10 +333,10 @@ const aceitosDoMes = data
                 Lúminuss
               </h1>
 
-              <p className="mb-8 max-w-xl text-lg text-white/90">
-                Levando louvor, adoração e mensagens de esperança às igrejas por
-                meio da música.
-              </p>
+              <p className="mb-6 max-w-[280px] text-sm leading-6 text-white/85 md:max-w-xl md:text-lg">
+  Levando louvor, adoração e mensagens de esperança às igrejas por
+  meio da música.
+</p>
 
               <div className="flex flex-col items-start gap-4">
                 <Link
@@ -452,7 +452,7 @@ const aceitosDoMes = data
 
       <section
         id="sobre"
-        className="bg-[#c7d5ff] px-6 py-20 min-h-[80vh] md:min-h-screen flex items-center justify-center"
+        className="bg-[#e2e9ff] px-6 py-20 min-h-[80vh] md:min-h-screen flex items-center justify-center"
       >
         <div className="mx-auto max-w-5xl text-center px-4 space-y-6">
           <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#d4a106]">
@@ -486,7 +486,7 @@ const aceitosDoMes = data
 
       <section
   id="recital"
-  className="relative overflow-hidden bg-[#010116] px-6 py-24 text-white"
+  className="relative overflow-hidden bg-[#001369] px-6 py-24 text-white"
 >
   <div className="absolute inset-0">
     <div className="absolute -top-20 left-10 h-72 w-72 rounded-full bg-[#9b4b8a]/20 blur-3xl" />
@@ -530,7 +530,7 @@ const aceitosDoMes = data
 
       <h2 className="text-4xl font-bold leading-tight md:text-5xl">
         Lúminuss
-        <span className="block bg-gradient-to-r from-[#d7b8ff] via-[#f7c7ff] to-[#d9d6e5] bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(155,75,138,0.5)]">
+        <span className="block bg-gradient-to-r from-[#95a8fd] via-[#f7c7ff] to-[#d9d6e5] bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(155,75,138,0.5)]">
           36 ANOS
         </span>
       </h2>

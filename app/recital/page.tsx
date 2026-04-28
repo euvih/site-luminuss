@@ -16,7 +16,7 @@ export default function RecitalPage() {
         left: `${Math.random() * 100}%`,
         top: `${Math.random() * 100}%`,
         size: `${size}px`,
-        opacity: 0.6 + Math.random() * 0.4,
+        opacity: 0.10 + Math.random() * 0.4,
         delay: `${Math.random() * 6}s`,
         duration: `${3 + Math.random() * 5}s`,
       };
@@ -24,7 +24,7 @@ export default function RecitalPage() {
   }, []);
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#f6f0ff] via-[#eadcff] to-[#d8c2ff] px-6 pb-20 pt-20 text-[#4B2C6F] md:pt-32">
+    <main className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#cdc9f8] via-[#2a1f4a] to-[#3a2c66] px-6 pb-20 pt-20 text-[#4B2C6F] md:pt-32">
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         <div className="dream-mist dream-mist-1" />
         <div className="dream-mist dream-mist-2" />
@@ -65,31 +65,31 @@ export default function RecitalPage() {
       <section className="relative z-10 mx-auto max-w-6xl">
         <div className="grid items-center gap-12 md:grid-cols-2">
           <div>
-            <p className="mb-3 text-sm uppercase tracking-[0.35em] text-[#9c7ac9]">
+            <p className="mb-3 text-sm uppercase tracking-[0.35em] text-[#9065c7]">
               Evento anual 2026
             </p>
 
             <h1 className="text-5xl font-bold leading-tight md:text-6xl">
               Recital
-              <span className="block bg-gradient-to-r from-[#8f63d9] via-[#c19cff] to-[#a45de6] bg-clip-text text-transparent drop-shadow-[0_0_18px_rgba(180,130,255,0.28)]">
+              <span className="block bg-gradient-to-r from-[#8555d8] via-[#b890fd] to-[#a45de6] bg-clip-text text-transparent drop-shadow-[0_0_18px_rgba(180,130,255,0.28)]">
                 Sonhos
               </span>
             </h1>
 
-            <p className="mt-6 max-w-xl text-lg leading-8 text-[#5f467e]/90">
+            <p className="mt-6 max-w-xl text-lg leading-8 text-[#5f467e]/100">
               Uma noite especial em comemoração ao aniversário do Ministério
               Lúminuss. Nesta edição, o recital convida o público a mergulhar em
               um universo de sensações, inspirado na delicadeza, na profundidade
               e na beleza dos sonhos.
             </p>
 
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            <div className="mt-8 grid grid-cols-2 gap-4">
               <div className="rounded-3xl border border-[#dcc7ff] bg-white/55 p-5 shadow-[0_10px_30px_rgba(180,130,255,0.10)] backdrop-blur-md">
                 <p className="text-sm uppercase tracking-wide text-[#9c7ac9]">
                   Tema
                 </p>
                 <p className="mt-2 text-xl font-semibold text-[#5b348d]">
-                  Sonhos ✨
+                  Sonhos
                 </p>
               </div>
 
@@ -189,17 +189,18 @@ export default function RecitalPage() {
 
       <style jsx global>{`
         .dream-star {
-          position: absolute;
-          display: block;
-          border-radius: 9999px;
-background: rgba(255, 255, 255, 1);
-          box-shadow:
-            0 0 6px rgba(255, 255, 255, 0.75),
-            0 0 14px rgba(210, 190, 255, 0.45);
-          animation-name: dreamTwinkle;
-          animation-timing-function: ease-in-out;
-          animation-iteration-count: infinite;
-        }
+  position: absolute;
+  border-radius: 9999px;
+
+  background: radial-gradient(circle, #ffffff 0%, #ffffff 40%, transparent 70%);
+
+  box-shadow:
+    0 0 10px rgba(255, 255, 255, 1),
+    0 0 20px rgba(200, 180, 255, 0.9),
+    0 0 35px rgba(180, 140, 255, 0.7);
+
+  animation: dreamTwinkle ease-in-out infinite;
+}
 
         .dream-mist {
           position: absolute;
