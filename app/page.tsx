@@ -378,7 +378,7 @@ const aceitosDoMes = data
 
           <div className="relative mt-15 w-full overflow-hidden md:mt-0 md:h-full">
             <img
-              src="/img1.jpeg"
+              src="/img1.png"
               alt="Grupo Lúminuss"
               className="block h-full w-full object-cover md:object-bottom"
             />
