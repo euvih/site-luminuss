@@ -320,8 +320,6 @@ const aceitosDoMes = data
         id="inicio"
         className="relative min-h-screen overflow-hidden bg-[#061B5C] pt-[150px] text-white md:pt-[89px]"
       > 
-        <div className="pointer-events-none absolute left-20 top-24 h-[260px] w-[260px] rounded-full bg-[#1b0952] blur-3xl" />
-
         <div className="relative z-10 grid min-h-[calc(100vh-89px)] grid-cols-1 md:grid-cols-2">
           <div className="flex items-center px-6 md:px-16">
             <div>
