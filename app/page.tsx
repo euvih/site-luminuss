@@ -331,7 +331,7 @@ const aceitosDoMes = data
                 Lúminuss
               </h1>
 
-              <p className="mb-6 max-w-[280px] text-sm leading-6 text-white/85 md:max-w-xl md:text-lg">
+              <p className="mb-8 max-w-xl text-lg leading-8 text-white/90">
   Levando louvor, adoração e mensagens de esperança às igrejas por
   meio da música.
 </p>
@@ -551,10 +551,10 @@ const aceitosDoMes = data
       </div>
       <div className="mt-8 flex flex-wrap justify-center gap-4">        <Link
           href="/recital"
-          className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-[#4b2c6f] via-[#580caf] to-[#2a0f3f] px-7 py-3 font-semibold text-white shadow-[0_0_30px_rgba(155,75,138,0.35)] transition duration-300 hover:scale-105"
+          className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-[#4e2ce4] via-[#240caf] to-[#4e2ce4] px-7 py-3 font-semibold text-white shadow-[0_0_30px_rgba(155,75,138,0.35)] transition duration-300 hover:scale-105"
         >
           <span className="absolute inset-0 translate-x-[-120%] bg-gradient-to-r from-transparent via-white/25 to-transparent transition duration-700 group-hover:translate-x-[120%]" />
-          <span className="relative z-10">Saiba mais sobre o recital ✨</span>
+          <span className="relative z-10">Sobre o recital</span>
         </Link>
       </div>
     </div>
