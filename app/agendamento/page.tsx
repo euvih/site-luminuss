@@ -35,6 +35,7 @@ function StatusBadge({ status }: { status: string }) {
 
 export default function AgendamentoPage() {
   const [copiado, setCopiado] = useState(false);
+
   const [nome, setNome] = useState(() => {
     if (typeof window === "undefined") return "";
     return localStorage.getItem("agendamento-nome") || "";
@@ -58,6 +59,11 @@ export default function AgendamentoPage() {
   const [telefone, setTelefone] = useState(() => {
     if (typeof window === "undefined") return "";
     return localStorage.getItem("agendamento-telefone") || "";
+  });
+
+  const [email, setEmail] = useState(() => {
+    if (typeof window === "undefined") return "";
+    return localStorage.getItem("agendamento-email") || "";
   });
 
   const [tipoEvento, setTipoEvento] = useState(() => {
@@ -112,20 +118,21 @@ export default function AgendamentoPage() {
     setData(format(date, "yyyy-MM-dd"));
     setMostrarCalendario(false);
   }
+
   async function copiarCodigo() {
-  if (!codigoGerado) return;
+    if (!codigoGerado) return;
 
-  try {
-    await navigator.clipboard.writeText(codigoGerado);
-    setCopiado(true);
+    try {
+      await navigator.clipboard.writeText(codigoGerado);
+      setCopiado(true);
 
-    setTimeout(() => {
-      setCopiado(false);
-    }, 1800);
-  } catch (erro) {
-    console.error("Erro ao copiar código:", erro);
+      setTimeout(() => {
+        setCopiado(false);
+      }, 1800);
+    } catch (erro) {
+      console.error("Erro ao copiar código:", erro);
+    }
   }
-}
 
   function gerarCodigoAcompanhamento() {
     const numero = Math.floor(100000 + Math.random() * 900000);
@@ -153,6 +160,7 @@ export default function AgendamentoPage() {
     setData("");
     setHorario("");
     setTelefone("");
+    setEmail("");
     setTipoEvento("");
     setDetalhes("");
 
@@ -161,6 +169,7 @@ export default function AgendamentoPage() {
     localStorage.removeItem("agendamento-data");
     localStorage.removeItem("agendamento-horario");
     localStorage.removeItem("agendamento-telefone");
+    localStorage.removeItem("agendamento-email");
     localStorage.removeItem("agendamento-tipoEvento");
     localStorage.removeItem("agendamento-detalhes");
   }
@@ -173,7 +182,7 @@ export default function AgendamentoPage() {
     setErroEnvio("");
     setMostrarCodigo(false);
 
-    if (!nome || !local || !data || !horario || !telefone || !tipoEvento) {
+    if (!nome || !local || !data || !horario || !telefone || !email || !tipoEvento) {
       setErroEnvio("Preencha todos os campos obrigatórios.");
       return;
     }
@@ -181,6 +190,11 @@ export default function AgendamentoPage() {
     const telefoneNumeros = telefone.replace(/\D/g, "");
     if (telefoneNumeros.length < 10) {
       setErroEnvio("Digite um telefone válido.");
+      return;
+    }
+
+    if (!email.includes("@") || !email.includes(".")) {
+      setErroEnvio("Digite um email válido.");
       return;
     }
 
@@ -203,6 +217,7 @@ export default function AgendamentoPage() {
       igreja: nome,
       responsavel: nome,
       whatsapp: telefone,
+      email: email,
       local: local,
       data: data,
       hora: horario,
@@ -236,6 +251,7 @@ export default function AgendamentoPage() {
           `Código de acompanhamento: ${codigo}\n` +
           `Nome: ${nome}\n` +
           `Telefone: ${telefone}\n` +
+          `Email: ${email}\n` +
           `Local do evento: ${local}\n` +
           `Data: ${data}\n` +
           `Horário: ${horario}\n` +
@@ -341,12 +357,14 @@ export default function AgendamentoPage() {
     localStorage.setItem("agendamento-data", data);
     localStorage.setItem("agendamento-horario", horario);
     localStorage.setItem("agendamento-telefone", telefone);
+    localStorage.setItem("agendamento-email", email);
     localStorage.setItem("agendamento-tipoEvento", tipoEvento);
     localStorage.setItem("agendamento-detalhes", detalhes);
-  }, [nome, local, data, horario, telefone, tipoEvento, detalhes]);
+  }, [nome, local, data, horario, telefone, email, tipoEvento, detalhes]);
 
   return (
-        <main className="flex min-h-screen flex-col justify-between bg-[#061B5C] px-6 py-8 text-white">      <Link
+    <main className="flex min-h-screen flex-col justify-between bg-[#061B5C] px-6 py-8 text-white">
+      <Link
         href="/"
         className="fixed left-4 top-24 z-50 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-lg backdrop-blur-md transition hover:scale-110 hover:bg-[#F4C021]/80 hover:text-[#061B5C] md:left-6 md:top-28 md:h-12 md:w-12"
       >
@@ -409,8 +427,6 @@ export default function AgendamentoPage() {
                         equipe.
                       </p>
                     </div>
-
-                    <div></div>
 
                     <div className="mt-10 flex justify-center">
                       <button
@@ -527,7 +543,8 @@ export default function AgendamentoPage() {
                 </div>
               </div>
 
-<div className="relative flex h-full flex-col justify-center overflow-visible px-8 py-10 lg:px-10">                <Image
+              <div className="relative flex h-full flex-col justify-center overflow-visible px-8 py-10 lg:px-10">
+                <Image
                   src="/img3.jpeg"
                   alt="Fundo agendamento"
                   fill
@@ -548,30 +565,31 @@ export default function AgendamentoPage() {
                   </div>
 
                   {mostrarCodigo && (
-                      <div className="mb-6 rounded-2xl border border-green-400/30 bg-green-500/10 p-4 text-green-100">
-                        <p className="text-sm">
-                          Agendamento enviado com sucesso.
+                    <div className="mb-6 rounded-2xl border border-green-400/30 bg-green-500/10 p-4 text-green-100">
+                      <p className="text-sm">
+                        Agendamento enviado com sucesso.
+                      </p>
+
+                      <div className="mt-2 flex flex-wrap items-center justify-center gap-2 text-center">
+                        <p className="text-lg font-bold">
+                          Código de acompanhamento: {codigoGerado}
                         </p>
 
-                          <div className="mt-2 flex flex-wrap items-center justify-center gap-2 text-center">      <p className="text-lg font-bold">
-                            Código de acompanhamento: {codigoGerado}
-                          </p>
-
-                          <button
-                            type="button"
-                            onClick={copiarCodigo}
-                            className="rounded-full border border-green-300/20 bg-white/10 px-2 py-1 text-xs font-medium text-green-50/90 transition hover:bg-white/20"
-                          >
-                            {copiado ? "✓" : "copiar"}
-                          </button>
-                        </div>
-
-                        <p className="mt-2 text-sm text-green-100/80">
-                          Guarde esse código para acompanhar o status do seu
-                          pedido no site.
-                        </p>
+                        <button
+                          type="button"
+                          onClick={copiarCodigo}
+                          className="rounded-full border border-green-300/20 bg-white/10 px-2 py-1 text-xs font-medium text-green-50/90 transition hover:bg-white/20"
+                        >
+                          {copiado ? "✓" : "copiar"}
+                        </button>
                       </div>
-                    )}
+
+                      <p className="mt-2 text-sm text-green-100/80">
+                        Guarde esse código para acompanhar o status do seu
+                        pedido no site.
+                      </p>
+                    </div>
+                  )}
 
                   {erroEnvio && (
                     <div className="mb-4 rounded-2xl border border-red-400/30 bg-red-500/10 p-4 text-red-200">
@@ -618,29 +636,32 @@ export default function AgendamentoPage() {
                         </button>
 
                         {mostrarCalendario && !loadingDatas && (
-  <div className="absolute left-0 right-0 top-[calc(100%+8px)] z-50 sm:right-auto sm:w-[300px]">
-    <div className="agendamento-calendario rounded-2xl border border-white/10 bg-[#071f69] p-3 shadow-2xl">
-      <DayPicker
-        mode="single"
-        locale={ptBR}
-        selected={dataSelecionadaDate}
-        onSelect={handleSelecionarData}
-        disabled={(date) => !dataEstaDisponivel(date)}
-        modifiers={{
-          disponivel: datasDisponiveisDate,
-        }}
-        modifiersClassNames={{
-          disponivel: "data-disponivel",
-          selected: "data-selecionada",
-          disabled: "data-bloqueada",
-        }}
-      />
-    </div>
-  </div>
-)}
-<p className="text-xs leading-relaxed text-yellow-200">
-                      Obs.: A data selecionada pode ser reajustada conforme a disponibilidade do grupo, devido a possíveis imprevistos.
-                    </p>
+                          <div className="absolute left-0 right-0 top-[calc(100%+8px)] z-50 sm:right-auto sm:w-[300px]">
+                            <div className="agendamento-calendario rounded-2xl border border-white/10 bg-[#071f69] p-3 shadow-2xl">
+                              <DayPicker
+                                mode="single"
+                                locale={ptBR}
+                                selected={dataSelecionadaDate}
+                                onSelect={handleSelecionarData}
+                                disabled={(date) => !dataEstaDisponivel(date)}
+                                modifiers={{
+                                  disponivel: datasDisponiveisDate,
+                                }}
+                                modifiersClassNames={{
+                                  disponivel: "data-disponivel",
+                                  selected: "data-selecionada",
+                                  disabled: "data-bloqueada",
+                                }}
+                              />
+                            </div>
+                          </div>
+                        )}
+
+                        <p className="text-xs leading-relaxed text-yellow-200">
+                          Obs.: A data selecionada pode ser reajustada conforme
+                          a disponibilidade do grupo, devido a possíveis
+                          imprevistos.
+                        </p>
 
                         <input type="hidden" value={data} required />
                       </div>
@@ -672,32 +693,41 @@ export default function AgendamentoPage() {
                         required
                       />
 
-                      <select
-                        value={tipoEvento}
-                        onChange={(e) => setTipoEvento(e.target.value)}
-                        className="rounded-xl bg-white/10 px-4 py-3 text-white outline-none"
+                      <input
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="rounded-xl bg-white/10 px-4 py-3 outline-none placeholder:text-white/60"
                         required
-                      >
-                        <option value="" className="text-black">
-                          Tipo de evento
-                        </option>
-                        <option value="Culto" className="text-black">
-                          Culto
-                        </option>
-                        <option value="Congresso" className="text-black">
-                          Congresso
-                        </option>
-                        <option value="Convenção" className="text-black">
-                          Convenção
-                        </option>
-                        <option value="Recital" className="text-black">
-                          Recital
-                        </option>
-                        <option value="Outros" className="text-black">
-                          Outros
-                        </option>
-                      </select>
+                      />
                     </div>
+
+                    <select
+                      value={tipoEvento}
+                      onChange={(e) => setTipoEvento(e.target.value)}
+                      className="rounded-xl bg-white/10 px-4 py-3 text-white outline-none"
+                      required
+                    >
+                      <option value="" className="text-black">
+                        Tipo de evento
+                      </option>
+                      <option value="Culto" className="text-black">
+                        Culto
+                      </option>
+                      <option value="Congresso" className="text-black">
+                        Congresso
+                      </option>
+                      <option value="Convenção" className="text-black">
+                        Convenção
+                      </option>
+                      <option value="Recital" className="text-black">
+                        Recital
+                      </option>
+                      <option value="Outros" className="text-black">
+                        Outros
+                      </option>
+                    </select>
 
                     <textarea
                       rows={3}
@@ -725,10 +755,11 @@ export default function AgendamentoPage() {
           </section>
         </main>
       </div>
-       <div className="flex justify-center pb-4 pt-6">
+
+      <div className="flex justify-center pb-1 pt-1">
         <Link
           href="/admin"
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-xs font-semibold text-white/20 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:border-white/20 hover:bg-white/10 hover:text-white/60"
+          className="flex h-7 w-7 items-center justify-center rounded-full border border-white/5 bg-white/5 text-xs font-semibold text-white/10 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:border-white/20 hover:bg-white/10 hover:text-white/60"
           aria-label="Admin"
           title="Admin"
         >
