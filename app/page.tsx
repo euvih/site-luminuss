@@ -228,9 +228,6 @@ const aceitosDoMes = data
           alt="Logo Lúminuss"
           className="h-12 w-12 rounded-full object-cover cursor-pointer"
         />
-        <span className="text-xl font-bold tracking-wide transition duration-300 hover:text-[#F4C021] hover:drop-shadow-[0_0_8px_#F4C021]">
-          Lúminuss
-        </span>
       </Link>
 
       <div className="hidden gap-6 md:flex">
