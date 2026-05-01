@@ -362,7 +362,7 @@ export default function AdminPage() {
 
   const CODIGO_CORRETO = "LUMADMIN2026";
   const URL_SCRIPT =
-    "https://script.google.com/macros/s/AKfycbzfBROjxwP4NMc4TaHmEs9OFDwdEqy8rwzbU1DjtlbXsYAUCMAwFEuTiz4jMSr7H6tIBQ/exec";
+    "https://script.google.com/macros/s/AKfycbwJzugY9yOD_EJd4Szh95zI7vNQ3LrYnV6RvR61Xt4KfrWUtvcXDQ6Wu7u8D6GtB6LDvg/exec";
   const URL_OPENSHEET =
     "https://opensheet.elk.sh/1_EsxHvUXbh8VQnmCLOCoIbvoC1VGtyl3YMr9TiSsgD4/agendamentos";
 

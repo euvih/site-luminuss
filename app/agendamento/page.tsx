@@ -227,8 +227,8 @@ export default function AgendamentoPage() {
 
     try {
       const resposta = await fetch(
-        "https://script.google.com/macros/s/AKfycbzfBROjxwP4NMc4TaHmEs9OFDwdEqy8rwzbU1DjtlbXsYAUCMAwFEuTiz4jMSr7H6tIBQ/exec",
-        {
+        "https://script.google.com/macros/s/AKfycbwJzugY9yOD_EJd4Szh95zI7vNQ3LrYnV6RvR61Xt4KfrWUtvcXDQ6Wu7u8D6GtB6LDvg/exec",
+                {
           method: "POST",
           body: JSON.stringify(dados),
         }
@@ -244,7 +244,7 @@ export default function AgendamentoPage() {
         return;
       }
 
-      const numero = "5584998512666";
+      const numero = "";
 
       const mensagem = encodeURIComponent(
         `Olá! Gostaria de solicitar um agendamento.\n\n` +
