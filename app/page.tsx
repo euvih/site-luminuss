@@ -395,7 +395,7 @@ const aceitosDoMes = data
         </div>
       </section>
 
-      <section className="bg-[#f7f9ff] px-6 py-20">
+      <section className="bg-[#ebeffc] px-6 py-20">
         <div className="mx-auto max-w-4xl">
           <div className="mb-12 text-center">
             <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#F4C021]">
@@ -450,7 +450,7 @@ const aceitosDoMes = data
 
       <section
         id="sobre"
-        className="bg-[#e2e9ff] px-6 py-20 min-h-[80vh] md:min-h-screen flex items-center justify-center"
+        className="bg-[#d7e0ff] px-6 py-20 min-h-[80vh] md:min-h-screen flex items-center justify-center"
       >
         <div className="mx-auto max-w-5xl text-center px-4 space-y-6">
           <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#d4a106]">
@@ -473,7 +473,7 @@ const aceitosDoMes = data
                 } transition-transform duration-700`}
               />
 
-              <span className="relative z-10">
+              <span className="relative z-10 " >
                 CONHECER ✨
               </span>
             </Link>
@@ -484,7 +484,7 @@ const aceitosDoMes = data
 
       <section
   id="recital"
-  className="relative overflow-hidden bg-[#001369] px-6 py-24 text-white"
+  className="relative overflow-hidden bg-[#000b3d] px-6 py-24 text-white"
 >
   <div className="absolute inset-0">
     <div className="absolute -top-20 left-10 h-72 w-72 rounded-full bg-[#9b4b8a]/20 blur-3xl" />
@@ -549,11 +549,12 @@ const aceitosDoMes = data
         />
         <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-t from-[#070736]/70 via-transparent to-transparent" />
       </div>
-      <div className="mt-8 flex flex-wrap justify-center gap-4">        <Link
+      <div className="mt-8 flex flex-wrap justify-center gap-4">        
+        <Link
           href="/recital"
-          className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-[#4e2ce4] via-[#240caf] to-[#4e2ce4] px-7 py-3 font-semibold text-white shadow-[0_0_30px_rgba(155,75,138,0.35)] transition duration-300 hover:scale-105"
+          className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-[#981ee9] via-[#d666da] to-[#981ee9] px-7 py-3 font-semibold text-white shadow-[0_0_30px_rgba(155,75,138,0.35)] transition duration-300 hover:scale-105"
         >
-          <span className="absolute inset-0 translate-x-[-120%] bg-gradient-to-r from-transparent via-white/25 to-transparent transition duration-700 group-hover:translate-x-[120%]" />
+          <span className="absolute inset-0 translate-x-[-120%] bg-gradient-to-r from-transparent via-white/10 to-transparent transition duration-700 group-hover:translate-x-[120%]" />
           <span className="relative z-10">Sobre o recital</span>
         </Link>
       </div>
@@ -561,10 +562,10 @@ const aceitosDoMes = data
   </div>
 </section>
 
-      <section id="integrantes" className="bg-[#edf1fd] px-6 py-24">
+      <section id="integrantes" className="bg-[#bfcfff] px-6 py-24">
         <div className="mx-auto max-w-6xl">
           <div className="mb-12 text-center">
-            <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#F4C021]">
+            <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#e4ab00]">
               Integrantes
             </p>
             <h2 className="text-4xl font-bold">Nossa equipe</h2>
@@ -599,7 +600,7 @@ const aceitosDoMes = data
         </div>
       </section>
 
-      <section id="galeria" className="bg-[#e2e5ec] px-6 py-24">
+      <section id="galeria" className="bg-[#cadaff] px-6 py-24">
         <div className="mx-auto max-w-6xl">
           <div className="mb-12 text-center">
             <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#e9b310]">
