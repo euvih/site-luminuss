@@ -10,6 +10,7 @@ type Agendamento = {
   igreja: string;
   responsavel: string;
   whatsapp: string;
+  email:string,
   local: string;
   data: string;
   hora: string;
@@ -244,9 +245,13 @@ function CardAgendamento({
       </div>
 
       <div className="mt-1 grid grid-cols-2 gap-1">
-        <div className="rounded-xl bg-black/20 p-3">
-          <p className="text-xs text-white/60">WhatsApp</p>
-          <p className="mt-0.5 text-sm font-medium">{item.whatsapp || "-"}</p>
+        
+
+        <div className="col-span-2 rounded-xl bg-black/20 p-3">
+          <p className="text-xs text-white/60">Email</p>
+          <p className="mt-0.5 break-words text-sm font-medium">
+            {item.email || "-"}
+          </p>
         </div>
 
         <div className="rounded-xl bg-black/20 p-3">
@@ -257,6 +262,11 @@ function CardAgendamento({
         <div className="rounded-xl bg-black/20 p-3">
           <p className="text-xs text-white/60">Data</p>
           <p className="mt-0.5 text-sm font-medium">{item.data || "-"}</p>
+        </div>
+
+        <div className="rounded-xl bg-black/20 p-3">
+          <p className="text-xs text-white/60">WhatsApp</p>
+          <p className="mt-0.5 text-sm font-medium">{item.whatsapp || "-"}</p>
         </div>
 
         <div className="rounded-xl bg-black/20 p-3">
@@ -595,6 +605,7 @@ export default function AdminPage() {
         item.codigo,
         item.local,
         item.whatsapp,
+        item.email,
         item.data,
         item.observacoes,
       ]
@@ -729,7 +740,7 @@ export default function AdminPage() {
       </main>
     );
   }
-
+ 
   return (
     <main className="min-h-screen bg-[#061B5C] px-6 py-24 text-white">
       <div className="mx-auto max-w-6xl">
