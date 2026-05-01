@@ -562,7 +562,7 @@ const aceitosDoMes = data
   </div>
 </section>
 
-      <section id="integrantes" className="bg-[#bfcfff] px-6 py-24">
+      <section id="integrantes" className="bg-[#dae3ff] px-6 py-24">
         <div className="mx-auto max-w-6xl">
           <div className="mb-12 text-center">
             <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#e4ab00]">

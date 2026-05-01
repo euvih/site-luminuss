@@ -24,7 +24,7 @@ export default function RecitalPage() {
   }, []);
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#cdc9f8] via-[#2a1f4a] to-[#3a2c66] px-6 pb-20 pt-20 text-[#4B2C6F] md:pt-32">
+    <main className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#e6e4ff] via-[#2a1f4a] to-[#3a2c66] px-6 pb-20 pt-20 text-[#4B2C6F] md:pt-32">
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         <div className="dream-mist dream-mist-1" />
         <div className="dream-mist dream-mist-2" />
@@ -50,14 +50,14 @@ export default function RecitalPage() {
       </div>
 
       <div className="pointer-events-none absolute inset-0 z-0">
-        <div className="absolute -top-24 left-0 h-[320px] w-[320px] rounded-full bg-[#d9b8ff]/40 blur-3xl" />
+        <div className="absolute -top-24 left-0 h-[320px] w-[320px] rounded-full bg-[#d9b8ff]/10 blur-3xl" />
         <div className="absolute right-[-40px] top-[18%] h-[300px] w-[300px] rounded-full bg-[#c9d8ff]/40 blur-3xl" />
         <div className="absolute bottom-[-60px] left-[25%] h-[280px] w-[280px] rounded-full bg-[#f3d4ff]/50 blur-3xl" />
       </div>
 
       <Link
         href="/#recital"
-        className="fixed left-4 top-4 z-50 inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#ffffffaa] bg-white/55 text-[#6b3fa0] shadow-lg backdrop-blur-md transition hover:scale-110 hover:bg-[#cfaeff] hover:text-[#4B2C6F] md:left-6 md:top-24 md:h-12 md:w-12"
+        className="fixed left-4 top-4 z-50 inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#ffffffaa] bg-white/1 text-[#5b318f] shadow-lg backdrop-blur-md transition hover:scale-110 hover:bg-[#cfaeff] hover:text-[#4B2C6F] md:left-6 md:top-24 md:h-12 md:w-12"
       >
         <FaArrowLeft className="text-sm md:text-lg" />
       </Link>
@@ -71,7 +71,7 @@ export default function RecitalPage() {
 
             <h1 className="text-5xl font-bold leading-tight md:text-6xl">
               Recital
-              <span className="block bg-gradient-to-r from-[#8555d8] via-[#b890fd] to-[#a45de6] bg-clip-text text-transparent drop-shadow-[0_0_18px_rgba(180,130,255,0.28)]">
+              <span className="block bg-gradient-to-r from-[#6644a0] via-[#bba8dd] to-[#9753d6] bg-clip-text text-transparent drop-shadow-[0_0_18px_rgba(180,130,255,0.28)]">
                 Sonhos
               </span>
             </h1>
