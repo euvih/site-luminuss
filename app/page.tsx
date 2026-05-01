@@ -336,14 +336,14 @@ const aceitosDoMes = data
               <div className="flex flex-col items-start gap-4">
                 <Link
                   href="/agendamento"
-                  className="rounded-full bg-[#e9ebfc] mt-5 px-6 py-3 font-semibold text-[#061B5C] transition hover:scale-105"
+                  className="rounded-full bg-[#e9ebfc] mt-5 px-4 py-2 font-semibold text-[#061B5C] transition hover:scale-105"
                 >
                   Solicitar agendamento
                 </Link>
 
                 <a
                   href="#sobre"
-                  className="rounded-full border border-white px-6 py-3 font-semibold text-white transition hover:bg-white hover:text-[#061B5C]"
+                  className="rounded-full border border-white px-4 py-2 font-semibold text-white transition hover:bg-white hover:text-[#061B5C]"
                 >
                   Conhecer o grupo
                 </a>
