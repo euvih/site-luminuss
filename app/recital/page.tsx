@@ -24,7 +24,7 @@ export default function RecitalPage() {
   }, []);
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#e6e4ff] via-[#2a1f4a] to-[#3a2c66] px-6 pb-20 pt-20 text-[#4B2C6F] md:pt-32">
+    <main className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#f2f1ff] via-[#2a1f4a] to-[#3a2c66] px-6 pb-20 pt-20 text-[#4B2C6F] md:pt-32">
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         <div className="dream-mist dream-mist-1" />
         <div className="dream-mist dream-mist-2" />
