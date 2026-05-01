@@ -224,7 +224,7 @@ const aceitosDoMes = data
     <div className="flex items-center justify-between">
       <Link href="#inicio" className="flex items-center gap-3">
         <img
-          src="/logo.jpeg"
+          src="/logo-transparente.png"
           alt="Logo Lúminuss"
           className="h-12 w-12 rounded-full object-cover cursor-pointer"
         />
@@ -293,7 +293,7 @@ const aceitosDoMes = data
         <a
           href="#integrantes"
           onClick={() => setMenuAberto(false)}
-          className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
+          className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#d1a00d]"
         >
           Integrantes
         </a>
@@ -461,7 +461,7 @@ const aceitosDoMes = data
           <div className="mt-10" ref={botaoSobreRef}>
             <Link
               href="/sobre"
-              className={`group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-[#061B5C] px-8 py-4 font-semibold text-white shadow-[0_10px_30px_rgba(6,27,92,0.28)] transition-all duration-300 hover:-translate-y-1 hover:scale-[1.03] hover:bg-[#0a2a8a] hover:shadow-[0_16px_40px_rgba(6,27,92,0.38)] active:scale-[0.98] ${
+              className={`group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-[#061B5C] px-6 py-3 font-semibold text-white shadow-[0_10px_30px_rgba(6,27,92,0.28)] transition-all duration-300 hover:-translate-y-1 hover:scale-[1.03] hover:bg-[#0a2a8a] hover:shadow-[0_16px_40px_rgba(6,27,92,0.38)] active:scale-[0.98] ${
                 animarBotaoSobre ? "animate-[pulse_0.9s_ease-out_1]" : ""
               }`}
             >
