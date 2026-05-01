@@ -324,7 +324,7 @@ const aceitosDoMes = data
                 Ministério
               </p>
 
-              <h1 className="mb-6 text-5xl font-bold leading-tight text-[#f0f6ff] drop-shadow-[0_0_8px_#3b82f6] transition duration-300 hover:text-[#28bbf5] hover:drop-shadow-[0_0_30px_#60a5fa] md:text-6xl">
+              <h1 className=" mb-6 text-5xl font-bold leading-tight text-[#f0f6ff] drop-shadow-[0_0_8px_#3b82f6] transition duration-300 hover:text-[#28bbf5] hover:drop-shadow-[0_0_30px_#60a5fa] md:text-6xl">
                 Lúminuss
               </h1>
 
@@ -336,7 +336,7 @@ const aceitosDoMes = data
               <div className="flex flex-col items-start gap-4">
                 <Link
                   href="/agendamento"
-                  className="rounded-full bg-[#e9ebfc] mt-5 px-4 py-2 font-semibold text-[#061B5C] transition hover:scale-105"
+                  className="rounded-full bg-[#e9ebfc] px-4 py-2 font-semibold text-[#061B5C] transition hover:scale-105"
                 >
                   Solicitar agendamento
                 </Link>
