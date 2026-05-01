@@ -658,9 +658,8 @@ export default function AgendamentoPage() {
                         )}
 
                         <p className="text-xs leading-relaxed text-yellow-200">
-                          Obs.: A data selecionada pode ser reajustada conforme
-                          a disponibilidade do grupo, devido a possíveis
-                          imprevistos.
+                          Obs.: A sua data selecionada pode sofrer remanejamento conforme
+                          a disponibilidade do grupo.
                         </p>
 
                         <input type="hidden" value={data} required />
@@ -759,7 +758,7 @@ export default function AgendamentoPage() {
       <div className="flex justify-center pb-1 pt-1">
         <Link
           href="/admin"
-          className="flex h-7 w-7 items-center justify-center rounded-full border border-white/5 bg-white/5 text-xs font-semibold text-white/10 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:border-white/20 hover:bg-white/10 hover:text-white/60"
+          className="flex h-7 w-7 items-center justify-center rounded-full border border-white/5 bg-white/1 text-xs font-semibold text-white/10 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:border-white/20 hover:bg-white/10 hover:text-white/60"
           aria-label="Admin"
           title="Admin"
         >
