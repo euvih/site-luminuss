@@ -211,111 +211,11 @@ const aceitosDoMes = data
 
   return (
     <main className="bg-white text-[#061B5C]">
-      <header
-  className={`fixed top-0 left-0 z-50 w-full transition-all duration-300 
-  ${esconderHeaderMobile ? "hidden md:flex" : ""}
-  ${
-    scrollAtivo
-      ? "bg-transparent backdrop-blur-[0.1px] border-b border-white/10"
-      : "bg-transparent border-b border-transparent"
-  }`}
->
-  <nav className="mx-auto max-w-6xl px-4 py-4 text-white">
-    <div className="flex items-center justify-between">
-      <Link href="#inicio" className="flex items-center gap-3">
-        <img
-          src="/logo-transparente.png"
-          alt="Logo Lúminuss"
-          className="h-12 w-12 rounded-full object-cover cursor-pointer"
-        />
-      </Link>
-
-      <div className="hidden gap-6 md:flex">
-        <a href="#inicio" className="transition hover:text-[#F4C021]">
-          Início
-        </a>
-        <a href="#sobre" className="transition hover:text-[#F4C021]">
-          Sobre
-        </a>
-        <a href="#recital" className="transition hover:text-[#F4C021]">
-          Recital
-        </a>
-        <a href="#integrantes" className="transition hover:text-[#F4C021]">
-          Integrantes
-        </a>
-        <a href="#galeria" className="transition hover:text-[#F4C021]">
-          Galeria
-        </a>
-        <a href="#doacoes" className="transition hover:text-[#F4C021]">
-          Doações
-        </a>
-      </div>
-
-      <button
-        type="button"
-        onClick={() => setMenuAberto(!menuAberto)}
-        className="rounded-lg p-2 transition hover:bg-white/10 md:hidden"
-        aria-label={menuAberto ? "Fechar menu" : "Abrir menu"}
-      >
-        {menuAberto ? <HiOutlineX size={28} /> : <HiOutlineMenu size={28} />}
-      </button>
-    </div>
-
-    <div
-      className={`overflow-hidden transition-all duration-300 md:hidden ${
-        menuAberto ? "max-h-96 pt-4 opacity-100" : "max-h-0 opacity-0"
-      }`}
-    >
-        <div className="mt-3 rounded-2xl border border-white/10 bg-[#061B5C] p-3 shadow-lg">        <a
-          href="#inicio"
-          onClick={() => setMenuAberto(false)}
-          className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
-        >
-          Início
-        </a>
-        <a
-          href="#sobre"
-          onClick={() => setMenuAberto(false)}
-          className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
-        >
-          Sobre
-        </a>
-         <a
-          href="#recital"
-          onClick={() => setMenuAberto(false)}
-          className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
-        >
-          Recital
-        </a>
-        <a
-          href="#integrantes"
-          onClick={() => setMenuAberto(false)}
-          className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#d1a00d]"
-        >
-          Integrantes
-        </a>
-        <a
-          href="#galeria"
-          onClick={() => setMenuAberto(false)}
-          className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
-        >
-          Galeria
-        </a>
-        <a
-          href="#doacoes"
-          onClick={() => setMenuAberto(false)}
-          className="block rounded-xl px-4 py-3 transition hover:bg-white/10 hover:text-[#F4C021]"
-        >
-          Doações
-        </a>
-      </div>
-    </div>
-  </nav>
-</header>
+      
 
       <section
         id="inicio"
-        className="relative min-h-screen overflow-hidden bg-[#061B5C] pt-[150px] text-white md:pt-[89px]"
+        className="relative min-h-screen overflow-hidden bg-[#061B5C] pt-[140px] text-white md:pt-[89px]"
       > 
         <div className="relative z-10 grid min-h-[calc(100vh-89px)] grid-cols-1 md:grid-cols-2">
           <div className="flex items-center px-6 md:px-16">
@@ -392,12 +292,17 @@ const aceitosDoMes = data
         </div>
       </section>
 
-      <section className="bg-[#ebeffc] px-6 py-20">
+      <section
+  id="agenda"
+  className="scroll-mt-24 bg-[#ebeffc] px-6 py-24 md:min-h-[70vh]"
+>
+        
         <div className="mx-auto max-w-4xl">
           <div className="mb-12 text-center">
             <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#F4C021]">
               Agenda
             </p>
+ 
 
             <h2 className="text-4xl font-bold text-[#061B5C]">
               Agenda do mês
@@ -409,7 +314,8 @@ const aceitosDoMes = data
               Ainda não há eventos aceitos para este mês.
             </p>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">              {agenda.map((evento, index) => {
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">              
+            {agenda.map((evento, index) => {
                 const dataEvento = evento.dataConvertida;
                 if (!dataEvento) return null;
 
@@ -458,7 +364,8 @@ const aceitosDoMes = data
           <div className="mt-10" ref={botaoSobreRef}>
             <Link
               href="/sobre"
-              className={`group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-[#061B5C] px-6 py-3 font-semibold text-white shadow-[0_10px_30px_rgba(6,27,92,0.28)] transition-all duration-300 hover:-translate-y-1 hover:scale-[1.03] hover:bg-[#0a2a8a] hover:shadow-[0_16px_40px_rgba(6,27,92,0.38)] active:scale-[0.98] ${
+              className={`group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-[#061B5C] px-6 py-3 font-semibold text-white shadow-[0_10px_30px_rgba(6,27,92,0.28)] transition-all duration-300 hover:-translate-y-1 hover:scale-[1.03] hover:bg-[#0a2a8a] hover:shadow-[0_16px_40px_rgba(6,27,92,0.38)] active:scale-[0.98] 
+                ${
                 animarBotaoSobre ? "animate-[pulse_0.9s_ease-out_1]" : ""
               }`}
             >
@@ -471,8 +378,8 @@ const aceitosDoMes = data
               />
 
               <span className="relative z-10 " >
-                CONHECER ✨
-              </span>
+                Conhecer              
+                </span>
             </Link>
           </div>
         </div>
@@ -549,7 +456,7 @@ const aceitosDoMes = data
       <div className="mt-8 flex flex-wrap justify-center gap-4">        
         <Link
           href="/recital"
-          className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-[#981ee9] via-[#d666da] to-[#981ee9] px-7 py-3 font-semibold text-white shadow-[0_0_30px_rgba(155,75,138,0.35)] transition duration-300 hover:scale-105"
+          className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-[#61089c] via-[#951999] to-[#61089c] px-7 py-3 font-semibold text-white shadow-[0_0_30px_rgba(155,75,138,0.35)] transition duration-300 hover:scale-105"
         >
           <span className="absolute inset-0 translate-x-[-120%] bg-gradient-to-r from-transparent via-white/10 to-transparent transition duration-700 group-hover:translate-x-[120%]" />
           <span className="relative z-10">Sobre o recital</span>
@@ -603,7 +510,9 @@ const aceitosDoMes = data
             <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#e9b310]">
               Galeria
             </p>
-            <h2 className="text-4xl font-bold">Fazendo história...</h2>
+            <h2 className="text-4xl font-bold">Fazendo história...
+              
+            </h2>
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
