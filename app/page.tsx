@@ -328,7 +328,7 @@ const aceitosDoMes = data
                 Lúminuss
               </h1>
 
-              <p className="mb-8 max-w-xl text-lg leading-8 text-white/90">
+              <p className="mb-8 max-w-xl text-base leading-8 text-white/90">
   Levando louvor, adoração e mensagens de esperança às igrejas por
   meio da música.
 </p>
