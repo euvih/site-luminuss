@@ -336,7 +336,7 @@ const aceitosDoMes = data
               <div className="flex flex-col items-start gap-4">
                 <Link
                   href="/agendamento"
-                  className="rounded-full bg-[#e9ebfc] mt-10 px-6 py-3 font-semibold text-[#061B5C] transition hover:scale-105"
+                  className="rounded-full bg-[#e9ebfc] mt-5 px-6 py-3 font-semibold text-[#061B5C] transition hover:scale-105"
                 >
                   Solicitar agendamento
                 </Link>
