@@ -26,6 +26,11 @@ function StatusBadge({ status }: { status: string }) {
     texto = "Recusado";
   }
 
+  if (valor === "ajustar") {
+  classes = "bg-blue-700/20 text-blue-300 border border-blue-400/30";
+  texto = "Ajustar";
+  }
+
   return (
     <span className={`rounded-full px-3 py-1 text-sm font-semibold ${classes}`}>
       {texto}

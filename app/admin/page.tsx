@@ -71,6 +71,11 @@ function StatusBadge({ status }: { status: string }) {
     texto = "Recusado";
   }
 
+  if (valor === "ajustar") {
+  classes = "bg-blue-500/20 text-blue-300 border border-blue-400/30";
+  texto = "Ajustar";
+  }
+
   return (
     <span className={`rounded-full px-3 py-1 text-sm font-semibold ${classes}`}>
       {texto}
@@ -315,12 +320,16 @@ function CardAgendamento({
           </button>
         )}
 
+        {item.status !== "ajustar" && (
         <button
-          onClick={() => atualizarStatus(item.id, "remanejar")}
-          className="rounded-lg bg-blue-700 px-3 py-1 text-white hover:bg-yellow-600"
+          onClick={() => atualizarStatus(String(item.id), "ajustar")}
+          disabled={salvandoEste || bloqueado}
+          className="rounded-xl bg-blue-700 px-3 py-1.5 text-sm font-semibold text-white transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-40"
         >
-          Ajustar
+          {salvandoEste ? "Salvando..." : "Ajustar"}
         </button>
+         )}
+        
 
         <button
           onClick={() => apagarEvento(String(item.id))}
