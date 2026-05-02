@@ -299,12 +299,12 @@ function CardAgendamento({
         )}
       </div>
 
-      <div className="mt-3 flex flex-wrap gap-2">
+      <div className="mt-3 grid grid-cols-4 gap-2">
         {item.status !== "aceito" && (
           <button
             onClick={() => atualizarStatus(String(item.id), "aceito")}
             disabled={salvandoEste || bloqueado}
-            className="rounded-xl bg-green-500 px-3 py-1.5 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+            className="rounded-xl bg-green-500 px-2 py-1 text-xs font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
           >
             {salvandoEste ? "Salvando..." : "Aceitar"}
           </button>
