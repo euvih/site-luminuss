@@ -315,15 +315,12 @@ function CardAgendamento({
           </button>
         )}
 
-        {item.status !== "pendente" && (
-          <button
-            onClick={() => atualizarStatus(String(item.id), "pendente")}
-            disabled={salvandoEste || bloqueado}
-            className="rounded-xl bg-yellow-500 px-3 py-1.5 text-sm font-semibold text-[#061B5C] transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
-          >
-            {salvandoEste ? "Salvando..." : "Voltar para pendente"}
-          </button>
-        )}
+        <button
+          onClick={() => atualizarStatus(item.id, "remanejar")}
+          className="rounded-lg bg-blue-700 px-3 py-1 text-white hover:bg-yellow-600"
+        >
+          Ajustar
+        </button>
 
         <button
           onClick={() => apagarEvento(String(item.id))}
