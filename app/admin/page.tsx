@@ -271,8 +271,15 @@ function CardAgendamento({
 
         <div className="rounded-xl bg-black/20 p-3">
           <p className="text-xs text-white/60">WhatsApp</p>
-          <p className="mt-0.5 text-sm font-medium">{item.whatsapp || "-"}</p>
-        </div>
+          <a
+            href={`https://wa.me/${item.whatsapp.replace(/\D/g, "")}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-0.5 block text-sm font-medium text-green-400 hover:underline"
+          >
+            {item.whatsapp || "-"}
+          </a>        
+          </div>
 
         <div className="rounded-xl bg-black/20 p-3">
           <p className="text-xs text-white/60">Hora</p>
