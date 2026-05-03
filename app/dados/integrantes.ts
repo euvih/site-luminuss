@@ -75,7 +75,7 @@ export const categorias: Categoria[] = [
         funcao: "Tenor",
         foto: "/Guilherme.jpeg",
         sobre:
-          "Filho do diretor Reginaldo, Guilherme participa do grupo desde novo, hoje com 19 anos estuda odontologia e ama fazer Jiu-Jitsu.",
+          "Guilherme participa do grupo desde novo, hoje com 19 anos estuda odontologia e ama fazer Jiu-Jitsu.",
         instagram: "https://instagram.com/",
         youtube: "",
       },

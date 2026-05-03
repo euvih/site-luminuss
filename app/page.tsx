@@ -618,8 +618,13 @@ const aceitosDoMes = data
         <p className="text-sm text-white/80">© 2026 Lúminuss</p>
 
         <p className="mt-1 text-sm text-white/30">
-          Desenvolvido com <span className="heart-beat text-red-500">❤️</span>{" "}
-          por Vitória Kelly
+          Desenvolvido com ❤️ por{" "}
+<Link
+  href="/integrantes/perfil/vitoria?categoria=midia"
+  className="transition hover:text-[#F4C021]"
+>
+  Vitória Kelly
+</Link>
         </p>
       </footer>
     </main>

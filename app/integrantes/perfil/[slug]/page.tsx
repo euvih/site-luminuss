@@ -17,8 +17,11 @@ export default async function PerfilIntegrantePage({
 }: Props) {
   const { slug } = await params;
   const categoria = searchParams?.categoria;
+const categoriaDoIntegrante = categorias.find((cat) =>
+  cat.integrantes.some((item) => item.slug === slug)
+);
 
-  const integrante = categorias
+const mostrarSolos = categoriaDoIntegrante?.slug === "vocais";  const integrante = categorias
     .flatMap((categoria) => categoria.integrantes)
     .find((item) => item.slug === slug);
 
@@ -137,16 +140,18 @@ export default async function PerfilIntegrantePage({
         </div>
       )}
 
-      <div>
-        <h2 className="mb-4 text-2xl font-semibold">
-          SOLOS
-        </h2>
+      {mostrarSolos && (
+  <div>
+    <h2 className="mb-4 text-2xl font-semibold">
+      SOLOS
+    </h2>
 
-        <ul className="list-disc space-y-2 pl-5 text-white/80">
-          <li>Adicionar solo aqui</li>
-          <li>Adicionar música aqui</li>
-        </ul>
-      </div>
+    <ul className="list-disc space-y-2 pl-5 text-white/80">
+      <li>Adicionar solo aqui</li>
+      <li>Adicionar música aqui</li>
+    </ul>
+  </div>
+)}
     </aside>
 
     {/* BIOGRAFIA */}
