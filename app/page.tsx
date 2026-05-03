@@ -353,7 +353,7 @@ const aceitosDoMes = data
 
       <section
         id="sobre"
-        className="bg-[#d7e0ff] px-6 py-20 min-h-[80vh] md:min-h-screen flex items-center justify-center"
+        className="bg-[#c5d2ff] px-6 py-20 min-h-[80vh] md:min-h-screen flex items-center justify-center"
       >
         <div className="mx-auto max-w-5xl text-center px-4 space-y-6">
           <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#f3b701]">
@@ -426,7 +426,7 @@ const aceitosDoMes = data
 
   <div className="relative mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-2">
     <div>
-      <p className="mb-3 text-sm uppercase tracking-[0.35em] text-[#dcb0e4]">
+      <p className="mb-3 text-sm uppercase tracking-[0.35em] text-[#d897e4]">
         Recital 2026
       </p>
 
@@ -438,9 +438,9 @@ const aceitosDoMes = data
       </h2>
 
       <p className="mt-6 max-w-xl text-lg leading-8 text-white/80">
-        O recital anual do Ministério Lúminuss, realizado em comemoração ao
-        aniversário do grupo. Em 2026, a temática será{" "}
-        <span className="font-semibold text-[#af7dff]">Sonhos</span>
+        Recital anual do Ministério Lúminuss, realizado em comemoração ao
+        {" "} <span className="font-semibold text-[#af7dff]">aniversário</span> do grupo. Comemore conosco!
+        
       </p>
     </div>
 
@@ -456,7 +456,7 @@ const aceitosDoMes = data
       <div className="mt-8 flex flex-wrap justify-center gap-4">        
         <Link
           href="/recital"
-          className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-[#61089c] via-[#951999] to-[#61089c] px-7 py-3 font-semibold text-white shadow-[0_0_30px_rgba(155,75,138,0.35)] transition duration-300 hover:scale-105"
+          className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-[#61089c] via-[#841999] to-[#61089c] px-7 py-3 font-semibold text-white shadow-[0_0_30px_rgba(155,75,138,0.35)] transition duration-300 hover:scale-105"
         >
           <span className="absolute inset-0 translate-x-[-120%] bg-gradient-to-r from-transparent via-white/10 to-transparent transition duration-700 group-hover:translate-x-[120%]" />
           <span className="relative z-10">Sobre o recital</span>
