@@ -13,7 +13,7 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed left-0 top-0 z-50 w-full border-b border-white/10 bg-[#061B5C]/95 backdrop-blur ${
+      className={`fixed left-0 top-0 z-50 w-full border-b border-white/10 bg-[#061B5C]/15 backdrop-blur ${
         esconderNoMobile ? "hidden" : ""
       }`}
     >
