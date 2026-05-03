@@ -316,7 +316,7 @@ export const categorias: Categoria[] = [
         slug: "vitoria",
         nome: "Vitória",
         funcao: "Mídia",
-        foto: "/vitoria.jpeg",
+        foto: "/vitoriaok.jpeg",
         sobre:
           "Vitória atua na equipe de mídia, colaborando com divulgação, identidade visual e produção de conteúdo.",
         instagram: "https://instagram.com/",

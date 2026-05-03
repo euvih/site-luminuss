@@ -89,6 +89,13 @@ useEffect(() => {
               um universo de sensações, inspirado na delicadeza, na profundidade
               e na beleza dos sonhos.
             </p>
+            <div className="col-span-2 mt-8 flex justify-center">
+                    <img
+                    src="/paletarecital.jpeg"
+                    alt="Paleta do recital"
+                    className="mx-auto h-50 w-auto rounded-xl object-cover"
+                  />
+                </div>
 
             <div className="mt-8 grid grid-cols-2 gap-4">
               <div className="rounded-3xl border border-[#e0d4ff] bg-white/60 p-5 shadow-[0_10px_30px_rgba(180,130,255,0.10)] backdrop-blur-md">
@@ -108,12 +115,13 @@ useEffect(() => {
                   2026
                 </p>
               </div>
+                
             </div>
           </div>
         </div>
       </section>
 
-      <section className="relative z-10 mx-auto mt-15 max-w-6xl">
+      <section className="relative z-10 mx-auto mt-8 max-w-6xl">
         <div className="grid gap-6 md:grid-cols-3">
           <div className="rounded-3xl border border-[#f3ebff] bg-white/60 p-6 shadow-[0_10px_30px_rgba(180,130,255,0.10)] backdrop-blur-md">
             <h2 className="text-xl font-semibold text-[#8c63c5]">

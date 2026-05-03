@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { categorias } from "@/app/dados/integrantes";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaInstagram, FaYoutube } from "react-icons/fa";
 
 type Props = {
   params: Promise<{
@@ -39,85 +39,130 @@ export default async function PerfilIntegrantePage({
   const linkVoltar = categoria ? `/integrantes/${categoria}` : "/#integrantes";
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#061B5C] px-6 pb-20 pt-28 text-white md:pt-32">
+    <main className="relative min-h-screen overflow-hidden bg-[#f4f1ea] text-[#061B5C]">
       <Link
         href={linkVoltar}
-        className="fixed left-4 top-20 z-50 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-lg backdrop-blur-md transition hover:scale-110 hover:bg-[#F4C021]/80 hover:text-[#061B5C] md:left-6 md:top-24 md:h-12 md:w-12"
+        className="fixed left-4 top-20 z-50 inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#061B5C]/15 bg-white/60 text-[#061B5C] shadow-lg backdrop-blur-md transition hover:scale-110 hover:bg-[#F4C021] md:left-6 md:top-24 md:h-12 md:w-12"
       >
         <FaArrowLeft className="text-sm md:text-lg" />
       </Link>
 
-      <div className="absolute inset-0 z-0">
-        <div className="absolute -top-40 -left-40 h-[400px] w-[400px] rounded-full bg-blue-400/20 blur-3xl"></div>
-        <div className="absolute top-[40%] right-[-150px] h-[350px] w-[350px] rounded-full bg-purple-300/20 blur-3xl"></div>
-        <div className="absolute -bottom-30 left-[30%] h-[300px] w-[300px] rounded-full bg-blue-300/20 blur-3xl"></div>
-      </div>
-
-      <div className="relative mx-auto mt-6 max-w-4xl md:mt-8">
-        <div className="rounded-3xl bg-white/10 p-8 backdrop-blur-md">
-          <div className="mx-auto mb-6 h-40 w-40 overflow-hidden rounded-full bg-[#0b2a87]">
-            {integrante.foto ? (
-              <img
-                src={integrante.foto}
-                alt={integrante.nome}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center text-4xl font-bold text-[#F4C021]">
-                {integrante.nome.charAt(0).toUpperCase()}
-              </div>
-            )}
+      <section className="relative min-h-[62vh] overflow-hidden bg-[#f4f1ea]">
+        {integrante.foto ? (
+          <img
+            src={integrante.foto}
+            alt={integrante.nome}
+            className="absolute inset-0 h-full w-full object-cover object-top"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center bg-[#f4f1ea] text-8xl font-bold text-[#061B5C]/15">
+            {integrante.nome.charAt(0).toUpperCase()}
           </div>
+        )}
 
-          <h1 className="text-center text-4xl font-bold">
-            {integrante.nome}
-          </h1>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/10 to-[#061B5C]/85" />
 
-          <p className="mt-2 text-center text-lg text-white/80">
-            {integrante.funcao}
-          </p>
+        <div className="absolute bottom-0 left-0 right-0 px-6 pb-10 pt-32">
+          <div className="mx-auto max-w-5xl">
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.35em] text-[#F4C021]">
+              Ministério Lúminuss
+            </p>
 
-          <div className="mt-8 text-center">
-            <h2 className="text-2xl font-semibold text-[#F4C021]">
-              Biografia
-            </h2>
+            <h1 className="text-5xl font-bold leading-tight text-white drop-shadow-lg md:text-7xl">
+              {integrante.nome}
+            </h1>
 
-            <p className="mt-4 leading-relaxed text-white/90">
-              {integrante.sobre}
+            <p className="mt-3 max-w-xl text-lg font-medium text-white/85">
+              {integrante.funcao}
             </p>
           </div>
+        </div>
+      </section>
 
-          <div className="mt-8 text-center">
-            <h2 className="text-2xl font-semibold text-[#F4C021]">
-              Redes sociais
-            </h2>
+      <section className="relative bg-[#061B5C] px-6 pb-20 pt-14 text-white">
+       <img
+  src="/logo-transparente.png"
+  alt="Logo Lúminuss"
+  className="pointer-events-none absolute right-[-90px] top-5 z-0 w-[900px] opacity-10 blur-[1px]"
+/>
+  <div className="pointer-events-none absolute inset-0 overflow-hidden">
+    <div className="absolute -right-20 top-0 h-72 w-72 rounded-full bg-[#F4C021]/10 blur-3xl" />
+    <div className="absolute -left-24 bottom-0 h-80 w-80 rounded-full bg-blue-300/10 blur-3xl" />
+  </div>
 
-            <div className="mt-4 flex flex-wrap justify-center gap-4">
-              {integrante.instagram && integrante.instagram !== "" && (
-                <a
-                  href={integrante.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-full bg-pink-500 px-5 py-2 font-medium transition hover:scale-105"
-                >
-                  Instagram
-                </a>
-              )}
+  <div className="relative mx-auto grid max-w-5xl gap-12 md:grid-cols-[0.75fr_1.25fr]">
+    
+    {/* LADO ESQUERDO */}
+    <aside className="space-y-10">
+      <div>
+        <p className="mb-2 text-sm uppercase tracking-[0.3em] text-[#F4C021]">
+          Função
+        </p>
+        <p className="text-xl font-semibold">
+          {integrante.funcao}
+        </p>
+      </div>
 
-              {integrante.youtube && integrante.youtube !== "" && (
-                <a
-                  href={integrante.youtube}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-full bg-red-500 px-5 py-2 font-medium transition hover:scale-105"
-                >
-                  YouTube
-                </a>
-              )}
-            </div>
+      {(integrante.instagram || integrante.youtube) && (
+        <div>
+          <h2 className="mb-4 text-2xl font-semibold">
+            SIGA
+          </h2>
+
+          <div className="space-y-3">
+            {integrante.instagram && integrante.instagram !== "" && (
+              <a
+                href={integrante.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 text-white/80 underline transition hover:text-[#F4C021]"
+              >
+                <FaInstagram className="text-xl" />
+                Instagram
+              </a>
+            )}
+
+            {integrante.youtube && integrante.youtube !== "" && (
+              <a
+                href={integrante.youtube}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 text-white/80 underline transition hover:text-[#F4C021]"
+              >
+                <FaYoutube className="text-xl" />
+                YouTube
+              </a>
+            )}
           </div>
         </div>
+      )}
+
+      <div>
+        <h2 className="mb-4 text-2xl font-semibold">
+          SOLOS
+        </h2>
+
+        <ul className="list-disc space-y-2 pl-5 text-white/80">
+          <li>Adicionar solo aqui</li>
+          <li>Adicionar música aqui</li>
+        </ul>
       </div>
+    </aside>
+
+    {/* BIOGRAFIA */}
+    <div>
+      <p className="mb-3 text-sm font-semibold uppercase tracking-[0.3em] text-[#F4C021]">
+        Biografia
+      </p>
+
+      <p className="mt-6 leading-8 text-white/85">
+        {integrante.sobre ||
+          "Em breve, este espaço receberá a biografia deste integrante, contando sua caminhada, experiências marcantes e o que o Ministério Lúminuss representa em sua vida."}
+      </p>
+
+    </div>
+  </div>
+</section>
     </main>
   );
 }

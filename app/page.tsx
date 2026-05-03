@@ -382,7 +382,7 @@ const aceitosDoMes = data
               />
 
               <span className="relative z-10 " >
-                Conhecer              
+                Conhecer           
                 </span>
             </Link>
           </div>
@@ -599,8 +599,18 @@ const aceitosDoMes = data
             >
               mluminuss.oficial@gmail.com
             </a>
-            <p className="text-white/80">QR Code</p>
+            
+            <p className="text-white/50">QR Code</p>
+            ainda não disponível
           </div>
+          <div className="mt-6">
+  <Link
+    href="/apoie"
+    className="inline-flex rounded-full bg-[#F4C021] px-6 py-3 font-semibold text-[#061B5C] transition hover:scale-105"
+  >
+    Ver formas de apoiar
+  </Link>
+</div>
         </div>
       </section>
 
