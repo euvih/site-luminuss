@@ -470,7 +470,7 @@ const opacity = useTransform(scrollYProgress, [0, 0.05, 1], [0, 1, 1]);
       </p>
 
       <h3 className="text-2xl font-bold leading-tight">
-        Ano era 1990...
+        O ano era 1990...
       </h3>
     </div>
 
