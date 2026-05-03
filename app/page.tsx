@@ -392,7 +392,7 @@ const aceitosDoMes = data
 
       <section
   id="recital"
-  className="relative overflow-hidden bg-[#000b3d] px-6 py-24 text-white"
+  className="relative overflow-hidden bg-[#000b3d] px-6 py-9 text-white"
 >
   <div className="absolute inset-0">
     <div className="absolute -top-20 left-10 h-72 w-72 rounded-full bg-[#9b4b8a]/20 blur-3xl" />
