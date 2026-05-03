@@ -617,8 +617,9 @@ const aceitosDoMes = data
       <footer className="bg-[#061B5C] px-6 py-8 text-center text-white">
         <p className="text-sm text-white/80">© 2026 Lúminuss</p>
 
-        <p className="mt-1 text-sm text-white/30">
-          Desenvolvido com ❤️ por{" "}
+        <p className="mt-1 text-sm text-white/50">
+          Desenvolvido com{" "}
+<span className="heart-beat">❤️</span> por{" "}
 <Link
   href="/integrantes/perfil/vitoria?categoria=midia"
   className="transition hover:text-[#F4C021]"
