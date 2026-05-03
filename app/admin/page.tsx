@@ -720,13 +720,36 @@ export default function AdminPage() {
     };
   }, [agendamentos, filtroStatus, busca, ordenacao]);
 
-  const totalTodos = eventosVisiveis.length;
-  const totalPendentes = eventosVisiveis.filter(
-    (item) => item.status?.toLowerCase().trim() === "pendente"
-  ).length;
-  const totalAceitos = eventosVisiveis.filter(
-    (item) => item.status?.toLowerCase().trim() === "aceito"
-  ).length;
+  const agendamentosDaBusca = agendamentos.filter((item) => {
+  const termo = busca.toLowerCase().trim();
+
+  if (!termo) return true;
+
+  const textoCompleto = [
+    item.igreja,
+    item.responsavel,
+    item.codigo,
+    item.local,
+    item.whatsapp,
+    item.email,
+    item.data,
+    item.observacoes,
+  ]
+    .join(" ")
+    .toLowerCase();
+
+  return textoCompleto.includes(termo);
+});
+
+const totalTodos = agendamentosDaBusca.length;
+
+const totalPendentes = agendamentosDaBusca.filter(
+  (item) => item.status?.toLowerCase().trim() === "pendente"
+).length;
+
+const totalAceitos = agendamentosDaBusca.filter(
+  (item) => item.status?.toLowerCase().trim() === "aceito"
+).length;
 
   if (!acessoLiberado) {
     return (
