@@ -45,7 +45,7 @@ export const categorias: Categoria[] = [
       {
         slug: "rejane-direcao",
         nome: "Rejane",
-        funcao: "Secretaria/Vocal",
+        funcao: "Secretaria / Vocal",
         foto: "/rejane.jpeg",
         sobre:
           "Rejane também contribui na direção e secretaria, além de participar do vocal do grupo.",
@@ -76,16 +76,6 @@ export const categorias: Categoria[] = [
         foto: "/Guilherme.jpeg",
         sobre:
           "Filho do diretor Reginaldo, Guilherme participa do grupo desde novo, hoje com 19 anos estuda odontologia e ama fazer Jiu-Jitsu.",
-        instagram: "https://instagram.com/",
-        youtube: "",
-      },
-      {
-        slug: "djanilson",
-        nome: "Djanilson",
-        funcao: "Tenor/capelão",
-        foto: "/djanilson.jpeg",
-        sobre:
-          "Djanilson integra o vocal como tenor, contribuindo para a harmonia e força das apresentações.",
         instagram: "https://instagram.com/",
         youtube: "",
       },
@@ -160,6 +150,26 @@ export const categorias: Categoria[] = [
         youtube: "",
       },
       {
+        slug: "amanda",
+        nome: "Amanda",
+        funcao: "Soprano",
+        foto: "/amanda.jpeg",
+        sobre:
+          "Amanda participa como soprano, trazendo delicadeza, presença e compromisso ao ministério.",
+        instagram: "https://instagram.com/",
+        youtube: "",
+      },
+      {
+        slug: "djanilson",
+        nome: "Djanilson",
+        funcao: "Tenor / capelão",
+        foto: "/djanilson.jpeg",
+        sobre:
+          "Djanilson integra o vocal como tenor, contribuindo para a harmonia e força das apresentações.",
+        instagram: "https://instagram.com/",
+        youtube: "",
+      },
+      {
         slug: "sergio",
         nome: "Sergio",
         funcao: "Tenor",
@@ -180,19 +190,9 @@ export const categorias: Categoria[] = [
         youtube: "",
       },
       {
-        slug: "amanda",
-        nome: "Amanda",
-        funcao: "Soprano",
-        foto: "/amanda.jpeg",
-        sobre:
-          "Amanda participa como soprano, trazendo delicadeza, presença e compromisso ao ministério.",
-        instagram: "https://instagram.com/",
-        youtube: "",
-      },
-      {
         slug: "eudes",
         nome: "Eudes",
-        funcao: "Tenor",
+        funcao: "Tenor / Sonoplasta / Orador",
         foto: "/eudes.jpeg",
         sobre:
           "Eudes participa da sonoplastia e também do vocal, contribuindo em diferentes áreas do ministério.",
@@ -210,10 +210,20 @@ export const categorias: Categoria[] = [
       {
         slug: "reginaldo",
         nome: "Reginaldo",
-        funcao: "Diretor e Violinista",
+        funcao: "Diretor geral / Violinista",
         foto: "/reginaldo.jpeg",
         sobre:
           "Reginaldo atua na direção do ministério e também como violinista, contribuindo com liderança e musicalidade.",
+        instagram: "https://instagram.com/",
+        youtube: "",
+      },
+       {
+        slug: "faelton",
+        nome: "Faelton",
+        funcao: "Guitarrista / diretor-instrumental",
+        foto: "/faelton.jpeg",
+        sobre:
+          "Faelton atua como guitarrista, contribuindo com criatividade e identidade musical ao grupo.",
         instagram: "https://instagram.com/",
         youtube: "",
       },
@@ -234,16 +244,6 @@ export const categorias: Categoria[] = [
         foto: "/bebeto.jpeg",
         sobre:
           "Bebeto participa como baterista, trazendo ritmo, energia e sustentação às apresentações.",
-        instagram: "https://instagram.com/",
-        youtube: "",
-      },
-      {
-        slug: "faelton",
-        nome: "Faelton",
-        funcao: "Guitarrista",
-        foto: "/faelton.jpeg",
-        sobre:
-          "Faelton atua como guitarrista, contribuindo com criatividade e identidade musical ao grupo.",
         instagram: "https://instagram.com/",
         youtube: "",
       },
@@ -278,7 +278,7 @@ export const categorias: Categoria[] = [
       {
         slug: "eudes",
         nome: "Eudes",
-        funcao: "Sonoplasta/Vocal/Orador",
+        funcao: "Sonoplasta / Vocal / Orador",
         foto: "/eudes.jpeg",
         sobre:
           "Eudes participa da sonoplastia e também do vocal, contribuindo em diferentes áreas do ministério.",
