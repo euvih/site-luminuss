@@ -2,15 +2,18 @@
 
 import Link from "next/link";
 import { FaArrowLeft, FaInstagram } from "react-icons/fa";
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 
 export default function RecitalPage() {
-  const estrelas = useMemo(() => {
-    return Array.from({ length: 150 }, (_, i) => {
+  const [estrelas, setEstrelas] = useState<any[]>([]);
+
+useEffect(() => {
+  setEstrelas(
+    Array.from({ length: 50 }, (_, i) => {
       const size =
         Math.random() < 0.15
           ? Math.random() * 3 + 2
-          : Math.random() * 2 + 1;
+          : Math.random() * 3 + 1.5;
 
       return {
         id: i,
@@ -21,8 +24,9 @@ export default function RecitalPage() {
         delay: `${Math.random() * 6}s`,
         duration: `${3 + Math.random() * 5}s`,
       };
-    });
-  }, []);
+    })
+  );
+}, []);
 
   return (
 <main className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#f7f3ff] via-[#ac88e7] to-[#191036] px-6 pb-20 pt-20 text-[#3c2560] md:pt-32">
@@ -36,7 +40,7 @@ export default function RecitalPage() {
         {estrelas.map((estrela) => (
   <span
     key={estrela.id}
-    className="estrela"
+    className="estrela-recital"
     style={{
       left: estrela.left,
       top: estrela.top,
