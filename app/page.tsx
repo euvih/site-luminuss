@@ -356,7 +356,7 @@ const aceitosDoMes = data
         className="bg-[#d7e0ff] px-6 py-20 min-h-[80vh] md:min-h-screen flex items-center justify-center"
       >
         <div className="mx-auto max-w-5xl text-center px-4 space-y-6">
-          <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#d4a106]">
+          <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#f3b701]">
             Sobre o grupo
           </p>
           <h2 className="mb-6 text-4xl font-bold">Quem somos</h2>

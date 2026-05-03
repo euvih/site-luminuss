@@ -6,7 +6,7 @@ import { useMemo } from "react";
 
 export default function RecitalPage() {
   const estrelas = useMemo(() => {
-    return Array.from({ length: 300 }, (_, i) => {
+    return Array.from({ length: 150 }, (_, i) => {
       const size =
         Math.random() < 0.15
           ? Math.random() * 3 + 2
