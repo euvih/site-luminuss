@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { FaArrowLeft, FaInstagram } from "react-icons/fa";
 import { useEffect, useState } from "react";
+import Notificacao from "@/app/components/Notificacao";
 
 export default function RecitalPage() {
+  const [mostrarAviso, setMostrarAviso] = useState(false);
   const [estrelas, setEstrelas] = useState<any[]>([]);
 
 useEffect(() => {
@@ -176,7 +178,7 @@ useEffect(() => {
             </a>
 
             <button
-  onClick={() => alert("Os ingressos ainda não estão disponíveis. Em breve! 🎶")}
+  onClick={() => setMostrarAviso(true)}
   className="rounded-full border border-[#d7bfff] bg-white/75 px-6 py-3 font-semibold text-[#5b348d] transition hover:bg-white"
 >
   ADQUIRIR INGRESSO
@@ -184,6 +186,12 @@ useEffect(() => {
           </div>
         </div>
       </section>
+      <Notificacao
+  mostrar={mostrarAviso}
+  tipo="aviso"
+  mensagem="Os ingressos ainda não estão disponíveis. Em breve! 🎶"
+  onFechar={() => setMostrarAviso(false)}
+/>
     </main>
   );
 }
