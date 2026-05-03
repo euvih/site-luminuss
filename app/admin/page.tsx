@@ -272,13 +272,13 @@ function CardAgendamento({
         <div className="rounded-xl bg-black/20 p-3">
           <p className="text-xs text-white/60">WhatsApp</p>
           <a
-            href={`https://wa.me/${item.whatsapp.replace(/\D/g, "")}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-0.5 block text-sm font-medium text-green-400 hover:underline"
-          >
-            {item.whatsapp || "-"}
-          </a>        
+  href={`https://wa.me/55${item.whatsapp.replace(/\D/g, "")}`}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="mt-0.5 block text-sm font-medium text-green-400 hover:underline"
+>
+  +55 {item.whatsapp || "-"}
+</a>       
           </div>
 
         <div className="rounded-xl bg-black/20 p-3">
