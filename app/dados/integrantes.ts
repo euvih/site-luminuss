@@ -103,7 +103,7 @@ export const categorias: Categoria[] = [
         slug: "rhadassa",
         nome: "Rhadassa",
         funcao: "Contralto",
-        foto: "/rhadassa.jpeg",
+        foto: "/rhadassa2.jpeg",
         sobre:
           "Rhadassa faz parte do vocal como contralto, ajudando a compor a identidade musical do ministério.",
         instagram: "https://instagram.com/",
