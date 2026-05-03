@@ -17,7 +17,7 @@ export default function Header() {
         esconderNoMobile ? "hidden" : ""
       }`}
     >
-      <nav className="mx-auto max-w-6xl px-4 py-4 text-white">
+      <nav className="mx-auto max-w-6xl px-4 py-2 text-white">
         <div className="flex items-center justify-between">
           <Link
             href="/#inicio"
