@@ -60,6 +60,8 @@ useEffect(() => {
   function formatarDiaSemana(data: Date) {
     return data.toLocaleDateString("pt-BR", { weekday: "long" });
   }
+  
+  const [fotoAberta, setFotoAberta] = useState<string | null>(null);
 
   const [menuAberto, setMenuAberto] = useState(false);
   const [form, setForm] = useState({
@@ -125,9 +127,11 @@ useEffect(() => {
     "/ftantiga1.jpeg",
     "/ftantiga2.jpeg",
     "/ftantiga3.jpeg",
-    "/auroraboreal.webp",
+    "/ftantiga4.jpeg",
+    "/ftantiga5.jpeg",
+    "/ftantiga6.jpeg",
     "/logo.jpeg",
-    "/foto6.jpeg",
+    "/auroraboreal.webp",
   ];
 
   useEffect(() => {
@@ -505,45 +509,76 @@ const aceitosDoMes = data
       </section>
 
       <section id="galeria" className="bg-[#cadaff] px-6 py-24">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-12 text-center">
-            <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#e9b310]">
-              Galeria
-            </p>
-            <h2 className="text-4xl font-bold">Fazendo história...
-              
-            </h2>
-          </div>
+  <div className="mx-auto max-w-6xl">
+    <div className="mb-12 text-center">
+      <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#e9b310]">
+        Galeria
+      </p>
+      <h2 className="text-4xl font-bold">Fazendo história...</h2>
+      <p className="mx-auto mt-4 max-w-2xl text-[#061B5C]/70">
+        Memórias especiais do Ministério Lúminuss ao longo da caminhada.
+      </p>
+    </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {fotos
-              .slice(0, mostrarMaisFotos ? fotos.length : 3)
-              .map((foto, index) => (
-                <div
-                  key={index}
-                  className="overflow-hidden rounded-3xl shadow-lg"
-                >
-                  <img
-                    src={foto}
-                    alt={`Foto ${index + 1} do grupo Lúminuss`}
-                    className="h-64 w-full object-cover transition duration-300 hover:scale-105"
-                  />
-                </div>
-              ))}
-          </div>
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:gap-4">
+      {fotos
+        .slice(0, mostrarMaisFotos ? fotos.length : 6)
+        .map((foto, index) => (
+          <button
+            key={index}
+            type="button"
+            onClick={() => setFotoAberta(foto)}
+            className={`group relative overflow-hidden rounded-2xl bg-white p-1 shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-xl ${
+              index % 5 === 0 ? "rotate-[-1.5deg]" : ""
+            } ${index % 5 === 1 ? "rotate-[1deg]" : ""} ${
+              index % 5 === 2 ? "rotate-[-0.7deg]" : ""
+            }`}
+          >
+            <img
+              src={foto}
+              alt={`Foto ${index + 1} do grupo Lúminuss`}
+              className="h-36 w-full rounded-xl object-cover grayscale-[15%] transition duration-300 group-hover:scale-105 group-hover:grayscale-0 sm:h-44 md:h-52"
+            />
 
-          {fotos.length > 3 && (
-            <div className="mt-10 text-center">
-              <button
-                onClick={() => setMostrarMaisFotos(!mostrarMaisFotos)}
-                className="rounded-full bg-[#061B5C] px-6 py-3 font-semibold text-white transition hover:scale-105"
-              >
-                {mostrarMaisFotos ? "Ver menos" : "Ver mais"}
-              </button>
-            </div>
-          )}
-        </div>
-      </section>
+            <div className="pointer-events-none absolute inset-1 rounded-xl bg-gradient-to-t from-[#061B5C]/25 via-transparent to-white/10 opacity-70" />
+          </button>
+        ))}
+    </div>
+
+    {fotos.length > 6 && (
+      <div className="mt-10 text-center">
+        <button
+          onClick={() => setMostrarMaisFotos(!mostrarMaisFotos)}
+          className="rounded-full bg-[#061B5C] px-6 py-3 font-semibold text-white transition hover:scale-105"
+        >
+          {mostrarMaisFotos ? "Ver menos" : "Ver mais"}
+        </button>
+      </div>
+    )}
+  </div>
+
+  {fotoAberta && (
+    <div
+      className="fixed inset-0 z-[999] flex items-center justify-center bg-black/80 px-4 backdrop-blur-sm"
+      onClick={() => setFotoAberta(null)}
+    >
+      <button
+        type="button"
+        onClick={() => setFotoAberta(null)}
+        className="absolute right-5 top-5 rounded-full bg-white/15 px-4 py-2 text-2xl font-bold text-white backdrop-blur transition hover:bg-white/25"
+      >
+        ×
+      </button>
+
+      <img
+        src={fotoAberta}
+        alt="Foto ampliada do Lúminuss"
+        className="max-h-[82vh] max-w-full rounded-3xl object-contain shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      />
+    </div>
+  )}
+</section>
 
       <section id="doacoes" className="bg-white px-6 py-24">
         <div className="mx-auto max-w-2xl text-center">
